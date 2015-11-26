@@ -17,6 +17,10 @@ Loading Screen (maybe):
 Import Network code.
 Set Username Textbox
 
+.Buttons:
+Join Game -> Text IP
+Host Game -> Lobby
+
 Extras:
 Incorporate chat.
 
