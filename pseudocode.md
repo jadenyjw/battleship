@@ -32,3 +32,8 @@ If there is no previous last hit coordinate, pick a random coordinate as a shot.
 Display to user where and whether it hits or not.
 If it hits, set the last hit coordinate to the hit coordinate.
 }
+
+#Network
+TODO
+
+Example: http://en.battleship-game.org/
