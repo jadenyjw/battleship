@@ -12,7 +12,9 @@ Randomly determine an orientation and place it on. If it's not valid (conflicts 
 #Algorithm for Human board placement
 Define a 10x10 boolean array with x and y coordinates.
 Define the aircraft carrier, battleship, cruiser, submarine, and destroyer
-TODO
+User drag and drops onto grid until all are ships are gone.
+Click on a ship to change its orientation. 
+Deny bad placements.
 
 #Game vs. Human Algorithm
 Repeat until someone loses:
