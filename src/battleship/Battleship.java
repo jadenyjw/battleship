@@ -3,6 +3,11 @@ package battleship;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class Battleship {
 
@@ -38,6 +43,12 @@ public class Battleship {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JLabel lblBattleship = DefaultComponentFactory.getInstance().createTitle("Battleship X");
+		lblBattleship.setFont(new Font("Impact", Font.BOLD, 25));
+		lblBattleship.setHorizontalAlignment(SwingConstants.CENTER);
+		frame.getContentPane().add(lblBattleship, BorderLayout.NORTH);
+		
 	}
 
 }
