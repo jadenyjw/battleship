@@ -1,13 +1,25 @@
 package battleship;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import com.jgoodies.forms.factories.DefaultComponentFactory;
-import java.awt.BorderLayout;
-import java.awt.Font;
-import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
+import javax.swing.JLayeredPane;
+import java.awt.Color;
+
 
 public class Battleship {
 
@@ -41,14 +53,57 @@ public class Battleship {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 537, 389);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JLabel lblBattleship = DefaultComponentFactory.getInstance().createTitle("Battleship X");
-		lblBattleship.setFont(new Font("Impact", Font.BOLD, 25));
-		lblBattleship.setHorizontalAlignment(SwingConstants.CENTER);
-		frame.getContentPane().add(lblBattleship, BorderLayout.NORTH);
+		JPanel panel_1 = new JPanel();
+		frame.getContentPane().add(panel_1, BorderLayout.SOUTH);
+		
+		JButton btnNewButton = new JButton("Singleplayer");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		panel_1.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Multiplayer");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		panel_1.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("Help");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(frame, "Rules can be found documented online.\nIf you are experiencing errors with network mode, try allowing this program through your firewall.");
+			}
+		});
+		panel_1.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("About");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(frame, "This is the standard Battleship game.\nCreated by Jaden Wang and Yuting Liu for ICS3U1.\nThis project can be tracked and bugs can be reported at https://github.com/yuting9/battleship");
+			}
+		});
+		panel_1.add(btnNewButton_3);
+		
+		JLayeredPane layeredPane = new JLayeredPane();
+		frame.getContentPane().add(layeredPane, BorderLayout.CENTER);
+		layeredPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(-92, 0, 620, 349);
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Jaden\\battleship\\src\\battleship\\img\\battleship.jpg"));
+		layeredPane.add(lblNewLabel);
+		
+		JLabel lblNewJgoodiesTitle = DefaultComponentFactory.getInstance().createTitle("Battleship X Pro Limited Edition 2");
+		lblNewJgoodiesTitle.setForeground(Color.CYAN);
+		lblNewJgoodiesTitle.setFont(new Font("Impact", Font.PLAIN, 25));
+		lblNewJgoodiesTitle.setBounds(88, 11, 364, 55);
+		layeredPane.setLayer(lblNewJgoodiesTitle, 1);
+		layeredPane.add(lblNewJgoodiesTitle);
 		
 	}
-
 }
