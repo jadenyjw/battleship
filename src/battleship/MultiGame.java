@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MultiGame {
 
@@ -55,33 +57,34 @@ public class MultiGame {
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setLocation(0, 0);
+		panel.setLocation(10, 10);
 		frame.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(10, 10));
-		panel.setSize(400,400);
+		panel.setSize(390,390);
 		
 		for (int i = 0; i<100; i++){
 			buttons[i] = new GridButton();
+			buttons[i].setEnabled(false);
 			panel.add(buttons[i]);
+			
 		}
 		
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(554, 0, -300, 561);
+		panel_1.setBounds(554, 10, 390, 390);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(new GridLayout(10, 10));
-		panel_1.setSize(400,400);
 		
 		JList list = new JList();
 		list.setBounds(410, 27, 134, 373);
 		frame.getContentPane().add(list);
 		
 		JLabel lblEventLog = new JLabel("Event Log");
-		lblEventLog.setBounds(450, 11, 57, 14);
+		lblEventLog.setBounds(450, 10, 57, 14);
 		frame.getContentPane().add(lblEventLog);
 		
 		textField = new JTextField();
-		textField.setBounds(113, 530, 831, 20);
+		textField.setBounds(113, 530, 732, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
@@ -92,6 +95,14 @@ public class MultiGame {
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(10, 411, 934, 108);
 		frame.getContentPane().add(textArea);
+		
+		JButton btnNewButton = new JButton("Send");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnNewButton.setBounds(855, 529, 89, 23);
+		frame.getContentPane().add(btnNewButton);
 		
 		for (int i = 0; i<100; i++){
 			buttons[i] = new GridButton();
