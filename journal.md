@@ -9,3 +9,5 @@
 
 
 #Yuting
+1. Nov 26 - Edited the pseudocode to make the game algorithms more streamlined
+2. Nov 28 - Began work on the singleplayer version
