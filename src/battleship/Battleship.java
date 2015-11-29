@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -52,20 +53,20 @@ public class Battleship {
   * Initialize the contents of the main menu.
   */
  private void initMain() {
-  frame = new JFrame();
+  frame = new JFrame("Battleship X");
   frame.setBounds(100, 100, 537, 389);
   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   
   JPanel panel_1 = new JPanel();
   frame.getContentPane().add(panel_1, BorderLayout.SOUTH);
   
-  JButton btnNewButton = new JButton("Quick Match");
-  btnNewButton.addActionListener(new ActionListener() {
+  JButton btnQuick = new JButton("Quick Match");
+  btnQuick.addActionListener(new ActionListener() {
    public void actionPerformed(ActionEvent e) {
-     initQuick();
+	   initQuick();
    }
   });
-  panel_1.add(btnNewButton);
+  panel_1.add(btnQuick);
   
   JButton btnNewButton_1 = new JButton("Multiplayer");
   btnNewButton_1.addActionListener(new ActionListener() {
@@ -94,6 +95,14 @@ public class Battleship {
   });
   panel_1.add(btnNewButton_3);
   
+  JButton btnExit = new JButton("Exit");
+  btnExit.addActionListener(new ActionListener() {
+	  public void actionPerformed(ActionEvent e) {
+		  frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+	  }
+  });
+  panel_1.add(btnExit);
+  
   JLayeredPane layeredPane = new JLayeredPane();
   frame.getContentPane().add(layeredPane, BorderLayout.CENTER);
   layeredPane.setLayout(null);
@@ -108,17 +117,12 @@ public class Battleship {
   
   JLabel lblNewLabel = new JLabel("");
   lblNewLabel.setBounds(-92, 0, 620, 349);
-  lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Jaden\\battleship\\src\\battleship\\img\\battleship.jpg"));
+  lblNewLabel.setIcon(new ImageIcon("battleship\\src\\battleship\\img\\battleship.jpg"));
   layeredPane.add(lblNewLabel);
   
  }//End initMain
  
- private void initQuick(){
-  frame = new JFrame();
-  frame.setBounds(100, 100, 537, 389);
-  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-  
-  JPanel panel_1 = new JPanel();
-  frame.getContentPane().add(panel_1, BorderLayout.SOUTH);
+ private void initQuick(){	  
+	 
  }//End initQuick()
 }//End Class
