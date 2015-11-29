@@ -3,7 +3,6 @@ package battleship;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,8 +14,6 @@ import javax.swing.JPanel;
 
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import javax.swing.ImageIcon;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
 import javax.swing.JLayeredPane;
 import java.awt.Color;
 
@@ -71,6 +68,8 @@ public class Battleship {
   btnNewButton_1.addActionListener(new ActionListener() {
    public void actionPerformed(ActionEvent e) {
      //Initialize Multiplayer
+	   Multimenu newWindow = new Multimenu();
+	   newWindow.setVisible(true);
    }
   });
   panel_1.add(btnNewButton_1);
