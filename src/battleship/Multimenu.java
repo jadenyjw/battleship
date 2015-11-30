@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.esotericsoftware.kryonet.Client;
+import com.esotericsoftware.kryonet.Server;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -21,6 +22,7 @@ import java.awt.CardLayout;
 import javax.swing.JList;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -31,7 +33,7 @@ public class Multimenu extends JDialog {
 	private JButton btnJoinGame;
 	private JPanel panel_1;
 	private JTextField txtName;
-	private JList list;
+	private JList<InetAddress> list;
 	private JButton btnRefresh;
 	private JLabel lblEnterUsername;
 
@@ -61,6 +63,7 @@ public class Multimenu extends JDialog {
 				btnRefresh = new JButton("Refresh");
 				btnRefresh.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						refresh();
 					}
 				});
 				panel.add(btnRefresh);
@@ -69,13 +72,28 @@ public class Multimenu extends JDialog {
 				btnHostGame = new JButton("Host Game");
 				btnHostGame.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-
+						try {
+							serve();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				});
 				panel.add(btnHostGame);
 			}
 			{
 				btnJoinGame = new JButton("Join Game");
+				btnJoinGame.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						try {
+							join();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				});
 				btnJoinGame.setEnabled(false);
 				panel.add(btnJoinGame);
 			}
@@ -96,9 +114,9 @@ public class Multimenu extends JDialog {
 		}
 		{
 
-			list = new JList();
+			list = new JList<InetAddress>();
 			getContentPane().add(list, BorderLayout.CENTER);
-            refresh();
+			refresh();
 		}
 	}
 
@@ -106,11 +124,25 @@ public class Multimenu extends JDialog {
 		Client client = new Client();
 		List<InetAddress> address = client.discoverHosts(1337, 1337);
 		System.out.println(address);
-		DefaultListModel listModel;
-		listModel = new DefaultListModel();
+		DefaultListModel<InetAddress> listModel;
+		listModel = new DefaultListModel<InetAddress>();
 		for (int i = 0; i < address.size(); i++) {
 			listModel.addElement(address.get(i));
 		}
-        list.setModel(listModel);
+		list.setModel(listModel);
+	}
+
+	private void serve() throws IOException {
+		Server server = new Server();
+		server.start();
+		server.bind(1337, 1337);
+		MultiGame newWindow = new MultiGame();
+		newWindow.frame.setVisible(true);
+	}
+
+	private void join() throws IOException {
+		Client client = new Client();
+		client.start();
+		client.connect(5000, String.valueOf(list.getSelectedValue()).substring(1), 1337, 1337);
 	}
 }
