@@ -14,9 +14,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
-public class MultiGame {
+public class MultigameClient {
 
-	JFrame frame;
+	private JFrame frame;
 	private JTextField textField;
 
 	/**
@@ -27,7 +27,7 @@ public class MultiGame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MultiGame window = new MultiGame();
+					MultigameClient window = new MultigameClient();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,7 +39,7 @@ public class MultiGame {
 	/**
 	 * Create the application.
 	 */
-	public MultiGame() {
+	public MultigameClient() {
 		initialize();
 	}
 
