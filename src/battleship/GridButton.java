@@ -7,7 +7,7 @@ public class GridButton extends JButton{
   ImageIcon hit,miss,neutral;
   byte value=0;
   /*
-   * 0: Not Shot
+   * 0: Empty
    * 1: Miss
    * 2: Hit
    */

@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -19,7 +20,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
-public class GridSetup {
+public class GridSetup extends JDialog {
 
 	private JFrame frame;
 	private JPanel panel;
@@ -40,6 +41,7 @@ public class GridSetup {
 			public void run() {
 				try {
 					GridSetup window = new GridSetup();
+					window.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,12 +75,12 @@ public class GridSetup {
 		panel.setSize(370,370);
 		
 		for (int i = 0; i<100; i++){
+		
+		
 			buttons[i] = new GridButton();
 			buttons[i].setEnabled(true);
 			panel.add(buttons[i]);
-			
 		}
-		
 		//String[] gridNames = ["Battleship","Carrier","Destroyer","Submarine","PT Boat"]
 		JPanel ships = new JPanel();
 		ships.setLocation(425,27);

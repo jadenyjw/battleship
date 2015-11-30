@@ -64,8 +64,8 @@ public class Battleship {
   JButton btnQuick = new JButton("Quick Match");
   btnQuick.addActionListener(new ActionListener() {
    public void actionPerformed(ActionEvent e) {
-	   SingleGame newWindow = new SingleGame();
-	   //newWindow.setVisible(true);
+	   GridSetup newWindow = new GridSetup();
+	   newWindow.setVisible(true);
    }
   });
   panel_1.add(btnQuick);
