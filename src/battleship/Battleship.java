@@ -41,7 +41,7 @@ public class Battleship {
     }
    }
   });
- }
+ }//End Main
 
  /**
   * Create the application.
@@ -64,7 +64,8 @@ public class Battleship {
   JButton btnQuick = new JButton("Quick Match");
   btnQuick.addActionListener(new ActionListener() {
    public void actionPerformed(ActionEvent e) {
-	   initQuick();
+	   SingleGame newWindow = new SingleGame();
+	   newWindow.setVisible(true);
    }
   });
   panel_1.add(btnQuick);
@@ -124,8 +125,4 @@ public class Battleship {
   layeredPane.add(lblNewLabel);
   
  }//End initMain
- 
- private void initQuick(){	  
-	 
- }//End initQuick()
 }//End Class
