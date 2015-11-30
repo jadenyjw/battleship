@@ -11,4 +11,3 @@
 #Yuting
 1. Nov 26 - Edited the pseudocode to make the game algorithms more streamlined
 2. Nov 28 - Began work on the singleplayer version
-3. Nov 29 - Changed the way images were imported to make it feasible to run the code on multiple compters without changing the code
