@@ -19,10 +19,17 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
-public class SingleGame {
+public class GridSetup {
 
 	private JFrame frame;
+	private JPanel panel;
+	private JPanel ships;
 	private JTextField textField;
+	private JButton battleship;
+	private JButton carrier;
+	private JButton sub;
+	private JButton frigate;
+	private JButton patrol;
 
 	/**
 	 * Launch the application.
@@ -32,7 +39,7 @@ public class SingleGame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SingleGame window = new SingleGame();
+					GridSetup window = new GridSetup();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +51,7 @@ public class SingleGame {
 	/**
 	 * Create the application.
 	 */
-	public SingleGame() {
+	public GridSetup() {	
 		initialize();
 	}
 
@@ -53,8 +60,9 @@ public class SingleGame {
 	 */
 	private void initialize() {
 		GridButton buttons[] = new GridButton[100];
+		GridButton ship[] = new GridButton[5];
 		frame = new JFrame();
-		frame.setBounds(100, 100, 970, 450);
+		frame.setBounds(100, 100, 550, 450);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -66,22 +74,25 @@ public class SingleGame {
 		
 		for (int i = 0; i<100; i++){
 			buttons[i] = new GridButton();
-			buttons[i].setEnabled(false);
+			buttons[i].setEnabled(true);
 			panel.add(buttons[i]);
 			
 		}
 		
+		//String[] gridNames = ["Battleship","Carrier","Destroyer","Submarine","PT Boat"]
+		JPanel ships = new JPanel();
+		ships.setLocation(425,27);
+		frame.getContentPane().add(ships);
+		ships.setLayout(new GridLayout(5,1));
+		ships.setSize(100,350);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(555, 27, 370, 370);
-		frame.getContentPane().add(panel_1);
-		panel_1.setLayout(new GridLayout(10, 10));
+		for (int i = 0; i<5;i++){
+			ship[i] = new GridButton();
+			buttons[i].setEnabled(true);
+			ships.add(ship[i]);
+		}
 		
-		JList list = new JList();
-		list.setBounds(410, 27, 134, 373);
-		frame.getContentPane().add(list);
-		
-		JLabel lblEventLog = new JLabel("Event Log");
+		JLabel lblEventLog = new JLabel("Ships");
 		lblEventLog.setBounds(450, 10, 57, 14);
 		frame.getContentPane().add(lblEventLog);
 		
@@ -89,25 +100,10 @@ public class SingleGame {
 		lblABC.setBounds(45, 10, 367, 14);
 		frame.getContentPane().add(lblABC);
 		
-		JLabel label = new JLabel("A          B          C           D          E          F         G          H           I           J");
-		label.setBounds(565, 10, 367, 14);
-		frame.getContentPane().add(label);
-		
 		JLabel label_1 = new JLabel("<html>1<br><br>2<br><br>3<br><br>4<br><br>5<br><br>6<br><br>7<br><br>8<br><br>9<br><br>10</html>");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		label_1.setVerticalAlignment(SwingConstants.TOP);
 		label_1.setBounds(10, 28, 46, 370);
 		frame.getContentPane().add(label_1);
-		
-		JLabel label_2 = new JLabel("<html>1<br><br>2<br><br>3<br><br>4<br><br>5<br><br>6<br><br>7<br><br>8<br><br>9<br><br>10</html>");
-		label_2.setVerticalAlignment(SwingConstants.TOP);
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label_2.setBounds(935, 27, 46, 370);
-		frame.getContentPane().add(label_2);
-		
-		for (int i = 0; i<100; i++){
-			buttons[i] = new GridButton();
-			panel_1.add(buttons[i]);
-		}
 	}
 }

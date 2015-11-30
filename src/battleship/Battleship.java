@@ -65,7 +65,7 @@ public class Battleship {
   btnQuick.addActionListener(new ActionListener() {
    public void actionPerformed(ActionEvent e) {
 	   SingleGame newWindow = new SingleGame();
-	   newWindow.setVisible(true);
+	   //newWindow.setVisible(true);
    }
   });
   panel_1.add(btnQuick);
