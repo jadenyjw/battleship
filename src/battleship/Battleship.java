@@ -120,8 +120,8 @@ public class Battleship {
   layeredPane.add(lblNewJgoodiesTitle);
   
   JLabel lblNewLabel = new JLabel("");
-  lblNewLabel.setBounds(-92, 0, 620, 349);
-  lblNewLabel.setIcon(new ImageIcon("img\\battleship.jpg"));
+  lblNewLabel.setBounds(-92, 0, 629, 349);
+  lblNewLabel.setIcon(new ImageIcon("img/battleship.jpg"));
   layeredPane.add(lblNewLabel);
   
  }//End initMain
