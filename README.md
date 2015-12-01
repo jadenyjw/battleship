@@ -1,12 +1,11 @@
 # Battleship Multiplayer in Java
 
 ##What we need to do:
-  1. Learn Graphics and Networking in Java
-  2. Write simple Battleship code.
-  3. Implement networking into program.
-  4. Debug.
-  5. Finish.
-
+  - [x] Learn Graphics and Networking in Java
+  - [x] Write simple Battleship code.
+  - [x] Implement networking into program. (!)
+  - [ ] Debug.
+  - [ ] Finish.
 
 ###UPDATE
 No more networking (?). We need to work on singleplayer and local multiplayer.
