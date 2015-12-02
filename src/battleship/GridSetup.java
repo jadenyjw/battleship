@@ -22,7 +22,7 @@ import java.awt.Font;
 
 public class GridSetup extends JDialog {
 
-	private JFrame frame;
+	JFrame frame;
 	private JPanel panel;
 	private JPanel ships;
 	private JTextField textField;

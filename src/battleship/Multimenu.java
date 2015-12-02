@@ -94,7 +94,6 @@ public class Multimenu extends JDialog {
 						}
 					}
 				});
-				btnJoinGame.setEnabled(false);
 				panel.add(btnJoinGame);
 			}
 		}
@@ -130,19 +129,26 @@ public class Multimenu extends JDialog {
 			listModel.addElement(address.get(i));
 		}
 		list.setModel(listModel);
+		
 	}
 
 	private void serve() throws IOException {
 		Server server = new Server();
 		server.start();
 		server.bind(1337, 1337);
-		MultiGame newWindow = new MultiGame();
+		//insert ship placing gui and wait for connection.
+		GridSetup newWindow = new GridSetup();
 		newWindow.frame.setVisible(true);
+		dispose();
 	}
 
 	private void join() throws IOException {
 		Client client = new Client();
 		client.start();
 		client.connect(5000, String.valueOf(list.getSelectedValue()).substring(1), 1337, 1337);
+		//insert ship placing gui
+		GridSetup newClient = new GridSetup();
+		newClient.frame.setVisible(true);
+		dispose();
 	}
 }

@@ -16,7 +16,7 @@ import java.awt.Font;
 
 public class MultigameClient {
 
-	private JFrame frame;
+	JFrame frame;
 	private JTextField textField;
 
 	/**
