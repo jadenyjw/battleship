@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JComboBox;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -26,11 +27,8 @@ public class GridSetup extends JDialog {
 	private JPanel panel;
 	private JPanel ships;
 	private JTextField textField;
-	private JButton battleship;
-	private JButton carrier;
-	private JButton sub;
-	private JButton frigate;
-	private JButton patrol;
+	private JButton submit;
+	private JComboBox shipDeploy;
 
 	/**
 	 * Launch the application.
@@ -62,7 +60,11 @@ public class GridSetup extends JDialog {
 	 */
 	private void initialize() {
 		GridButton buttons[] = new GridButton[100];
-		GridButton ship[] = new GridButton[5];
+		GridButton ship[] = new GridButton[6];
+		String[] shipNames = { "Battleship", "Carrier",
+								"Frigate", "Submarine",
+								"PT Boat" };
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 550, 450);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,18 +83,11 @@ public class GridSetup extends JDialog {
 			buttons[i].setEnabled(true);
 			panel.add(buttons[i]);
 		}
-		//String[] gridNames = ["Battleship","Carrier","Destroyer","Submarine","PT Boat"]
-		JPanel ships = new JPanel();
-		ships.setLocation(425,27);
-		frame.getContentPane().add(ships);
-		ships.setLayout(new GridLayout(5,1));
-		ships.setSize(100,350);
+		JComboBox shipDeploy = new JComboBox(shipNames);
+		shipDeploy.setSelectedIndex(4);
 		
-		for (int i = 0; i<5;i++){
-			ship[i] = new GridButton();
-			buttons[i].setEnabled(true);
-			ships.add(ship[i]);
-		}
+		add(shipDeploy, BorderLayout.EAST);
+		//shipDeploy.addActionListener(this);
 		
 		JLabel lblEventLog = new JLabel("Ships");
 		lblEventLog.setBounds(450, 10, 57, 14);
