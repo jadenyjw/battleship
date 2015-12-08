@@ -23,6 +23,17 @@ import java.awt.Font;
 
 public class GridSetup extends JDialog {
 
+	public byte[][] board = {{0,0,0,0,0,0,0,0,0,0}, 
+							 {0,0,0,0,0,0,0,0,0,0},
+							 {0,0,0,0,0,0,0,0,0,0},
+							 {0,0,0,0,0,0,0,0,0,0},
+							 {0,0,0,0,0,0,0,0,0,0},
+							 {0,0,0,0,0,0,0,0,0,0},
+							 {0,0,0,0,0,0,0,0,0,0},
+							 {0,0,0,0,0,0,0,0,0,0},
+							 {0,0,0,0,0,0,0,0,0,0},
+							 {0,0,0,0,0,0,0,0,0,0}};
+	
 	JFrame frame;
 	private JPanel panel;
 	private JPanel ships;
@@ -58,14 +69,14 @@ public class GridSetup extends JDialog {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize() {		
 		GridButton buttons[] = new GridButton[100];
 		GridButton ship[] = new GridButton[6];
 		String[] shipNames = { "Battleship", "Carrier",
 								"Frigate", "Submarine",
 								"PT Boat" };
 		
-		frame = new JFrame();
+		frame = new JFrame("Board Setup");
 		frame.setBounds(100, 100, 550, 450);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -83,10 +94,13 @@ public class GridSetup extends JDialog {
 			buttons[i].setEnabled(true);
 			panel.add(buttons[i]);
 		}
+		JPanel ships = new JPanel();
+		ships.setLocation(450,27);
+		frame.getContentPane().add(ships);
+		
 		JComboBox shipDeploy = new JComboBox(shipNames);
 		shipDeploy.setSelectedIndex(4);
-		
-		add(shipDeploy, BorderLayout.EAST);
+		ships.add(shipDeploy);
 		//shipDeploy.addActionListener(this);
 		
 		JLabel lblEventLog = new JLabel("Ships");
