@@ -20,6 +20,7 @@ import javax.swing.DefaultListModel;
 
 import java.awt.CardLayout;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -143,6 +144,7 @@ public class Multimenu extends JDialog {
 	}
 
 	private void join() throws IOException {
+		if (list.isSelectionEmpty() == false){
 		Client client = new Client();
 		client.start();
 		client.connect(5000, String.valueOf(list.getSelectedValue()).substring(1), 1337, 1337);
@@ -150,5 +152,13 @@ public class Multimenu extends JDialog {
 		GridSetup newClient = new GridSetup();
 		newClient.frame.setVisible(true);
 		dispose();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Please select a host to join.");
+			
+		}
+		
+		
+		
 	}
 }
