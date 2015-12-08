@@ -20,6 +20,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import javax.swing.JRadioButton;
+import javax.swing.DefaultComboBoxModel;
 
 public class GridSetup extends JDialog {
 
@@ -86,7 +88,7 @@ public class GridSetup extends JDialog {
 		JComboBox shipDeploy = new JComboBox(shipNames);
 		shipDeploy.setSelectedIndex(4);
 		
-		add(shipDeploy, BorderLayout.EAST);
+		getContentPane().add(shipDeploy, BorderLayout.EAST);
 		//shipDeploy.addActionListener(this);
 		
 		JLabel lblEventLog = new JLabel("Ships");
@@ -102,5 +104,23 @@ public class GridSetup extends JDialog {
 		label_1.setVerticalAlignment(SwingConstants.TOP);
 		label_1.setBounds(10, 28, 46, 370);
 		frame.getContentPane().add(label_1);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(412, 27, 126, 370);
+		frame.getContentPane().add(panel_1);
+		
+		JRadioButton rdbtnVertical = new JRadioButton("Vertical");
+		panel_1.add(rdbtnVertical);
+		JRadioButton rdbtnHorizontal = new JRadioButton("Horizontal");
+		panel_1.add(rdbtnHorizontal);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Aircraft Carrier", "Battleship", "Cruiser", "Submarine", "Patrol Boat"}));
+		panel_1.add(comboBox);
+		
+		JButton btnDeploy = new JButton("Deploy");
+		panel_1.add(btnDeploy);
+		
+		
 	}
 }
