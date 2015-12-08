@@ -109,10 +109,8 @@ public class GridSetup extends JDialog {
 		panel_1.setBounds(412, 27, 126, 370);
 		frame.getContentPane().add(panel_1);
 		
-		JRadioButton rdbtnVertical = new JRadioButton("Vertical");
-		panel_1.add(rdbtnVertical);
-		JRadioButton rdbtnHorizontal = new JRadioButton("Horizontal");
-		panel_1.add(rdbtnHorizontal);
+		JButton btnOrient = new JButton("Rotate");
+		panel_1.add(btnOrient);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Aircraft Carrier", "Battleship", "Cruiser", "Submarine", "Patrol Boat"}));
@@ -121,6 +119,8 @@ public class GridSetup extends JDialog {
 		JButton btnDeploy = new JButton("Deploy");
 		panel_1.add(btnDeploy);
 		
+		JButton btnFinish = new JButton("Done");
+		panel_1.add(btnFinish);
 		
 	}
 }
