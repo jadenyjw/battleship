@@ -5,6 +5,7 @@
 4. Nov. 29 - Added the design structure for game hosting/joining as well as layout for game.
 5. Nov. 30 - Added Server discovery on LAN inside the host/join gui.
 6. Dec. 7 - Error catching on multiplayer GUI.
+7. Dec. 8 - Did layout of ship placement GUI.
 
 
 
