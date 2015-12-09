@@ -76,14 +76,13 @@ public class GridSetup extends JDialog {
 				buttons[i][x].addActionListener(new ActionListener(){
                 
 				        public void actionPerformed(ActionEvent e) {
-				        	check(shipName,shipOrient, tempX, tempY);
-				        	if (check(shipName, shipName, tempX, tempY))  {
-				        		  System.out.println("Valid");
-				        		}
-				        	else{
-				        		System.out.println("invalid");
+				        	if (check(shipName,shipOrient, tempX, tempY) == true){
+				        		System.out.println("Valid");
 				        	
 				        	}
+				        	else 
+				        		System.out.println("Invalid");
+				        	
 				          } 
 
 
@@ -154,17 +153,21 @@ public class GridSetup extends JDialog {
 		
 		if(shipOrient.equals("Horizontal")){
 			if (xCoord < 11 - shipLen){
+				
 				return true;
 			}
-			else{				
+			else{
+				
 				return false;
 			}
 		}
 		else{
 			if (yCoord < 11 - shipLen){
+				
 				return true;
 			}
 			else{
+				
 				return false;
 			}
 		}
