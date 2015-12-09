@@ -37,6 +37,7 @@ public class Multimenu extends JDialog {
 	private JList<InetAddress> list;
 	private JButton btnRefresh;
 	private JLabel lblEnterUsername;
+	private JButton btnLocal;
 
 	/**
 	 * Launch the application.
@@ -55,7 +56,7 @@ public class Multimenu extends JDialog {
 	 * Create the dialog.
 	 */
 	public Multimenu() {
-		setBounds(100, 100, 300, 300);
+		setBounds(100, 100, 400, 300);
 		getContentPane().setLayout(new BorderLayout());
 		{
 			panel = new JPanel();
@@ -96,6 +97,20 @@ public class Multimenu extends JDialog {
 					}
 				});
 				panel.add(btnJoinGame);
+			}
+			{
+				btnLocal = new JButton("Local");
+				btnLocal.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						GridSetup p1Window = new GridSetup();
+						p1Window.frame.setVisible(true);
+						dispose();
+						JOptionPane.showMessageDialog(null, "Player 1 picks first.");
+						GridSetup p2Window = new GridSetup();
+						p2Window.frame.setVisible(true);
+					}
+				});
+				panel.add(btnLocal);
 			}
 		}
 		{

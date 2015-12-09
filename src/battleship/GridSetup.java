@@ -144,7 +144,7 @@ public class GridSetup extends JDialog {
 		
 		
 	}
-	private void check(String shipName,String shipOrient, int xCoord, int yCoord){
+	private void check(String shipName,String shipOrient, int yCoord, int xCoord){
 		int shipLen;
 		
 		if(shipName.equals("Aircraft Carrier"))
@@ -157,13 +157,23 @@ public class GridSetup extends JDialog {
 			shipLen = 3;
 		
 		if(shipOrient.equals("Horizontal")){
-			for(int i = 1; i<=shipLen; i++){
-				//Check if this button works
+			if (xCoord < 11 - shipLen){
+				System.out.println(xCoord + " " + shipLen);
+				System.out.println("valid");
+			}
+			else{
+				System.out.println("not valid");
+				
 			}
 		}
 		else{
-			for(int i = 1; i<=shipLen; i++){
-				//Check if this button works
+			if (yCoord < 11 - shipLen){
+				System.out.println(yCoord + " " + shipLen);
+				System.out.println("valid");
+			}
+			else{
+				System.out.println("not valid");
+				
 			}
 		}
 	}
