@@ -32,6 +32,7 @@ public class GridSetup extends JDialog {
 	private JButton submit;
 	private JComboBox shipDeploy;
 	public SetupButton buttons[][] = new SetupButton[10][10];
+	private String shipName = "Aircraft Carrier", shipOrient = "Horizontal";
 
 	/**
 	 * Launch the application.
@@ -64,9 +65,6 @@ public class GridSetup extends JDialog {
 	private void initialize() {
 		
 		SetupButton ship[] = new SetupButton[6];
-		String[] shipNames = { "Battleship", "Carrier",
-								"Frigate", "Submarine",
-								"PT Boat" };
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 550, 450);
@@ -84,13 +82,12 @@ public class GridSetup extends JDialog {
 				
 			    buttons[i][x] = new SetupButton();
 				buttons[i][x].setEnabled(true);
-				final int xcoord = i;
-				final int ycoord = x;
+				final int tempX = i;
+				final int tempY = x;
 				buttons[i][x].addActionListener(new ActionListener(){
                 
 				        public void actionPerformed(ActionEvent e) {
-                         System.out.println(xcoord + " " + ycoord);
-				                        
+				        	check(shipName,shipOrient, tempX, tempY);
 				          } 
 
 
@@ -98,11 +95,6 @@ public class GridSetup extends JDialog {
 				panel.add(buttons[i][x]);
 			}
 		}
-		JComboBox shipDeploy = new JComboBox(shipNames);
-		shipDeploy.setSelectedIndex(4);
-		
-		getContentPane().add(shipDeploy, BorderLayout.EAST);
-		//shipDeploy.addActionListener(this);
 		
 		JLabel lblEventLog = new JLabel("Ships");
 		lblEventLog.setBounds(450, 10, 57, 14);
@@ -122,19 +114,19 @@ public class GridSetup extends JDialog {
 		panel_1.setBounds(412, 27, 126, 370);
 		frame.getContentPane().add(panel_1);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.addActionListener(new ActionListener() {
+		JComboBox shipNames = new JComboBox();
+		shipNames.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(comboBox.getSelectedItem());
+				shipName = (String) shipNames.getSelectedItem();
 			}
 		});
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Aircraft Carrier", "Battleship", "Cruiser", "Submarine", "Patrol Boat"}));
-		panel_1.add(comboBox);
+		shipNames.setModel(new DefaultComboBoxModel(new String[] {"Aircraft Carrier", "Battleship", "Cruiser", "Submarine", "Patrol Boat"}));
+		panel_1.add(shipNames);
 		
 		JComboBox orient = new JComboBox();
 		orient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(orient.getSelectedItem());
+				shipOrient = (String) orient.getSelectedItem();
 			}
 		});
 		orient.setModel(new DefaultComboBoxModel(new String[] {"Horizontal", "Vertical"}));
@@ -151,5 +143,28 @@ public class GridSetup extends JDialog {
 		panel_1.add(btnFinish);
 		
 		
+	}
+	private void check(String shipName,String shipOrient, int xCoord, int yCoord){
+		int shipLen;
+		
+		if(shipName.equals("Aircraft Carrier"))
+			shipLen = 5;
+		else if(shipName.equals("Battleship"))
+			shipLen = 4;
+		else if(shipName.equals("Patrol Boat"))
+			shipLen = 2;
+		else
+			shipLen = 3;
+		
+		if(shipOrient.equals("Horizontal")){
+			for(int i = 1; i<=shipLen; i++){
+				//Check if this button works
+			}
+		}
+		else{
+			for(int i = 1; i<=shipLen; i++){
+				//Check if this button works
+			}
+		}
 	}
 }
