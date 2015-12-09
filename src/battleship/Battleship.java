@@ -26,6 +26,7 @@ import java.awt.Color;
 public class Battleship {
 
  private JFrame frame;
+ public String place = "Main Menu";
 
  /**
   * Launch the application.

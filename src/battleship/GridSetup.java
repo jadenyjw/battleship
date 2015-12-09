@@ -31,6 +31,7 @@ public class GridSetup extends JDialog {
 	private JTextField textField;
 	private JButton submit;
 	private JComboBox shipDeploy;
+	public SetupButton buttons[][] = new SetupButton[10][10];
 
 	/**
 	 * Launch the application.
@@ -61,8 +62,8 @@ public class GridSetup extends JDialog {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		GridButton buttons[] = new GridButton[100];
-		GridButton ship[] = new GridButton[6];
+		
+		SetupButton ship[] = new SetupButton[6];
 		String[] shipNames = { "Battleship", "Carrier",
 								"Frigate", "Submarine",
 								"PT Boat" };
@@ -78,12 +79,24 @@ public class GridSetup extends JDialog {
 		panel.setLayout(new GridLayout(10, 10));
 		panel.setSize(370,370);
 		
-		for (int i = 0; i<100; i++){
-		
-		
-			buttons[i] = new GridButton();
-			buttons[i].setEnabled(true);
-			panel.add(buttons[i]);
+		for (int i = 0; i<10; i++){
+			for (int x = 0; x<10; x++){
+				
+			    buttons[i][x] = new SetupButton();
+				buttons[i][x].setEnabled(true);
+				final int xcoord = i;
+				final int ycoord = x;
+				buttons[i][x].addActionListener(new ActionListener(){
+                
+				        public void actionPerformed(ActionEvent e) {
+                         System.out.println(xcoord + " " + ycoord);
+				                        
+				          } 
+
+
+				   });
+				panel.add(buttons[i][x]);
+			}
 		}
 		JComboBox shipDeploy = new JComboBox(shipNames);
 		shipDeploy.setSelectedIndex(4);
@@ -109,18 +122,34 @@ public class GridSetup extends JDialog {
 		panel_1.setBounds(412, 27, 126, 370);
 		frame.getContentPane().add(panel_1);
 		
-		JButton btnOrient = new JButton("Rotate");
-		panel_1.add(btnOrient);
-		
 		JComboBox comboBox = new JComboBox();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(comboBox.getSelectedItem());
+			}
+		});
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Aircraft Carrier", "Battleship", "Cruiser", "Submarine", "Patrol Boat"}));
 		panel_1.add(comboBox);
 		
+		JComboBox orient = new JComboBox();
+		orient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(orient.getSelectedItem());
+			}
+		});
+		orient.setModel(new DefaultComboBoxModel(new String[] {"Horizontal", "Vertical"}));
+		panel_1.add(orient);
+		
 		JButton btnDeploy = new JButton("Deploy");
+		btnDeploy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		panel_1.add(btnDeploy);
 		
 		JButton btnFinish = new JButton("Done");
 		panel_1.add(btnFinish);
+		
 		
 	}
 }
