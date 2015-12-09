@@ -76,8 +76,35 @@ public class GridSetup extends JDialog {
 				buttons[i][x].addActionListener(new ActionListener(){
                 
 				        public void actionPerformed(ActionEvent e) {
-				        	if (check(shipName,shipOrient, tempX, tempY) == true){
+				        	byte shipLen;
+				        	if(shipName.equals("Aircraft Carrier"))
+				    			shipLen = 5;
+				    		else if(shipName.equals("Battleship"))
+				    			shipLen = 4;
+				    		else if(shipName.equals("Patrol Boat"))
+				    			shipLen = 2;
+				    		else
+				    			shipLen = 3;
+				        	if (check(shipLen,shipOrient, tempX, tempY) == true){
 				        		System.out.println("Valid");
+				        		if (shipOrient.equals("Horizontal")){
+				        			System.out.println(tempY);
+				        			int last = tempY + shipLen;
+				        			for (int a = tempY; a < last; a++){
+				        				buttons[tempX][a].setEnabled(false);
+				        			}
+				        				
+				        		}
+				        		if (shipOrient.equals("Vertical")){
+				        			System.out.println(tempX);
+				        			int last = tempX + shipLen;
+				        			for (int a = tempX; a < last; a++){
+				        				buttons[a][tempY].setEnabled(false);
+				        			}
+				        				
+				        		}
+				        		
+				        				
 				        	
 				        	}
 				        	else 
@@ -127,29 +154,14 @@ public class GridSetup extends JDialog {
 		orient.setModel(new DefaultComboBoxModel(new String[] {"Horizontal", "Vertical"}));
 		panel_1.add(orient);
 		
-		JButton btnDeploy = new JButton("Deploy");
-		btnDeploy.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		panel_1.add(btnDeploy);
-		
 		JButton btnFinish = new JButton("Done");
 		panel_1.add(btnFinish);
 		
 		
 	}
-	public static boolean check(String shipName,String shipOrient, int yCoord, int xCoord){
-		int shipLen;
+	public static boolean check(byte shipLen,String shipOrient, int yCoord, int xCoord){
 		
-		if(shipName.equals("Aircraft Carrier"))
-			shipLen = 5;
-		else if(shipName.equals("Battleship"))
-			shipLen = 4;
-		else if(shipName.equals("Patrol Boat"))
-			shipLen = 2;
-		else
-			shipLen = 3;
+		
 		
 		if(shipOrient.equals("Horizontal")){
 			if (xCoord < 11 - shipLen){
