@@ -1,36 +1,25 @@
 package battleship;
 
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JComboBox;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
 import java.awt.Font;
-import javax.swing.JRadioButton;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import javax.swing.SwingConstants;
 
 public class GridSetup extends JDialog {
 
 	JFrame frame;
-	private JPanel panel;
-	private JPanel ships;
-	private JTextField textField;
-	private JButton submit;
-	private JComboBox shipDeploy;
+
 	public SetupButton buttons[][] = new SetupButton[10][10];
 	private String shipName = "Aircraft Carrier", shipOrient = "Horizontal";
 
@@ -88,6 +77,13 @@ public class GridSetup extends JDialog {
                 
 				        public void actionPerformed(ActionEvent e) {
 				        	check(shipName,shipOrient, tempX, tempY);
+				        	if (check(shipName, shipName, tempX, tempY))  {
+				        		  System.out.println("Valid");
+				        		}
+				        	else{
+				        		System.out.println("invalid");
+				        	
+				        	}
 				          } 
 
 
@@ -144,7 +140,7 @@ public class GridSetup extends JDialog {
 		
 		
 	}
-	private void check(String shipName,String shipOrient, int yCoord, int xCoord){
+	public static boolean check(String shipName,String shipOrient, int yCoord, int xCoord){
 		int shipLen;
 		
 		if(shipName.equals("Aircraft Carrier"))
@@ -158,22 +154,18 @@ public class GridSetup extends JDialog {
 		
 		if(shipOrient.equals("Horizontal")){
 			if (xCoord < 11 - shipLen){
-				System.out.println(xCoord + " " + shipLen);
-				System.out.println("valid");
+				return true;
 			}
-			else{
-				System.out.println("not valid");
-				
+			else{				
+				return false;
 			}
 		}
 		else{
 			if (yCoord < 11 - shipLen){
-				System.out.println(yCoord + " " + shipLen);
-				System.out.println("valid");
+				return true;
 			}
 			else{
-				System.out.println("not valid");
-				
+				return false;
 			}
 		}
 	}
