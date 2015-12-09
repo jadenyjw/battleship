@@ -6,3 +6,4 @@
 5. Nov 30 - Added the framework required for deployment of ships. New problem: GridSetup doesn't work
 6. Dec 08 - Added titles to pages
 7. Dec 09 - Added actionListeners to GridSetup and SetupButtons. New problem: Implement the listeners to do something
+8. Dec 09 - Added check method to GridSetup and implemented the code necissary to check the ship's placement
