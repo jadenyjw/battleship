@@ -115,9 +115,6 @@ public class GridSetup extends JDialog {
 				        				shipArray[shipNum][0] = tempY;
 				        				shipArray[shipNum][1] = tempX;
 				        				shipArray[shipNum][2] = orientation;
-				        				System.out.println(shipArray[shipNum][0]);
-				        				System.out.println(shipArray[shipNum][1]);
-				        				System.out.println(shipArray[shipNum][2]);
 				        			}
 				        			else{
 				        				
@@ -129,11 +126,11 @@ public class GridSetup extends JDialog {
 					                        
 					        			}
 				        				}
-				        				else{
+				        				else if (shipArray[shipNum][2] == 1){
 				        					int last = shipLen + shipArray[shipNum][1];
 				        					for (int d = shipArray[shipNum][1]; d < last; d++){
 					        					System.out.println(d);
-						        				buttons[shipArray[shipNum][1]][d].setIcon(null);
+						        				buttons[d][shipArray[shipNum][1]].setIcon(null);
 				        				}
 				        				}
 				        				shipArray[shipNum][0] = tempY;
@@ -147,7 +144,33 @@ public class GridSetup extends JDialog {
 				        			}
 				        		}
 				        		if (shipOrient.equals("Vertical")){
-				        			
+				        			int orientation = 1;
+				        			if (shipArray[shipNum][0] == -1){
+				        				shipArray[shipNum][0] = tempY;
+				        				shipArray[shipNum][1] = tempX;
+				        				shipArray[shipNum][2] = orientation;
+				        			}
+				        			else{
+				        				
+				        				if (shipArray[shipNum][2] == 0){
+				        				int last = shipLen + shipArray[shipNum][0];
+				        				for (int d = shipArray[shipNum][0]; d < last; d++){
+				        					System.out.println(d);
+					        				buttons[shipArray[shipNum][1]][d].setIcon(null);
+					                        
+					        			}
+				        				}
+				        				else if (shipArray[shipNum][2] == 1){
+				        					int last = shipLen + shipArray[shipNum][1];
+				        					for (int d = shipArray[shipNum][1]; d < last; d++){
+					        					System.out.println(d);
+						        				buttons[d][shipArray[shipNum][1]].setIcon(null);
+				        				}
+				        				}
+				        				shipArray[shipNum][0] = tempY;
+				        				shipArray[shipNum][1] = tempX;
+				        				shipArray[shipNum][2] = orientation;
+				        			}
 				        			int last = tempX + shipLen;
 				        			for (int a = tempX; a < last; a++){
 				        				buttons[a][tempY].setIcon(shipIcon);				        				
