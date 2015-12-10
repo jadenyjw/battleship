@@ -7,11 +7,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import javax.swing.SwingConstants;
@@ -19,7 +21,7 @@ import javax.swing.SwingConstants;
 public class GridSetup extends JDialog {
 
 	JFrame frame;
-
+    ImageIcon shipIcon = new ImageIcon("img/ship.png");
 	public SetupButton buttons[][] = new SetupButton[10][10];
 	private String shipName = "Aircraft Carrier", shipOrient = "Horizontal";
 
@@ -86,12 +88,13 @@ public class GridSetup extends JDialog {
 				    		else
 				    			shipLen = 3;
 				        	if (check(shipLen,shipOrient, tempX, tempY) == true){
+				        		
 				        		System.out.println("Valid");
 				        		if (shipOrient.equals("Horizontal")){
 				        			System.out.println(tempY);
 				        			int last = tempY + shipLen;
 				        			for (int a = tempY; a < last; a++){
-				        				buttons[tempX][a].setEnabled(false);
+				        				buttons[tempX][a].setIcon(shipIcon);
 				        			}
 				        				
 				        		}
@@ -99,8 +102,10 @@ public class GridSetup extends JDialog {
 				        			System.out.println(tempX);
 				        			int last = tempX + shipLen;
 				        			for (int a = tempX; a < last; a++){
-				        				buttons[a][tempY].setEnabled(false);
+				        				buttons[a][tempY].setIcon(shipIcon);
+				        				
 				        			}
+				        			
 				        				
 				        		}
 				        		
@@ -108,7 +113,7 @@ public class GridSetup extends JDialog {
 				        	
 				        	}
 				        	else 
-				        		System.out.println("Invalid");
+				        		JOptionPane.showMessageDialog(null, "Invalid placement.");
 				        	
 				          } 
 
