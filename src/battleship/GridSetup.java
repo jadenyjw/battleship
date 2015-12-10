@@ -21,8 +21,8 @@ import javax.swing.SwingConstants;
 public class GridSetup extends JDialog {
 
 	JFrame frame;
-    ImageIcon shipIcon = new ImageIcon("img/ship.png");
-	public SetupButton buttons[][] = new SetupButton[10][10];
+    static ImageIcon shipIcon = new ImageIcon("img/ship.png");
+	public static SetupButton buttons[][] = new SetupButton[10][10];
 	private String shipName = "Aircraft Carrier", shipOrient = "Horizontal";
 	private int[][] shipArray = {{-1,-1,0}
 	,{-1,-1,0}
@@ -130,7 +130,7 @@ public class GridSetup extends JDialog {
 				        					int last = shipLen + shipArray[shipNum][1];
 				        					for (int d = shipArray[shipNum][1]; d < last; d++){
 					        					System.out.println(d);
-						        				buttons[d][shipArray[shipNum][1]].setIcon(null);
+						        				buttons[d][shipArray[shipNum][0]].setIcon(null);
 				        				}
 				        				}
 				        				shipArray[shipNum][0] = tempY;
@@ -226,16 +226,15 @@ public class GridSetup extends JDialog {
 		
 		
 	}
-	private static boolean check(byte shipLen,String shipOrient, int yCoord, int xCoord, int shipArray[][], int shipNum){
+	public static boolean check(byte shipLen,String shipOrient, int yCoord, int xCoord, int shipArray[][], int shipNum){
 		
-		if(shipArray[shipNum][0] == -1){
-			
-		}
+		
 		
 		if(shipOrient.equals("Horizontal")){
+			
 			if (xCoord < 11 - shipLen)
 				return true;
-			else				
+			else		
 				return false;
 		}
 		else{
@@ -244,5 +243,10 @@ public class GridSetup extends JDialog {
 			else
 				return false;
 		}
+	}
+	public static boolean checkCrash(){
+		
+		return false;
+		
 	}
 }
