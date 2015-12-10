@@ -24,13 +24,13 @@ public class GridSetup extends JDialog {
     ImageIcon shipIcon = new ImageIcon("img/ship.png");
 	public SetupButton buttons[][] = new SetupButton[10][10];
 	private String shipName = "Aircraft Carrier", shipOrient = "Horizontal";
-	private byte shipArray[][] = {{-1,-1,0}
+	private int[][] shipArray = {{-1,-1,0}
 	,{-1,-1,0}
 	,{-1,-1,0}
 	,{-1,-1,0}
 	,{-1,-1,0}};
 
-	private byte shipNum = -1;
+	private int shipNum = -1;
 
 	/**
 	 * Launch the application.
@@ -110,14 +110,34 @@ public class GridSetup extends JDialog {
 				        	if (check(shipLen,shipOrient, tempX, tempY, shipArray, shipNum) == true){
 				        		System.out.println("Valid");
 				        		if (shipOrient.equals("Horizontal")){
-				        			System.out.println(tempY);
+				                    int orientation = 0;
+				        			if (shipArray[shipNum][0] == -1){
+				        				shipArray[shipNum][0] = tempY;
+				        				shipArray[shipNum][1] = tempX;
+				        				shipArray[shipNum][2] = orientation;
+				        				System.out.println(shipArray[shipNum][0]);
+				        				System.out.println(shipArray[shipNum][1]);
+				        				System.out.println(shipArray[shipNum][2]);
+				        			}
+				        			else{
+				        				int last = shipLen + shipArray[shipNum][0];
+				        				for (int d = shipArray[shipNum][0]; d < last; d++){
+				        					System.out.println(d);
+					        				buttons[tempX][d].setIcon(null);
+					       
+					        			}
+				        				shipArray[shipNum][0] = tempY;
+				        				shipArray[shipNum][1] = tempX;
+				        				shipArray[shipNum][2] = orientation;
+				        			}
+				        			
 				        			int last = tempY + shipLen;
 				        			for (int a = tempY; a < last; a++){
 				        				buttons[tempX][a].setIcon(shipIcon);
 				        			}
 				        		}
 				        		if (shipOrient.equals("Vertical")){
-				        			System.out.println(tempX);
+				        			
 				        			int last = tempX + shipLen;
 				        			for (int a = tempX; a < last; a++){
 				        				buttons[a][tempY].setIcon(shipIcon);				        				
@@ -173,7 +193,7 @@ public class GridSetup extends JDialog {
 		
 		
 	}
-	private static boolean check(byte shipLen,String shipOrient, int yCoord, int xCoord, byte shipArray[][], byte shipNum){
+	private static boolean check(byte shipLen,String shipOrient, int yCoord, int xCoord, int shipArray[][], int shipNum){
 		
 		if(shipArray[shipNum][0] == -1){
 			
