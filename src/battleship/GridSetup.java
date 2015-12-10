@@ -164,7 +164,7 @@ public class GridSetup extends JDialog {
 				        					int last = shipLen + shipArray[shipNum][1];
 				        					for (int d = shipArray[shipNum][1]; d < last; d++){
 					        					System.out.println(d);
-						        				buttons[d][shipArray[shipNum][1]].setIcon(null);
+						        				buttons[d][shipArray[shipNum][0]].setIcon(null);
 				        				}
 				        				}
 				        				shipArray[shipNum][0] = tempY;
