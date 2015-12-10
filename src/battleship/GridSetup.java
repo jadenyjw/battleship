@@ -232,21 +232,34 @@ public class GridSetup extends JDialog {
 		
 		if(shipOrient.equals("Horizontal")){
 			
-			if (xCoord < 11 - shipLen)
+			if (xCoord < 11 - shipLen){
+				int last = shipLen + xCoord; 
+				for (int t = xCoord; t < last; t++){
+					if (buttons[yCoord][t].getIcon()==shipIcon){
+						return false;
+					}
+				}
 				return true;
+			}
 			else		
 				return false;
 		}
 		else{
-			if (yCoord < 11 - shipLen)
+			if (yCoord < 11 - shipLen){
+				int last = shipLen + yCoord; 
+				for (int t = yCoord; t < last; t++){
+					if (buttons[t][xCoord].getIcon()==shipIcon){
+						return false;
+					}
+				}
+				
 				return true;
+			}
+				
+				
 			else
 				return false;
 		}
 	}
-	public static boolean checkCrash(){
-		
-		return false;
-		
-	}
+
 }
