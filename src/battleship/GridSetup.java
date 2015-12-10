@@ -120,12 +120,22 @@ public class GridSetup extends JDialog {
 				        				System.out.println(shipArray[shipNum][2]);
 				        			}
 				        			else{
+				        				
+				        				if (shipArray[shipNum][2] == 0){
 				        				int last = shipLen + shipArray[shipNum][0];
 				        				for (int d = shipArray[shipNum][0]; d < last; d++){
 				        					System.out.println(d);
-					        				buttons[tempX][d].setIcon(null);
-					       
+					        				buttons[shipArray[shipNum][1]][d].setIcon(null);
+					                        
 					        			}
+				        				}
+				        				else{
+				        					int last = shipLen + shipArray[shipNum][1];
+				        					for (int d = shipArray[shipNum][1]; d < last; d++){
+					        					System.out.println(d);
+						        				buttons[shipArray[shipNum][1]][d].setIcon(null);
+				        				}
+				        				}
 				        				shipArray[shipNum][0] = tempY;
 				        				shipArray[shipNum][1] = tempX;
 				        				shipArray[shipNum][2] = orientation;
