@@ -24,7 +24,7 @@ import java.awt.Color;
 
 
 public class Battleship {
-public static String referer = "main";
+public static String referer;
 private JFrame frame;
 
 

@@ -250,7 +250,7 @@ public class GridSetup extends JDialog {
 			if (yCoord < 11 - shipLen) {
 				int last = shipLen + yCoord;
 				for (int t = yCoord; t < last; t++) {
-					if (buttons[yCoord][t].getIcon() != SetupButton.shipIcon[shipNum] && buttons[yCoord][t].getIcon() != SetupButton.water) {
+					if (buttons[t][xCoord].getIcon() != SetupButton.shipIcon[shipNum] && buttons[t][xCoord].getIcon() != SetupButton.water) {
 						return false;
 					}
 				}
