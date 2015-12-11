@@ -266,14 +266,11 @@ public class GridSetup extends JDialog {
 				else
 					shipOrient = "Horizontal";
 				System.out.println("CHECK");
-			}while(!(check(shipLen[shipNum], shipOrient, y, x, shipArray, shipNum)));
+				refresh(x,y);
+			}while(error);
 			System.out.println("LOL" + x+y+o);
 			System.out.println(shipNum);
 			System.out.println(shipName);
-			refresh(x,y);
-			shipArray[shipNum][0] = x;
-			shipArray[shipNum][1] = y;
-			shipArray[shipNum][2] = o;
 		}
 		return shipArray;
 	}
