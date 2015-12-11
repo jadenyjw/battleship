@@ -14,6 +14,8 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import javax.swing.text.DefaultCaret;
+
 import java.awt.Font;
 
 public class MultiGame {
@@ -121,8 +123,23 @@ public class MultiGame {
 		JLabel lblEventLog = new JLabel("Event Log");
 		lblEventLog.setBounds(450, 10, 57, 14);
 		frame.getContentPane().add(lblEventLog);
-
+		JTextArea textArea = new JTextArea();
+		textArea.setEditable(false);
+		textArea.setBounds(10, 411, 934, 108);
+		frame.getContentPane().add(textArea);
+		DefaultCaret caret = (DefaultCaret)textArea.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		
 		textField = new JTextField();
+		textField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (!(textField.getText().trim().equals(""))){
+				textArea.append(Multimenu.userName + ": " + textField.getText() + "\n");
+				textField.setText("");
+				}
+				
+			}
+		});
 		textField.setBounds(113, 530, 732, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
@@ -131,10 +148,7 @@ public class MultiGame {
 		lblEnterAMesage.setBounds(10, 533, 93, 14);
 		frame.getContentPane().add(lblEnterAMesage);
 
-		JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
-		textArea.setBounds(10, 411, 934, 108);
-		frame.getContentPane().add(textArea);
+		
 
 		JButton btnNewButton = new JButton("Send");
 		btnNewButton.addActionListener(new ActionListener() {
