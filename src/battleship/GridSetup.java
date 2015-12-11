@@ -185,7 +185,7 @@ public class GridSetup extends JDialog {
 		btnRandomDeploy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				shipArray = randomDeploy(shipArray);
-				System.out.println(shipArray[0][0]);
+				shipName = (String) shipNames.getSelectedItem();
 			}
 		});
 		panel_1.add(btnRandomDeploy);
@@ -237,30 +237,44 @@ public class GridSetup extends JDialog {
 	
 	public static int[][] randomDeploy(int shipArray[][]){
 		reset();
-		
+		System.out.println("Reset Done");
 		byte shipLen[] = {5,4,3,3,2};
-		for(int i = 0; i<5; i++){
+		for(shipNum = 0; shipNum<5; shipNum++){
+			System.out.println(shipNum);
+			switch(shipNum){
+				case 0: shipName = "Aircraft Carrier";
+						break;
+				case 1: shipName = "Battleship";
+						break;
+				case 2: shipName = "Cruiser";
+						break;
+				case 3: shipName = "Submarine";
+						break;
+				default: shipName = "Patrol Boat";
+						break;
+			}
+			System.out.println(shipName);
 			shipOrient = "Horizontal";
 			int x,y,o;
-			refresh(-1,-1);
 			do{
 				x = rng(9);
 				y = rng(9);
-				o = rng(1);
+				o = rng(2);
+				
 				if(o == 1)
 					shipOrient = "Vertical";
 				else
 					shipOrient = "Horizontal";
-				if(check(shipLen[i], shipOrient, y, x, shipArray, i)){
-					System.out.println(x + " " + y + " " + o);
-					shipArray[i][0] = x;
-					shipArray[i][1] = y;
-					shipArray[1][2] = o;
-				}
-				refresh(x,y);
-			}while(check(shipLen[i], shipOrient, y, x, shipArray, i));
+				System.out.println("CHECK");
+			}while(!(check(shipLen[shipNum], shipOrient, y, x, shipArray, shipNum)));
+			System.out.println("LOL" + x+y+o);
+			System.out.println(shipNum);
+			System.out.println(shipName);
+			refresh(x,y);
+			shipArray[shipNum][0] = x;
+			shipArray[shipNum][1] = y;
+			shipArray[shipNum][2] = o;
 		}
-		
 		return shipArray;
 	}
 	
@@ -287,7 +301,9 @@ public class GridSetup extends JDialog {
 			shipLen = 3;
 			shipNum = 3;
 		}
-		if (check(shipLen, shipOrient, tempX, tempY, shipArray, shipNum) == true) {
+		System.out.println(shipNum);
+		if (check(shipLen, shipOrient, tempX, tempY, shipArray, shipNum)) {
+			System.out.println("Hey");
 			error = false;
 			if (shipOrient.equals("Horizontal")) {
 				int orientation = 0;
@@ -361,7 +377,6 @@ public class GridSetup extends JDialog {
 		System.out.println("This is a reset function. This is supposed to reset the board");
 		for(int i = 0; i<10; i++){
 			for(int x = 0; x<10; x++){
-				System.out.println(i + " " + x);
 				buttons[i][x].setIcon(SetupButton.water);
 			}
 		}
