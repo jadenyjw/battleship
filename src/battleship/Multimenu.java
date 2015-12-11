@@ -37,6 +37,7 @@ public class Multimenu extends JDialog {
 	private JList<InetAddress> list;
 	private JButton btnRefresh;
 	private JLabel lblEnterUsername;
+	public static String userName;
 
 	/**
 	 * Launch the application.
@@ -51,7 +52,7 @@ public class Multimenu extends JDialog {
 		}
 	}
 
-	/**
+	/*
 	 * Create the dialog.
 	 */
 	public Multimenu() {
@@ -73,8 +74,11 @@ public class Multimenu extends JDialog {
 				btnHostGame = new JButton("Host Game");
 				btnHostGame.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
+						userName = txtName.getText();
+						if (!(userName.trim().length() > 10 || userName.trim().length() < 4)){
 						
 						try {
+							
 							Battleship.referer = "host";
 							serve();
 							
@@ -82,6 +86,9 @@ public class Multimenu extends JDialog {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						}
+						else 
+							JOptionPane.showMessageDialog(null, "Please enter a username between 4 to 10 characters");
 					}
 				});
 				panel.add(btnHostGame);

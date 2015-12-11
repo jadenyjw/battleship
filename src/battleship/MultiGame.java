@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JLabel;
@@ -69,7 +71,7 @@ public class MultiGame {
 				panel.add(buttons[i][x]);
 			}
 		}
-		
+
 		int shipLen;
 		for (int i = 0; i < 5; i++) {
 			switch (i) {
@@ -88,21 +90,21 @@ public class MultiGame {
 			case 4:
 				shipLen = 2;
 				break;
-			default: shipLen = 0;
+			default:
+				shipLen = 0;
 
 			}
 			if (GridSetup.shipArray[i][2] == 0) {
 				int last = shipLen + GridSetup.shipArray[i][0];
-              for (int x = GridSetup.shipArray[i][0]; x < last; x++){
-            	 
-            	  buttons[GridSetup.shipArray[i][1]][x].setDisabledIcon(GridButton.shipIcon[0]);
-              }
-			} 
-			else if (GridSetup.shipArray[i][2] == 1) {
+				for (int x = GridSetup.shipArray[i][0]; x < last; x++) {
+
+					buttons[GridSetup.shipArray[i][1]][x].setDisabledIcon(GridButton.shipIcon[0]);
+				}
+			} else if (GridSetup.shipArray[i][2] == 1) {
 				int last = shipLen + GridSetup.shipArray[i][1];
-				for (int y = GridSetup.shipArray[i][1]; y < last; y++){
-	            	  buttons[y][GridSetup.shipArray[i][0]].setDisabledIcon(GridButton.shipIcon[0]);
-	              }
+				for (int y = GridSetup.shipArray[i][1]; y < last; y++) {
+					buttons[y][GridSetup.shipArray[i][0]].setDisabledIcon(GridButton.shipIcon[0]);
+				}
 
 			}
 		}
@@ -175,5 +177,11 @@ public class MultiGame {
 				panel_1.add(buttons[i][x]);
 			}
 		}
+		DefaultListModel listModel;
+		listModel = new DefaultListModel();
+		list.setModel(listModel);
+		textArea.append(">> Welcome " + Multimenu.userName + ".\n");
+		textArea.append(">> Now waiting for a connection from another player. " + "\n");
+
 	}
 }
