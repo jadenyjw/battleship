@@ -130,7 +130,7 @@ public class GridSetup extends JDialog {
 
 								int last = tempY + shipLen;
 								for (int a = tempY; a < last; a++) {
-									buttons[tempX][a].setIcon(SetupButton.shipIcon);
+									buttons[tempX][a].setIcon(SetupButton.shipIcon[shipNum]);
 								}
 							}
 							if (shipOrient.equals("Vertical")) {
@@ -161,7 +161,7 @@ public class GridSetup extends JDialog {
 								}
 								int last = tempX + shipLen;
 								for (int a = tempX; a < last; a++) {
-									buttons[a][tempY].setIcon(SetupButton.shipIcon);
+									buttons[a][tempY].setIcon(SetupButton.shipIcon[shipNum]);
 								}
 							}
 						} else
@@ -239,7 +239,7 @@ public class GridSetup extends JDialog {
 				int last = shipLen + xCoord;
 
 				for (int t = xCoord; t < last; t++) {
-					if (buttons[yCoord][t].getIcon() == SetupButton.shipIcon) {
+					if (buttons[yCoord][t].getIcon() != SetupButton.shipIcon[shipNum] && buttons[yCoord][t].getIcon() != SetupButton.water) {
 						return false;
 					}
 				}
@@ -250,7 +250,7 @@ public class GridSetup extends JDialog {
 			if (yCoord < 11 - shipLen) {
 				int last = shipLen + yCoord;
 				for (int t = yCoord; t < last; t++) {
-					if (buttons[t][xCoord].getIcon() == SetupButton.shipIcon) {
+					if (buttons[yCoord][t].getIcon() != SetupButton.shipIcon[shipNum] && buttons[yCoord][t].getIcon() != SetupButton.water) {
 						return false;
 					}
 				}
