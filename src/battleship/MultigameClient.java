@@ -47,7 +47,7 @@ public class MultigameClient {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		GridButton buttons[] = new GridButton[100];
+		GridButton buttons[][] = new GridButton[10][10];
 		frame = new JFrame();
 		frame.setBounds(100, 100, 970, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,11 +59,15 @@ public class MultigameClient {
 		panel.setLayout(new GridLayout(10, 10));
 		panel.setSize(370,370);
 		
-		for (int i = 0; i<100; i++){
-			buttons[i] = new GridButton();
-			buttons[i].setEnabled(false);
-			panel.add(buttons[i]);
-			
+		for (int i = 0; i < 10; i++) {
+			for (int x = 0; x < 10; x++) {
+
+				buttons[i][x] = new GridButton();
+				buttons[i][x].setIcon(GridButton.water);
+				buttons[i][x].setDisabledIcon(GridButton.water);
+				buttons[i][x].setEnabled(false);
+				panel.add(buttons[i][x]);
+			}
 		}
 		
 		
@@ -122,9 +126,14 @@ public class MultigameClient {
 		label_2.setBounds(935, 27, 46, 370);
 		frame.getContentPane().add(label_2);
 		
-		for (int i = 0; i<100; i++){
-			buttons[i] = new GridButton();
-			panel_1.add(buttons[i]);
+		for (int i = 0; i < 10; i++) {
+			for (int x = 0; x < 10; x++) {
+
+				buttons[i][x] = new GridButton();
+				buttons[i][x].setIcon(GridButton.water);
+				buttons[i][x].setEnabled(true);
+				panel_1.add(buttons[i][x]);
+			}
 		}
 	}
 }

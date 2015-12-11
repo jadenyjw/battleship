@@ -220,17 +220,35 @@ public class GridSetup extends JDialog {
 		JButton btnFinish = new JButton("Done");
 		btnFinish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				int count = 0;
+				for (int r = 0; r <= 9; r++){
+					for (int c = 0; c <= 9; c++){
+						if(buttons[r][c].getIcon()!= SetupButton.water)
+							count++;
+					}
+					
+					
+				}
+				System.out.println(count);
+				if (count == 17){
 				if (Battleship.referer.equals("single")){
 					SingleGame newClient = new SingleGame();
 					newClient.frame.setVisible(true);
 					frame.dispose();
 				}
 				else if (Battleship.referer.equals("host")){
-						
+					MultiGame newClient = new MultiGame();
+					newClient.frame.setVisible(true);
+					frame.dispose();
 				}
 				else{
-					
+					MultigameClient newClient = new MultigameClient();
+					newClient.frame.setVisible(true);
+					frame.dispose();
 				}
+				}
+				else
+					JOptionPane.showMessageDialog(null, "Please place all your ships before deploying.");
 			
 			}
 		});
