@@ -21,14 +21,19 @@ import javax.swing.SwingConstants;
 public class GridSetup extends JDialog {
 
 	JFrame frame;
-	JLabel image;
+	static JLabel image;
 	
 	public static SetupButton buttons[][] = new SetupButton[10][10];
+
+	private static String shipName = "Aircraft Carrier";
+	private static String shipOrient = "Horizontal";
+	private static int[][] shipArray = { { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 } };
+	private static int shipNum = -1;
+	private static boolean error = false;
+
 	public static int clientShip[][] = new int[5][3] ;
 	public static int hostShip[][] = new int[5][3] ;
-	private String shipName = "Aircraft Carrier", shipOrient = "Horizontal";
-	public static int[][] shipArray = { { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 } };
-	private int shipNum = -1;
+
 
 	/**
 	 * Launch the application.
@@ -90,89 +95,9 @@ public class GridSetup extends JDialog {
 				buttons[i][x].addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
-						byte shipLen;
-						if (shipName.equals("Aircraft Carrier")) {
-							shipLen = 5;
-							shipNum = 0;
-						} else if (shipName.equals("Battleship")) {
-							shipLen = 4;
-							shipNum = 1;
-						} else if (shipName.equals("Patrol Boat")) {
-							shipLen = 2;
-							shipNum = 4;
-						} else if (shipName.equals("Cruiser")) {
-							shipLen = 3;
-							shipNum = 2;
-						} else {
-							shipLen = 3;
-							shipNum = 3;
-						}
-						if (check(shipLen, shipOrient, tempX, tempY, shipArray, shipNum) == true) {
-							image.setIcon(null);
-							if (shipOrient.equals("Horizontal")) {
-								int orientation = 0;
-								if (shipArray[shipNum][0] == -1) {
-									shipArray[shipNum][0] = tempY;
-									shipArray[shipNum][1] = tempX;
-									shipArray[shipNum][2] = orientation;
-								} else {
-
-									if (shipArray[shipNum][2] == 0) {
-										int last = shipLen + shipArray[shipNum][0];
-										for (int d = shipArray[shipNum][0]; d < last; d++) {
-
-											buttons[shipArray[shipNum][1]][d].setIcon(SetupButton.water);
-
-										}
-									} else if (shipArray[shipNum][2] == 1) {
-										int last = shipLen + shipArray[shipNum][1];
-										for (int d = shipArray[shipNum][1]; d < last; d++) {
-
-											buttons[d][shipArray[shipNum][0]].setIcon(SetupButton.water);
-										}
-									}
-									shipArray[shipNum][0] = tempY;
-									shipArray[shipNum][1] = tempX;
-									shipArray[shipNum][2] = orientation;
-								}
-
-								int last = tempY + shipLen;
-								for (int a = tempY; a < last; a++) {
-									buttons[tempX][a].setIcon(SetupButton.shipIcon[shipNum]);
-								}
-							}
-							if (shipOrient.equals("Vertical")) {
-								int orientation = 1;
-								if (shipArray[shipNum][0] == -1) {
-									shipArray[shipNum][0] = tempY;
-									shipArray[shipNum][1] = tempX;
-									shipArray[shipNum][2] = orientation;
-								} else {
-
-									if (shipArray[shipNum][2] == 0) {
-										int last = shipLen + shipArray[shipNum][0];
-										for (int d = shipArray[shipNum][0]; d < last; d++) {
-
-											buttons[shipArray[shipNum][1]][d].setIcon(SetupButton.water);
-
-										}
-									} else if (shipArray[shipNum][2] == 1) {
-										int last = shipLen + shipArray[shipNum][1];
-										for (int d = shipArray[shipNum][1]; d < last; d++) {
-
-											buttons[d][shipArray[shipNum][0]].setIcon(SetupButton.water);
-										}
-									}
-									shipArray[shipNum][0] = tempY;
-									shipArray[shipNum][1] = tempX;
-									shipArray[shipNum][2] = orientation;
-								}
-								int last = tempX + shipLen;
-								for (int a = tempX; a < last; a++) {
-									buttons[a][tempY].setIcon(SetupButton.shipIcon[shipNum]);
-								}
-							}
-						} else
+						image.setIcon(null);
+						refresh(tempX, tempY);
+						if(error)
 							image.setIcon(new ImageIcon(GridSetup.class.getResource("/img/invalid.png")));
 					}
 				});
@@ -255,14 +180,30 @@ public class GridSetup extends JDialog {
 			
 			}
 		});
+		
+		JButton btnRandomDeploy = new JButton("Random Deploy");
+		btnRandomDeploy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				shipArray = randomDeploy(shipArray);
+				System.out.println(shipArray[0][0]);
+			}
+		});
+		panel_1.add(btnRandomDeploy);
 		panel_1.add(btnFinish);
+		
+		JButton btnDebugButton = new JButton("Debug Button");
+		btnDebugButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refresh(-1,-1);
+			}
+		});
+		panel_1.add(btnDebugButton);
 		
 
 	}
 
 
-	public static boolean check(byte shipLen, String shipOrient, int yCoord, int xCoord, int shipArray[][],
-			int shipNum) {
+	private static boolean check(byte shipLen, String shipOrient, int yCoord, int xCoord, int shipArray[][],int shipNum){
 
 		if (shipOrient.equals("Horizontal")) {
 
@@ -293,5 +234,130 @@ public class GridSetup extends JDialog {
 				return false;
 		}
 	}
+	
+	public static int[][] randomDeploy(int shipArray[][]){
+		shipArray = new int[5][3];
+		
+		byte shipLen[] = {5,4,3,3,2};
+		for(int i = 0; i<5; i++){
+			shipOrient = "Horizontal";
+			int x,y,o;
+			refresh(-1,-1);
+			do{
+				x = rng(9);
+				y = rng(9);
+				o = rng(1);
+				if(o == 1)
+					shipOrient = "Vertical";
+				else
+					shipOrient = "Horizontal";
+				if(check(shipLen[i], shipOrient, y, x, shipArray, i)){
+					System.out.println(x + " " + y + " " + o);
+					shipArray[i][0] = x;
+					shipArray[i][1] = y;
+					shipArray[1][2] = o;
+				}
+				refresh(x,y);
+			}while(check(shipLen[i], shipOrient, y, x, shipArray, i));
+		}
+		
+		return shipArray;
+	}
+	
+	public static int rng(int range){
+		return (int) (Math.random() * range);
+	}
+	
+	private static void refresh(int tempX, int tempY){
 
+		byte shipLen;
+		if (shipName.equals("Aircraft Carrier")) {
+			shipLen = 5;
+			shipNum = 0;
+		} else if (shipName.equals("Battleship")) {
+			shipLen = 4;
+			shipNum = 1;
+		} else if (shipName.equals("Patrol Boat")) {
+			shipLen = 2;
+			shipNum = 4;
+		} else if (shipName.equals("Cruiser")) {
+			shipLen = 3;
+			shipNum = 2;
+		} else {
+			shipLen = 3;
+			shipNum = 3;
+		}
+		if (check(shipLen, shipOrient, tempX, tempY, shipArray, shipNum) == true) {
+			error = false;
+			if (shipOrient.equals("Horizontal")) {
+				int orientation = 0;
+				if (shipArray[shipNum][0] == -1) {
+					shipArray[shipNum][0] = tempY;
+					shipArray[shipNum][1] = tempX;
+					shipArray[shipNum][2] = orientation;
+				} else {
+
+					if (shipArray[shipNum][2] == 0) {
+						int last = shipLen + shipArray[shipNum][0];
+						for (int d = shipArray[shipNum][0]; d < last; d++) {
+
+							buttons[shipArray[shipNum][1]][d].setIcon(SetupButton.water);
+
+						}
+					} else if (shipArray[shipNum][2] == 1) {
+						int last = shipLen + shipArray[shipNum][1];
+						for (int d = shipArray[shipNum][1]; d < last; d++) {
+
+							buttons[d][shipArray[shipNum][0]].setIcon(SetupButton.water);
+						}
+					}
+					shipArray[shipNum][0] = tempY;
+					shipArray[shipNum][1] = tempX;
+					shipArray[shipNum][2] = orientation;
+				}
+
+				int last = tempY + shipLen;
+				for (int a = tempY; a < last; a++) {
+					buttons[tempX][a].setIcon(SetupButton.shipIcon[shipNum]);
+				}
+			}
+			if (shipOrient.equals("Vertical")) {
+				int orientation = 1;
+				if (shipArray[shipNum][0] == -1) {
+					shipArray[shipNum][0] = tempY;
+					shipArray[shipNum][1] = tempX;
+					shipArray[shipNum][2] = orientation;
+				} else {
+
+					if (shipArray[shipNum][2] == 0) {
+						int last = shipLen + shipArray[shipNum][0];
+						for (int d = shipArray[shipNum][0]; d < last; d++) {
+
+							buttons[shipArray[shipNum][1]][d].setIcon(SetupButton.water);
+
+						}
+					} else if (shipArray[shipNum][2] == 1) {
+						int last = shipLen + shipArray[shipNum][1];
+						for (int d = shipArray[shipNum][1]; d < last; d++) {
+
+							buttons[d][shipArray[shipNum][0]].setIcon(SetupButton.water);
+						}
+					}
+					shipArray[shipNum][0] = tempY;
+					shipArray[shipNum][1] = tempX;
+					shipArray[shipNum][2] = orientation;
+				}
+				int last = tempX + shipLen;
+				for (int a = tempX; a < last; a++) {
+					buttons[a][tempY].setIcon(SetupButton.shipIcon[shipNum]);
+				}
+			}
+		}
+		else
+			error = true;
+	
+	}
+	private static void reset(){
+		System.out.println("This is a reset function. This is supposed to reset the board");
+	}
 }
