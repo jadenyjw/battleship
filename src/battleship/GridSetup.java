@@ -194,7 +194,7 @@ public class GridSetup extends JDialog {
 		JButton btnDebugButton = new JButton("Debug Button");
 		btnDebugButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				refresh(-1,-1);
+				reset();
 			}
 		});
 		panel_1.add(btnDebugButton);
@@ -236,7 +236,7 @@ public class GridSetup extends JDialog {
 	}
 	
 	public static int[][] randomDeploy(int shipArray[][]){
-		shipArray = new int[5][3];
+		reset();
 		
 		byte shipLen[] = {5,4,3,3,2};
 		for(int i = 0; i<5; i++){
@@ -359,5 +359,13 @@ public class GridSetup extends JDialog {
 	}
 	private static void reset(){
 		System.out.println("This is a reset function. This is supposed to reset the board");
+		for(int i = 0; i<10; i++){
+			for(int x = 0; x<10; x++){
+				System.out.println(i + " " + x);
+				buttons[i][x].setIcon(SetupButton.water);
+			}
+		}
+		shipArray = new int[][] { { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 } };
+		System.out.println("done");
 	}
 }
