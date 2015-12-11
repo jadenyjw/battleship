@@ -28,7 +28,7 @@ import java.net.InetAddress;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
-public class Multimenu extends JDialog {
+public class MultiMenu extends JDialog {
 	private JPanel panel;
 	private JButton btnHostGame;
 	private JButton btnJoinGame;
@@ -38,13 +38,14 @@ public class Multimenu extends JDialog {
 	private JButton btnRefresh;
 	private JLabel lblEnterUsername;
 	public static String userName;
+	public static String ipAddress;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			Multimenu dialog = new Multimenu();
+			MultiMenu dialog = new MultiMenu();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -55,7 +56,7 @@ public class Multimenu extends JDialog {
 	/*
 	 * Create the dialog.
 	 */
-	public Multimenu() {
+	public MultiMenu() {
 		setBounds(100, 100, 400, 300);
 		getContentPane().setLayout(new BorderLayout());
 		{
@@ -75,19 +76,18 @@ public class Multimenu extends JDialog {
 				btnHostGame.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						userName = txtName.getText();
-						if (!(userName.trim().length() > 10 || userName.trim().length() < 4)){
-						
-						try {
-							
-							Battleship.referer = "host";
-							serve();
-							
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						}
-						else 
+						if (!(userName.trim().length() > 10 || userName.trim().length() < 4)) {
+
+							try {
+
+								Battleship.referer = "host";
+								serve();
+
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} else
 							JOptionPane.showMessageDialog(null, "Please enter a username between 4 to 10 characters");
 					}
 				});
@@ -141,35 +141,24 @@ public class Multimenu extends JDialog {
 			listModel.addElement(address.get(i));
 		}
 		list.setModel(listModel);
-		
+
 	}
 
 	public void serve() throws IOException {
-		Server server = new Server();
-		server.start();
-		server.bind(1337, 1337);
-		//insert ship placing gui and wait for connection.
 		GridSetup newWindow = new GridSetup();
 		newWindow.frame.setVisible(true);
 		dispose();
 	}
 
 	public void join() throws IOException {
-		if (list.isSelectionEmpty() == false){
-		Client client = new Client();
-		client.start();
-		client.connect(5000, String.valueOf(list.getSelectedValue()).substring(1), 1337, 1337);
-		//insert ship placing gui
-		GridSetup newClient = new GridSetup();
-		newClient.frame.setVisible(true);
-		dispose();
-		}
-		else {
+		if (list.isSelectionEmpty() == false) {
+			ipAddress = String.valueOf(list.getSelectedValue()).substring(1);
+			GridSetup newClient = new GridSetup();
+			newClient.frame.setVisible(true);
+			dispose();
+		} else {
 			JOptionPane.showMessageDialog(null, "Please select a host to join.");
-			
 		}
-		
-		
-		
+
 	}
 }

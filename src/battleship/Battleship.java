@@ -77,7 +77,7 @@ private JFrame frame;
   btnNewButton_1.addActionListener(new ActionListener() {
    public void actionPerformed(ActionEvent e) {
      //Initialize Multiplayer
-	   Multimenu newWindow = new Multimenu();
+	   MultiMenu newWindow = new MultiMenu();
 	   newWindow.setVisible(true);
 	   frame.dispose();
    }

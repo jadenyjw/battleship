@@ -12,31 +12,36 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.text.DefaultCaret;
 
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryonet.Server;
+
 import java.awt.Font;
 
-public class MultiGame {
+public class MultiGameHost {
 
 	JFrame frame;
 	private JTextField textField;
+	int port = 1337;
+	Server server;
+	ServerListener sl;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MultiGame window = new MultiGame();
+					MultiGameHost window = new MultiGameHost();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,8 +53,9 @@ public class MultiGame {
 	/**
 	 * Create the application.
 	 */
-	public MultiGame() {
+	public MultiGameHost() {
 		initialize();
+
 	}
 
 	/**
@@ -130,24 +136,23 @@ public class MultiGame {
 		JLabel lblEventLog = new JLabel("Event Log");
 		lblEventLog.setBounds(450, 10, 57, 14);
 		frame.getContentPane().add(lblEventLog);
-		
+
 		JTextArea textArea = new JTextArea();
-		JScrollPane scroll = new JScrollPane (textArea);
-		DefaultCaret caret = (DefaultCaret)textArea.getCaret();
+		JScrollPane scroll = new JScrollPane(textArea);
+		DefaultCaret caret = (DefaultCaret) textArea.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		textArea.setEditable(false);
 		scroll.setBounds(10, 411, 934, 108);
 		frame.getContentPane().add(scroll);
-	    
-		
+
 		textField = new JTextField();
 		textField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!(textField.getText().trim().equals(""))){
-				textArea.append(Multimenu.userName + ": " + textField.getText() + "\n");
-				textField.setText("");
+				if (!(textField.getText().trim().equals(""))) {
+					textArea.append(MultiMenu.userName + ": " + textField.getText() + "\n");
+					textField.setText("");
 				}
-				
+
 			}
 		});
 		textField.setBounds(113, 530, 732, 20);
@@ -157,8 +162,6 @@ public class MultiGame {
 		JLabel lblEnterAMesage = new JLabel("Enter a mesage:");
 		lblEnterAMesage.setBounds(10, 533, 93, 14);
 		frame.getContentPane().add(lblEnterAMesage);
-
-		
 
 		JButton btnNewButton = new JButton("Send");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -204,10 +207,32 @@ public class MultiGame {
 		DefaultListModel listModel;
 		listModel = new DefaultListModel();
 		list.setModel(listModel);
-		textArea.append(">> Welcome " + Multimenu.userName + ".\n");
-		textArea.append(">> Now waiting for a connection from another player. " + "\n");
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
-		textArea.setBorder(BorderFactory.createCompoundBorder(border, 
-		          BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		textArea.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		textArea.append(">> Welcome " + MultiMenu.userName + ".\n");
+		hostServer();
+		textArea.append(">> Now waiting for a connection from another player. " + "\n");
+		
 	}
+
+public void hostServer(){
+  server = new Server();
+  sl = new ServerListener();
+  server.addListener(sl);
+  
+  try {
+	server.bind(port, 1337);
+	System.out.println("lol");
+} catch (IOException e) {
+	JOptionPane.showMessageDialog(null, "There was an error with starting the server. Please restart the program. If the problem persists, change your network rules.");
+}
+  registerPackets();
+  server.start();
+}
+
+	private void registerPackets() {
+		Kryo kryo = server.getKryo();
+		kryo.register(Packets.Packet01Message.class);
+	}
+
 }

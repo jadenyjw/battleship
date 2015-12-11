@@ -164,13 +164,13 @@ public class GridSetup extends JDialog {
 					frame.dispose();
 				}
 				else if (Battleship.referer.equals("host")){
-					MultiGame newClient = new MultiGame();
+					MultiGameHost newClient = new MultiGameHost();
 					newClient.frame.setVisible(true);
 					frame.dispose();
 					
 				}
 				else if (Battleship.referer.equals("client")){
-					MultigameClient newClient = new MultigameClient();
+					MultiGameClient newClient = new MultiGameClient();
 					newClient.frame.setVisible(true);
 					frame.dispose();
 				}

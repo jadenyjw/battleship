@@ -1,24 +1,40 @@
 package battleship;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.text.DefaultCaret;
+
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryonet.Client;
+
 import java.awt.Font;
 
-public class MultigameClient {
+public class MultiGameClient {
 
 	JFrame frame;
 	private JTextField textField;
-
+    String ipAddress = MultiMenu.ipAddress;
+    
+    public Client client;
+    private ClientListener cl;
+    
 	/**
 	 * Launch the application.
 	 */
@@ -27,7 +43,7 @@ public class MultigameClient {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MultigameClient window = new MultigameClient();
+					MultiGameClient window = new MultiGameClient();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,7 +55,7 @@ public class MultigameClient {
 	/**
 	 * Create the application.
 	 */
-	public MultigameClient() {
+	public MultiGameClient() {
 		initialize();
 	}
 
@@ -69,6 +85,42 @@ public class MultigameClient {
 				panel.add(buttons[i][x]);
 			}
 		}
+		int shipLen;
+		for (int i = 0; i < 5; i++) {
+			switch (i) {
+			case 0:
+				shipLen = 5;
+				break;
+			case 1:
+				shipLen = 4;
+				break;
+			case 2:
+				shipLen = 3;
+				break;
+			case 3:
+				shipLen = 3;
+				break;
+			case 4:
+				shipLen = 2;
+				break;
+			default:
+				shipLen = 0;
+
+			}
+			if (GridSetup.shipArray[i][2] == 0) {
+				int last = shipLen + GridSetup.shipArray[i][0];
+				for (int x = GridSetup.shipArray[i][0]; x < last; x++) {
+
+					buttons[GridSetup.shipArray[i][1]][x].setDisabledIcon(GridButton.shipIcon[0]);
+				}
+			} else if (GridSetup.shipArray[i][2] == 1) {
+				int last = shipLen + GridSetup.shipArray[i][1];
+				for (int y = GridSetup.shipArray[i][1]; y < last; y++) {
+					buttons[y][GridSetup.shipArray[i][0]].setDisabledIcon(GridButton.shipIcon[0]);
+				}
+
+			}
+		}
 		
 		
 		JPanel panel_1 = new JPanel();
@@ -77,6 +129,8 @@ public class MultigameClient {
 		panel_1.setLayout(new GridLayout(10, 10));
 		
 		JList list = new JList();
+		Border listBorder = BorderFactory.createLineBorder(Color.BLACK);
+		list.setBorder(BorderFactory.createCompoundBorder(listBorder, null));
 		list.setBounds(410, 27, 134, 373);
 		frame.getContentPane().add(list);
 		
@@ -94,9 +148,12 @@ public class MultigameClient {
 		frame.getContentPane().add(lblEnterAMesage);
 		
 		JTextArea textArea = new JTextArea();
+		JScrollPane scroll = new JScrollPane(textArea);
+		DefaultCaret caret = (DefaultCaret) textArea.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		textArea.setEditable(false);
-		textArea.setBounds(10, 411, 934, 108);
-		frame.getContentPane().add(textArea);
+		scroll.setBounds(10, 411, 934, 108);
+		frame.getContentPane().add(scroll);
 		
 		JButton btnNewButton = new JButton("Send");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -135,5 +192,29 @@ public class MultigameClient {
 				panel_1.add(buttons[i][x]);
 			}
 		}
+		Border border = BorderFactory.createLineBorder(Color.BLACK);
+		textArea.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		joinServer();
+	}
+	public void joinServer(){
+		client = new Client();
+		cl = new ClientListener();
+		
+		cl.init(client);
+		registerPackets();
+		client.addListener(cl);
+		
+		client.start();
+		
+		try {
+			client.connect(5000, ipAddress, 1337);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+	}
+	private void registerPackets(){
+		Kryo kryo = client.getKryo();
+		kryo.register(Packets.Packet01Message.class);
 	}
 }
