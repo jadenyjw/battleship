@@ -24,8 +24,10 @@ public class GridSetup extends JDialog {
 	JLabel image;
 	
 	public static SetupButton buttons[][] = new SetupButton[10][10];
+	public static int clientShip[][] = new int[5][3] ;
+	public static int hostShip[][] = new int[5][3] ;
 	private String shipName = "Aircraft Carrier", shipOrient = "Horizontal";
-	private int[][] shipArray = { { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 } };
+	public static int[][] shipArray = { { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 } };
 	private int shipNum = -1;
 
 	/**
@@ -240,6 +242,7 @@ public class GridSetup extends JDialog {
 					MultiGame newClient = new MultiGame();
 					newClient.frame.setVisible(true);
 					frame.dispose();
+					
 				}
 				else if (Battleship.referer.equals("client")){
 					MultigameClient newClient = new MultigameClient();
