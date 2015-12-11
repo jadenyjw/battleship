@@ -1,10 +1,14 @@
 package battleship;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -14,6 +18,7 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.text.DefaultCaret;
 
 import java.awt.Font;
@@ -118,17 +123,22 @@ public class MultiGame {
 
 		JList list = new JList();
 		list.setBounds(410, 27, 134, 373);
+		Border listBorder = BorderFactory.createLineBorder(Color.BLACK);
+		list.setBorder(BorderFactory.createCompoundBorder(listBorder, null));
 		frame.getContentPane().add(list);
 
 		JLabel lblEventLog = new JLabel("Event Log");
 		lblEventLog.setBounds(450, 10, 57, 14);
 		frame.getContentPane().add(lblEventLog);
+		
 		JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
-		textArea.setBounds(10, 411, 934, 108);
-		frame.getContentPane().add(textArea);
+		JScrollPane scroll = new JScrollPane (textArea);
 		DefaultCaret caret = (DefaultCaret)textArea.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		textArea.setEditable(false);
+		scroll.setBounds(10, 411, 934, 108);
+		frame.getContentPane().add(scroll);
+	    
 		
 		textField = new JTextField();
 		textField.addActionListener(new ActionListener() {
@@ -196,6 +206,8 @@ public class MultiGame {
 		list.setModel(listModel);
 		textArea.append(">> Welcome " + Multimenu.userName + ".\n");
 		textArea.append(">> Now waiting for a connection from another player. " + "\n");
-
+		Border border = BorderFactory.createLineBorder(Color.BLACK);
+		textArea.setBorder(BorderFactory.createCompoundBorder(border, 
+		          BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 	}
 }
