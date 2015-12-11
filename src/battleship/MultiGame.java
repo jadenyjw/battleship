@@ -100,8 +100,8 @@ public class MultiGame {
 			} 
 			else if (GridSetup.shipArray[i][2] == 1) {
 				int last = shipLen + GridSetup.shipArray[i][1];
-				for (int y = GridSetup.shipArray[i][0]; y < last; y++){
-	            	  buttons[GridSetup.shipArray[i][1]][y].setDisabledIcon(GridButton.shipIcon[0]);
+				for (int y = GridSetup.shipArray[i][1]; y < last; y++){
+	            	  buttons[GridSetup.shipArray[i][0]][y].setDisabledIcon(GridButton.shipIcon[0]);
 	              }
 
 			}
