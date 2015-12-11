@@ -21,7 +21,7 @@ import java.awt.Font;
 
 public class SingleGame {
 
-	private JFrame frame;
+	JFrame frame;
 	private JTextField textField;
 
 	/**

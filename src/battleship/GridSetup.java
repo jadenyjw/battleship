@@ -74,7 +74,7 @@ public class GridSetup extends JDialog {
 		
 		image = new JLabel();
 		image.setBounds(425,120,95,88);
-		image.setIcon(new ImageIcon(GridSetup.class.getResource("/img/horizontal.png")));
+		image.setIcon(null);
 		frame.getContentPane().add(image);
 		
 		for (int i = 0; i < 10; i++) {
@@ -106,9 +106,8 @@ public class GridSetup extends JDialog {
 							shipNum = 3;
 						}
 						if (check(shipLen, shipOrient, tempX, tempY, shipArray, shipNum) == true) {
-
+							image.setIcon(null);
 							if (shipOrient.equals("Horizontal")) {
-								image.setIcon(new ImageIcon(GridSetup.class.getResource("/img/Horizontal.png")));
 								int orientation = 0;
 								if (shipArray[shipNum][0] == -1) {
 									shipArray[shipNum][0] = tempY;
@@ -141,7 +140,6 @@ public class GridSetup extends JDialog {
 								}
 							}
 							if (shipOrient.equals("Vertical")) {
-								image.setIcon(new ImageIcon(GridSetup.class.getResource("/img/vertical.png")));
 								int orientation = 1;
 								if (shipArray[shipNum][0] == -1) {
 									shipArray[shipNum][0] = tempY;
@@ -214,10 +212,6 @@ public class GridSetup extends JDialog {
 		orient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				shipOrient = (String) orient.getSelectedItem();
-				if(shipOrient.equals("Horizontal"))
-					image.setIcon(new ImageIcon(GridSetup.class.getResource("/img/horizontal.png")));
-				else
-					image.setIcon(new ImageIcon(GridSetup.class.getResource("/img/vertical.png")));
 			}
 		});
 		orient.setModel(new DefaultComboBoxModel(new String[] { "Horizontal", "Vertical" }));
@@ -227,10 +221,12 @@ public class GridSetup extends JDialog {
 		btnFinish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (Battleship.referer.equals("single")){
-					
+					SingleGame newClient = new SingleGame();
+					newClient.frame.setVisible(true);
+					frame.dispose();
 				}
 				else if (Battleship.referer.equals("host")){
-					
+						
 				}
 				else{
 					
