@@ -24,9 +24,9 @@ import java.awt.Color;
 
 
 public class Battleship {
+public static String referer = "main";
+private JFrame frame;
 
- private JFrame frame;
- public String place = "Main Menu";
 
  /**
   * Launch the application.
@@ -65,6 +65,7 @@ public class Battleship {
   JButton btnQuick = new JButton("Quick Match");
   btnQuick.addActionListener(new ActionListener() {
    public void actionPerformed(ActionEvent e) {
+	   referer = "single";
 	   GridSetup newClient = new GridSetup();
 	   newClient.frame.setVisible(true);
 	   frame.dispose();

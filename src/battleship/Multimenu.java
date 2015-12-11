@@ -37,7 +37,6 @@ public class Multimenu extends JDialog {
 	private JList<InetAddress> list;
 	private JButton btnRefresh;
 	private JLabel lblEnterUsername;
-	private JButton btnLocal;
 
 	/**
 	 * Launch the application.
@@ -74,8 +73,11 @@ public class Multimenu extends JDialog {
 				btnHostGame = new JButton("Host Game");
 				btnHostGame.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
+						
 						try {
+							Battleship.referer = "host";
 							serve();
+							
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -89,6 +91,7 @@ public class Multimenu extends JDialog {
 				btnJoinGame.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						try {
+							Battleship.referer = "client";
 							join();
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
@@ -97,20 +100,6 @@ public class Multimenu extends JDialog {
 					}
 				});
 				panel.add(btnJoinGame);
-			}
-			{
-				btnLocal = new JButton("Local");
-				btnLocal.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						GridSetup p1Window = new GridSetup();
-						p1Window.frame.setVisible(true);
-						dispose();
-						JOptionPane.showMessageDialog(null, "Player 1 picks first.");
-						GridSetup p2Window = new GridSetup();
-						p2Window.frame.setVisible(true);
-					}
-				});
-				panel.add(btnLocal);
 			}
 		}
 		{
@@ -135,7 +124,7 @@ public class Multimenu extends JDialog {
 		}
 	}
 
-	private void refresh() {
+	public void refresh() {
 		Client client = new Client();
 		List<InetAddress> address = client.discoverHosts(1337, 1337);
 		System.out.println(address);
@@ -148,7 +137,7 @@ public class Multimenu extends JDialog {
 		
 	}
 
-	private void serve() throws IOException {
+	public void serve() throws IOException {
 		Server server = new Server();
 		server.start();
 		server.bind(1337, 1337);
@@ -158,7 +147,7 @@ public class Multimenu extends JDialog {
 		dispose();
 	}
 
-	private void join() throws IOException {
+	public void join() throws IOException {
 		if (list.isSelectionEmpty() == false){
 		Client client = new Client();
 		client.start();
