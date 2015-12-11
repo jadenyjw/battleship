@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
 public class GridSetup extends JDialog {
 
 	JFrame frame;
+	JLabel image;
 	
 	public static SetupButton buttons[][] = new SetupButton[10][10];
 	private String shipName = "Aircraft Carrier", shipOrient = "Horizontal";
@@ -70,7 +71,12 @@ public class GridSetup extends JDialog {
 		frame.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(10, 10));
 		panel.setSize(370, 370);
-
+		
+		image = new JLabel();
+		image.setBounds(425,120,95,88);
+		image.setIcon(new ImageIcon(GridSetup.class.getResource("/img/horizontal.png")));
+		frame.getContentPane().add(image);
+		
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 
@@ -102,6 +108,7 @@ public class GridSetup extends JDialog {
 						if (check(shipLen, shipOrient, tempX, tempY, shipArray, shipNum) == true) {
 
 							if (shipOrient.equals("Horizontal")) {
+								image.setIcon(new ImageIcon(GridSetup.class.getResource("/img/Horizontal.png")));
 								int orientation = 0;
 								if (shipArray[shipNum][0] == -1) {
 									shipArray[shipNum][0] = tempY;
@@ -134,6 +141,7 @@ public class GridSetup extends JDialog {
 								}
 							}
 							if (shipOrient.equals("Vertical")) {
+								image.setIcon(new ImageIcon(GridSetup.class.getResource("/img/vertical.png")));
 								int orientation = 1;
 								if (shipArray[shipNum][0] == -1) {
 									shipArray[shipNum][0] = tempY;
@@ -165,7 +173,7 @@ public class GridSetup extends JDialog {
 								}
 							}
 						} else
-							JOptionPane.showMessageDialog(null, "Invalid placement.");
+							image.setIcon(new ImageIcon(GridSetup.class.getResource("/img/invalid.png")));
 					}
 				});
 				panel.add(buttons[i][x]);
@@ -206,6 +214,10 @@ public class GridSetup extends JDialog {
 		orient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				shipOrient = (String) orient.getSelectedItem();
+				if(shipOrient.equals("Horizontal"))
+					image.setIcon(new ImageIcon(GridSetup.class.getResource("/img/horizontal.png")));
+				else
+					image.setIcon(new ImageIcon(GridSetup.class.getResource("/img/vertical.png")));
 			}
 		});
 		orient.setModel(new DefaultComboBoxModel(new String[] { "Horizontal", "Vertical" }));
@@ -227,8 +239,10 @@ public class GridSetup extends JDialog {
 			}
 		});
 		panel_1.add(btnFinish);
+		
 
 	}
+
 
 	public static boolean check(byte shipLen, String shipOrient, int yCoord, int xCoord, int shipArray[][],
 			int shipNum) {
