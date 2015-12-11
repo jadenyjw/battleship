@@ -21,7 +21,7 @@ import javax.swing.SwingConstants;
 public class GridSetup extends JDialog {
 
 	JFrame frame;
-	static ImageIcon shipIcon = new ImageIcon("img/ship.png");
+	
 	public static SetupButton buttons[][] = new SetupButton[10][10];
 	private String shipName = "Aircraft Carrier", shipOrient = "Horizontal";
 	private int[][] shipArray = { { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 } };
@@ -76,6 +76,7 @@ public class GridSetup extends JDialog {
 
 				buttons[i][x] = new SetupButton();
 				buttons[i][x].setEnabled(true);
+				buttons[i][x].setIcon(SetupButton.water);
 				final int tempX = i;
 				final int tempY = x;
 				buttons[i][x].addActionListener(new ActionListener() {
@@ -112,14 +113,14 @@ public class GridSetup extends JDialog {
 										int last = shipLen + shipArray[shipNum][0];
 										for (int d = shipArray[shipNum][0]; d < last; d++) {
 
-											buttons[shipArray[shipNum][1]][d].setIcon(null);
+											buttons[shipArray[shipNum][1]][d].setIcon(SetupButton.water);
 
 										}
 									} else if (shipArray[shipNum][2] == 1) {
 										int last = shipLen + shipArray[shipNum][1];
 										for (int d = shipArray[shipNum][1]; d < last; d++) {
 
-											buttons[d][shipArray[shipNum][0]].setIcon(null);
+											buttons[d][shipArray[shipNum][0]].setIcon(SetupButton.water);
 										}
 									}
 									shipArray[shipNum][0] = tempY;
@@ -129,7 +130,7 @@ public class GridSetup extends JDialog {
 
 								int last = tempY + shipLen;
 								for (int a = tempY; a < last; a++) {
-									buttons[tempX][a].setIcon(shipIcon);
+									buttons[tempX][a].setIcon(SetupButton.shipIcon);
 								}
 							}
 							if (shipOrient.equals("Vertical")) {
@@ -144,14 +145,14 @@ public class GridSetup extends JDialog {
 										int last = shipLen + shipArray[shipNum][0];
 										for (int d = shipArray[shipNum][0]; d < last; d++) {
 
-											buttons[shipArray[shipNum][1]][d].setIcon(null);
+											buttons[shipArray[shipNum][1]][d].setIcon(SetupButton.water);
 
 										}
 									} else if (shipArray[shipNum][2] == 1) {
 										int last = shipLen + shipArray[shipNum][1];
 										for (int d = shipArray[shipNum][1]; d < last; d++) {
 
-											buttons[d][shipArray[shipNum][0]].setIcon(null);
+											buttons[d][shipArray[shipNum][0]].setIcon(SetupButton.water);
 										}
 									}
 									shipArray[shipNum][0] = tempY;
@@ -160,7 +161,7 @@ public class GridSetup extends JDialog {
 								}
 								int last = tempX + shipLen;
 								for (int a = tempX; a < last; a++) {
-									buttons[a][tempY].setIcon(shipIcon);
+									buttons[a][tempY].setIcon(SetupButton.shipIcon);
 								}
 							}
 						} else
@@ -238,7 +239,7 @@ public class GridSetup extends JDialog {
 				int last = shipLen + xCoord;
 
 				for (int t = xCoord; t < last; t++) {
-					if (buttons[yCoord][t].getIcon() == shipIcon) {
+					if (buttons[yCoord][t].getIcon() == SetupButton.shipIcon) {
 						return false;
 					}
 				}
@@ -249,7 +250,7 @@ public class GridSetup extends JDialog {
 			if (yCoord < 11 - shipLen) {
 				int last = shipLen + yCoord;
 				for (int t = yCoord; t < last; t++) {
-					if (buttons[t][xCoord].getIcon() == shipIcon) {
+					if (buttons[t][xCoord].getIcon() == SetupButton.shipIcon) {
 						return false;
 					}
 				}
