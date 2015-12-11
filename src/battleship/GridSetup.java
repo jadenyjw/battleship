@@ -27,7 +27,7 @@ public class GridSetup extends JDialog {
 
 	private static String shipName = "Aircraft Carrier";
 	private static String shipOrient = "Horizontal";
-	private static int[][] shipArray = { { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 } };
+	public static int[][] shipArray = { { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 } };
 	private static int shipNum = -1;
 	private static boolean error = false;
 
