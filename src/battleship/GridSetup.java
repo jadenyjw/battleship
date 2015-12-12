@@ -28,6 +28,7 @@ public class GridSetup extends JDialog {
 	private static String shipName = "Aircraft Carrier";
 	private static String shipOrient = "Horizontal";
 	public static int[][] shipArray = { { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 } };
+	public static int[][] aiArray = { { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 } };
 	private static int shipNum = -1;
 	private static boolean error = false;
 
@@ -80,7 +81,7 @@ public class GridSetup extends JDialog {
 		panel.setSize(370, 370);
 		
 		image = new JLabel();
-		image.setBounds(425,120,95,88);
+		image.setBounds(425,200,95,88);
 		image.setIcon(null);
 		frame.getContentPane().add(image);
 		
@@ -160,6 +161,11 @@ public class GridSetup extends JDialog {
 			
 				if (count == 17){
 				if (Battleship.referer.equals("single")){
+					int tempShipArray[][] = shipArray;
+					randomDeploy();
+					aiArray = shipArray;
+					shipArray = tempShipArray;
+					
 					SingleGame newClient = new SingleGame();
 					newClient.frame.setVisible(true);
 					frame.dispose();
@@ -192,14 +198,6 @@ public class GridSetup extends JDialog {
 		});
 		panel_1.add(btnRandomDeploy);
 		panel_1.add(btnFinish);
-		
-		JButton btnDebugButton = new JButton("Debug Button");
-		btnDebugButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				reset();
-			}
-		});
-		panel_1.add(btnDebugButton);
 		
 
 	}
