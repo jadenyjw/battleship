@@ -78,15 +78,10 @@ public class MultiMenu extends JDialog {
 						userName = txtName.getText();
 						if (!(userName.trim().length() > 10 || userName.trim().length() < 4)) {
 
-							try {
+							Battleship.referer = "host";
 
-								Battleship.referer = "host";
-								serve();
+							serve();
 
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
 						} else
 							JOptionPane.showMessageDialog(null, "Please enter a username between 4 to 10 characters");
 					}
@@ -97,13 +92,15 @@ public class MultiMenu extends JDialog {
 				btnJoinGame = new JButton("Join Game");
 				btnJoinGame.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						try {
+						userName = txtName.getText();
+						if (!(userName.trim().length() > 10 || userName.trim().length() < 4)) {
+
 							Battleship.referer = "client";
 							join();
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+
+						} else
+							JOptionPane.showMessageDialog(null, "Please enter a username between 4 to 10 characters");
+
 					}
 				});
 				panel.add(btnJoinGame);
@@ -133,8 +130,8 @@ public class MultiMenu extends JDialog {
 
 	public void refresh() {
 		Client client = new Client();
-		List<InetAddress> address = client.discoverHosts(1337, 1337);
-		System.out.println(address);
+		List<InetAddress> address = client.discoverHosts(1337,1337);
+
 		DefaultListModel<InetAddress> listModel;
 		listModel = new DefaultListModel<InetAddress>();
 		for (int i = 0; i < address.size(); i++) {
@@ -144,13 +141,13 @@ public class MultiMenu extends JDialog {
 
 	}
 
-	public void serve() throws IOException {
+	public void serve() {
 		GridSetup newWindow = new GridSetup();
 		newWindow.frame.setVisible(true);
 		dispose();
 	}
 
-	public void join() throws IOException {
+	public void join() {
 		if (list.isSelectionEmpty() == false) {
 			ipAddress = String.valueOf(list.getSelectedValue()).substring(1);
 			GridSetup newClient = new GridSetup();

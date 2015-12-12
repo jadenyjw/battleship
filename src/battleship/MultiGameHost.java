@@ -25,13 +25,19 @@ import javax.swing.text.DefaultCaret;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Server;
+import com.esotericsoftware.minlog.Log;
 
 import java.awt.Font;
 
 public class MultiGameHost {
+	
+	
+		  
 
 	JFrame frame;
 	private JTextField textField;
+	public static boolean hasNewText;
+	public static String message;
 	int port = 1337;
 	Server server;
 	ServerListener sl;
@@ -41,6 +47,7 @@ public class MultiGameHost {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
 					MultiGameHost window = new MultiGameHost();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -54,7 +61,10 @@ public class MultiGameHost {
 	 * Create the application.
 	 */
 	public MultiGameHost() {
+		
 		initialize();
+		
+		
 
 	}
 
@@ -213,26 +223,32 @@ public class MultiGameHost {
 		hostServer();
 		textArea.append(">> Now waiting for a connection from another player. " + "\n");
 		
+		
 	}
 
 public void hostServer(){
-  server = new Server();
-  sl = new ServerListener();
-  server.addListener(sl);
-  
-  try {
-	server.bind(port, 1337);
-	System.out.println("lol");
-} catch (IOException e) {
-	JOptionPane.showMessageDialog(null, "There was an error with starting the server. Please restart the program. If the problem persists, change your network rules.");
-}
-  registerPackets();
-  server.start();
-}
+	server = new Server();
+	  sl = new ServerListener();
+	  server.addListener(sl);
+	  
+	  try {
+		server.bind(port, 1337);
+		
+	} catch (IOException e) {
+		JOptionPane.showMessageDialog(null, "There was an error with starting the server. Please restart the program. If the problem persists, change your network rules.");
+	}
+	  registerPackets();
+	  server.start();
+	  System.out.println("Started");
+	  Log.set(Log.LEVEL_TRACE);
+	}
 
 	private void registerPackets() {
 		Kryo kryo = server.getKryo();
-		kryo.register(Packets.Packet01Message.class);
+		kryo.register(Packets.Packet00Request.class);
+		kryo.register(Packets.Packet01Response.class);
+		kryo.register(Packets.Packet02Message.class);
+		
 	}
 
 }

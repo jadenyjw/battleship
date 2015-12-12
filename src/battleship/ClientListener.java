@@ -12,19 +12,38 @@ public class ClientListener extends Listener {
 	}
 
 	public void connected(Connection c) {
-		System.out.println("connected");
-		Packets.Packet01Message firstMessage = new Packets.Packet01Message();
-		firstMessage.message = "Hello server";
-		client.sendTCP(firstMessage);
+
+		//client.sendTCP(new Packets.Packet00Request());
 	}
 
 	public void disconnected(Connection c) {
-		System.out.println("disconnected");
+
 	}
 
 	public void received(Connection c, Object o) {
-		if (o instanceof Packets.Packet01Message) {
-			Packets.Packet01Message p = (Packets.Packet01Message) o;
+		if (o instanceof Packets.Packet01Response) {
+			boolean serverAnswer = ((Packets.Packet01Response) o).accepted;
+			
+			if (serverAnswer == true){
+				while(true){
+					if(MultiGameClient.hasNewText == true){
+						Packets.Packet02Message messagePacket = new Packets.Packet02Message();
+						messagePacket.userName = MultiMenu.userName;
+						messagePacket.message = MultiGameClient.message;
+						System.out.println("testing");
+						MultiGameClient.hasNewText = false;
+						c.sendTCP(messagePacket);
+			
+				}
+			}
+			}
+			else{
+				c.close();
+			}
+			
+		}
+		if (o instanceof Packets.Packet02Message) {
+			Packets.Packet02Message p = (Packets.Packet02Message) o;
 			System.out.println(p.message);
 		}
 	}

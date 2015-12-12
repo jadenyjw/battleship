@@ -23,6 +23,7 @@ import javax.swing.text.DefaultCaret;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
+import com.esotericsoftware.minlog.Log;
 
 import java.awt.Font;
 
@@ -30,10 +31,11 @@ public class MultiGameClient {
 
 	JFrame frame;
 	private JTextField textField;
-    //String ipAddress = MultiMenu.ipAddress;
-	String ipAddress = "localhost";
+    String ipAddress = MultiMenu.ipAddress;
     public Client client;
     private ClientListener cl;
+    public static boolean hasNewText;
+    public static String message;
     
 	/**
 	 * Launch the application.
@@ -43,6 +45,7 @@ public class MultiGameClient {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
 					MultiGameClient window = new MultiGameClient();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -57,6 +60,7 @@ public class MultiGameClient {
 	 */
 	public MultiGameClient() {
 		initialize();
+		
 	}
 
 	/**
@@ -138,7 +142,25 @@ public class MultiGameClient {
 		lblEventLog.setBounds(450, 10, 57, 14);
 		frame.getContentPane().add(lblEventLog);
 		
+		JTextArea textArea = new JTextArea();
+		JScrollPane scroll = new JScrollPane(textArea);
+		DefaultCaret caret = (DefaultCaret) textArea.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		textArea.setEditable(false);
+		scroll.setBounds(10, 411, 934, 108);
+		frame.getContentPane().add(scroll);
+		
 		textField = new JTextField();
+		textField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (!(textField.getText().trim().equals(""))) {
+					textArea.append(MultiMenu.userName + ": " + textField.getText() + "\n");
+					message = textField.getText();
+					textField.setText("");
+					hasNewText = true;
+				}
+			}
+		});
 		textField.setBounds(113, 530, 732, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
@@ -147,13 +169,7 @@ public class MultiGameClient {
 		lblEnterAMesage.setBounds(10, 533, 93, 14);
 		frame.getContentPane().add(lblEnterAMesage);
 		
-		JTextArea textArea = new JTextArea();
-		JScrollPane scroll = new JScrollPane(textArea);
-		DefaultCaret caret = (DefaultCaret) textArea.getCaret();
-		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		textArea.setEditable(false);
-		scroll.setBounds(10, 411, 934, 108);
-		frame.getContentPane().add(scroll);
+		
 		
 		JButton btnNewButton = new JButton("Send");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -192,10 +208,13 @@ public class MultiGameClient {
 				panel_1.add(buttons[i][x]);
 			}
 		}
+		joinServer();
+		
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		textArea.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-		joinServer();
+		
 	}
+
 	public void joinServer(){
 		client = new Client();
 		cl = new ClientListener();
@@ -204,10 +223,14 @@ public class MultiGameClient {
 		registerPackets();
 		client.addListener(cl);
 		
-		client.start();
+		Log.set(Log.LEVEL_TRACE);
+		
+		new Thread(client).start();
 		
 		try {
-			client.connect(5000, ipAddress, 1337);
+			
+			client.connect(5000, ipAddress, 1337, 1337);
+			System.out.println("Connecttttt");
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -215,6 +238,8 @@ public class MultiGameClient {
 	}
 	private void registerPackets(){
 		Kryo kryo = client.getKryo();
-		kryo.register(Packets.Packet01Message.class);
+		kryo.register(Packets.Packet00Request.class);
+		kryo.register(Packets.Packet01Response.class);
+		kryo.register(Packets.Packet02Message.class);
 	}
 }
