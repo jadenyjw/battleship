@@ -31,7 +31,7 @@ public class MultiGameClient {
 
 	JFrame frame;
 	private JTextField textField;
-    String ipAddress = MultiMenu.ipAddress;
+    String ipAddress = "204.197.182.51";
     public Client client;
     private ClientListener cl;
     public static boolean hasNewText;
