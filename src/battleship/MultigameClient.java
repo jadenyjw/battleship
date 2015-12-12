@@ -238,7 +238,7 @@ public class MultiGameClient {
 		try {
 			
 			client.connect(5000, ipAddress, 1337, 1337);
-			System.out.println("Connecttttt");
+			
 		} catch (IOException e) {
 			
 			e.printStackTrace();

@@ -14,8 +14,9 @@ public class ClientListener extends Listener {
 	}
 
 	public void connected(Connection c) {
-
-		client.sendTCP(new Packets.Packet00Request());
+		Packets.Packet00Request packet = new Packets.Packet00Request();
+		packet.clientName = MultiMenu.userName;
+		client.sendTCP(packet);
 	}
 
 	public void disconnected(Connection c) {
@@ -27,14 +28,13 @@ public class ClientListener extends Listener {
 			boolean serverAnswer = ((Packets.Packet01Response) o).accepted;
 			
 			if (serverAnswer == true){
-				
-				System.out.println("Accepted");
+				MultiGameClient.textArea.append(">> You have successfully connected. Server is now rolling to decide whos go first.\n");
 			}
 			
 	
 			else{
 				c.close();
-				 JOptionPane.showMessageDialog(null, "That host already has a connected user. Please choose a different one.");
+				 JOptionPane.showMessageDialog(null, "That host already has an active game. Please choose a different one.");
 			}
 			
 		}

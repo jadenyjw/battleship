@@ -29,6 +29,7 @@ boolean uniqueConnection = true;
 			if (uniqueConnection){
 			answer.accepted = true;
 			c.sendTCP(answer);
+			MultiGameHost.textArea.append(((Packets.Packet00Request) o).clientName + " has joined your game.\n");
 			uniqueConnection = false;
 			}
 			else{
