@@ -10,6 +10,7 @@ import battleship.Packets.Packet01Response;
 
 public class ServerListener extends Listener {
 	boolean uniqueConnection = true;
+	boolean gameDone = false;
 
 	public ServerListener() {
 
@@ -30,7 +31,7 @@ public class ServerListener extends Listener {
 				answer.accepted = true;
 				c.sendTCP(answer);
 				MultiGameHost.textArea.append(
-						((Packets.Packet00Request) o).clientName + " has joined your game.\nYou will go first.\n");
+						(">> " +((Packets.Packet00Request) o).clientName + " has joined your game.\n>> You will go first.\n"));
 				uniqueConnection = false;
 				for (int i = 0; i < 10; i++) {
 					for (int x = 0; x < 10; x++) {
@@ -77,10 +78,13 @@ public class ServerListener extends Listener {
 				Packets.Packet05Victory victoryPacket = new Packets.Packet05Victory();
 				victoryPacket.victory = true;
 				c.sendTCP(victoryPacket);
+				gameDone = true;
 				JOptionPane.showMessageDialog(null, "You lost!");
 
 			}
+			if (gameDone == false){
 			MultiGameHost.reEnableButtons();
+			}
 
 		}
 		if (o instanceof Packets.Packet04Hit) {
@@ -97,8 +101,10 @@ public class ServerListener extends Listener {
 		if (o instanceof Packets.Packet05Victory) {
 			Packets.Packet05Victory p = (Packets.Packet05Victory) o;
 			if (p.victory) {
-				JOptionPane.showMessageDialog(null, "You won!");
+				gameDone = true;
 				MultiGameHost.disableButtons();
+				JOptionPane.showMessageDialog(null, "You won!");
+				
 			}
 
 		}

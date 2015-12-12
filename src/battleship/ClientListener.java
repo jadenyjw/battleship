@@ -8,6 +8,7 @@ import com.esotericsoftware.kryonet.Listener;
 
 public class ClientListener extends Listener {
 	private Client client;
+	boolean gameDone = false;
 
 	public void init(Client client) {
 		this.client = client;
@@ -20,7 +21,7 @@ public class ClientListener extends Listener {
 	}
 
 	public void disconnected(Connection c) {
-
+      
 	}
 
 	public void received(Connection c, Object o) {
@@ -72,9 +73,12 @@ public class ClientListener extends Listener {
 				Packets.Packet05Victory victoryPacket = new Packets.Packet05Victory();
 				victoryPacket.victory = true;
 				c.sendTCP(victoryPacket);
+				gameDone = true;
 				JOptionPane.showMessageDialog(null, "You lost!");
 			}
-			MultiGameClient.reEnableButtons();
+			if (gameDone == false){
+				MultiGameClient.reEnableButtons();
+				}
 
 		}
 
@@ -92,8 +96,10 @@ public class ClientListener extends Listener {
 		if (o instanceof Packets.Packet05Victory) {
 			Packets.Packet05Victory p = (Packets.Packet05Victory) o;
 			if (p.victory) {
-				JOptionPane.showMessageDialog(null, "You won!");
+				gameDone = true;
 				MultiGameClient.disableButtons();
+				JOptionPane.showMessageDialog(null, "You won!");
+				
 			}
 
 		}
