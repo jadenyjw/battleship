@@ -225,6 +225,7 @@ public class MultiGameClient {
 						coordPacket.x = tempX;
 						coordPacket.y = tempY;
 						client.sendTCP(coordPacket);
+						disableButtons();
 					}
 				});
 				panel_1.add(enemyButtons[i][x]);
@@ -266,6 +267,7 @@ public class MultiGameClient {
 		kryo.register(Packets.Packet02Message.class);
 		kryo.register(Packets.Packet03Coords.class);
 		kryo.register(Packets.Packet04Hit.class);
+		kryo.register(Packets.Packet05Victory.class);
 	}
 
 	public static void reEnableButtons() {
@@ -273,17 +275,18 @@ public class MultiGameClient {
 			for (int x = 0; x < 10; x++) {
 				if (MultiGameClient.enemyButtons[i][x].getDisabledIcon() != GridButton.hit
 						&& MultiGameClient.enemyButtons[i][x].getDisabledIcon() != GridButton.miss)
-					MultiGameClient.enemyButtons[i][x].setEnabled(true);
+					 MultiGameClient.enemyButtons[i][x].setEnabled(true);
 			}
 		}
 	}
 
-	public static void DisableButtons() {
+	public static void disableButtons() {
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 				MultiGameClient.enemyButtons[i][x].setEnabled(false);
 			}
 		}
 	}
+	
 
 }
