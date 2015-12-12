@@ -56,18 +56,6 @@ public class ServerListener extends Listener {
 			hitPacket.x = p.x;
 			hitPacket.y = p.y;
 
-			/*int count = 17;
-			for (int i = 0; i < 10; i++) {
-				for (int x = 0; x < 10; x++) {
-					if (MultiGameClient.enemyButtons[i][x].getDisabledIcon() == GridButton.hit) {
-						count--;
-					}
-				}
-			}
-			if (count == 0) {
-				JOptionPane.showMessageDialog(null, "You lost!");
-			}*/
-			//hitPacket.shipsLeft = count;
 			if (MultiGameHost.buttons[p.x][p.y].getDisabledIcon() == GridButton.shipIcon[0]) {
 				hitPacket.isHit = true;
 
