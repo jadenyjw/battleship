@@ -7,3 +7,5 @@
 6. Dec 08 - Added titles to pages
 7. Dec 09 - Added actionListeners to GridSetup and SetupButtons. New problem: Implement the listeners to do something
 8. Dec 09 - Added check method to GridSetup and implemented the code necissary to check the ship's placement
+9. Dec 10 - Added new images, as well as polished up the ship placement system.
+9. Dec 11 - Added a random ship placement method for GridSetup
