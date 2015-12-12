@@ -9,11 +9,8 @@ import javax.swing.JScrollPane;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
@@ -25,41 +22,35 @@ import javax.swing.border.Border;
 import javax.swing.text.DefaultCaret;
 
 import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryonet.Server;
+import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.minlog.Log;
 
 import java.awt.Font;
 
-public class MultiGameHost {
-	
-	
-		  
+public class MultiGameClient {
 
 	JFrame frame;
 	private JTextField textField;
-	
-	public static String message;
-	
-	public static javax.swing.JTextArea textArea;
+	String ipAddress = MultiMenu.ipAddress;
+	public Client client;
+	private ClientListener cl;
 	public static GridButton buttons[][] = new GridButton[10][10];
 	public static GridButton enemyButtons[][] = new GridButton[10][10];
-	
-	int port = 1337;
-	Server server;
-	ServerListener sl;
-	
+	public static String message;
+	public static javax.swing.JTextArea textArea;
 	public static JPanel panel;
-    public static JPanel panel_1;
+	public static JPanel panel_1;
 
-	
-	
+	/**
+	 * Launch the application.
+	 */
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					
-					MultiGameHost window = new MultiGameHost();
+
+					MultiGameClient window = new MultiGameClient();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -71,11 +62,8 @@ public class MultiGameHost {
 	/**
 	 * Create the application.
 	 */
-	public MultiGameHost() {
-		
+	public MultiGameClient() {
 		initialize();
-		
-		
 
 	}
 
@@ -83,7 +71,7 @@ public class MultiGameHost {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
+
 		frame = new JFrame();
 		frame.setBounds(100, 100, 970, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,7 +93,6 @@ public class MultiGameHost {
 				panel.add(buttons[i][x]);
 			}
 		}
-
 		int shipLen;
 		for (int i = 0; i < 5; i++) {
 			switch (i) {
@@ -149,17 +136,16 @@ public class MultiGameHost {
 		panel_1.setLayout(new GridLayout(10, 10));
 
 		JList list = new JList();
-		list.setBounds(410, 27, 134, 373);
 		Border listBorder = BorderFactory.createLineBorder(Color.BLACK);
 		list.setBorder(BorderFactory.createCompoundBorder(listBorder, null));
+		list.setBounds(410, 27, 134, 373);
 		frame.getContentPane().add(list);
 
 		JLabel lblEventLog = new JLabel("Event Log");
 		lblEventLog.setBounds(450, 10, 57, 14);
 		frame.getContentPane().add(lblEventLog);
-		
-	    textArea = new JTextArea();
-	    
+
+		textArea = new JTextArea();
 		JScrollPane scroll = new JScrollPane(textArea);
 		DefaultCaret caret = (DefaultCaret) textArea.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
@@ -168,7 +154,7 @@ public class MultiGameHost {
 		frame.getContentPane().add(scroll);
 
 		textField = new JTextField();
-		
+
 		textField.setBounds(113, 530, 732, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
@@ -185,15 +171,16 @@ public class MultiGameHost {
 					Packets.Packet02Message messagePacket = new Packets.Packet02Message();
 					messagePacket.userName = MultiMenu.userName;
 					messagePacket.message = textField.getText();
-					server.sendToAllTCP(messagePacket);
+					client.sendTCP(messagePacket);
 					textField.setText("");
+
 				}
 			}
 		});
 		textField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				btnNewButton.doClick();
-				
+
 			}
 		});
 		btnNewButton.setBounds(855, 529, 89, 23);
@@ -237,58 +224,56 @@ public class MultiGameHost {
 						Packets.Packet03Coords coordPacket = new Packets.Packet03Coords();
 						coordPacket.x = tempX;
 						coordPacket.y = tempY;
-						server.sendToAllTCP(coordPacket);
-						DisableButtons();
-						
+						client.sendTCP(coordPacket);
 					}
 				});
 				panel_1.add(enemyButtons[i][x]);
 			}
 		}
-		DefaultListModel listModel;
-		listModel = new DefaultListModel();
-		list.setModel(listModel);
+		joinServer();
+
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		textArea.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-		textArea.append(">> Welcome " + MultiMenu.userName + ".\n");
-		hostServer();
-		textArea.append(">> Now waiting for a connection from another player. " + "\n");
-		
-		
+
 	}
 
-public void hostServer(){
-	server = new Server();
-	  sl = new ServerListener();
-	  server.addListener(sl);
-	  
-	  try {
-		server.bind(port, 1337);
-		
-	} catch (IOException e) {
-		JOptionPane.showMessageDialog(null, "There was an error with starting the server. Please restart the program. If the problem persists, change your network rules.");
-	}
-	  registerPackets();
-	  server.start();
-	  System.out.println("Started");
-	  Log.set(Log.LEVEL_TRACE);
+	public void joinServer() {
+		client = new Client();
+		cl = new ClientListener();
+
+		cl.init(client);
+		registerPackets();
+		client.addListener(cl);
+
+		Log.set(Log.LEVEL_TRACE);
+
+		new Thread(client).start();
+
+		try {
+
+			client.connect(5000, ipAddress, 1337, 1337);
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 	private void registerPackets() {
-		Kryo kryo = server.getKryo();
+		Kryo kryo = client.getKryo();
 		kryo.register(Packets.Packet00Request.class);
 		kryo.register(Packets.Packet01Response.class);
 		kryo.register(Packets.Packet02Message.class);
 		kryo.register(Packets.Packet03Coords.class);
 		kryo.register(Packets.Packet04Hit.class);
-		
 	}
+
 	public static void reEnableButtons() {
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
-				if (MultiGameHost.enemyButtons[i][x].getDisabledIcon() != GridButton.hit
-						&& MultiGameHost.enemyButtons[i][x].getDisabledIcon() != GridButton.miss)
-					MultiGameHost.enemyButtons[i][x].setEnabled(true);
+				if (MultiGameClient.enemyButtons[i][x].getDisabledIcon() != GridButton.hit
+						&& MultiGameClient.enemyButtons[i][x].getDisabledIcon() != GridButton.miss)
+					MultiGameClient.enemyButtons[i][x].setEnabled(true);
 			}
 		}
 	}
@@ -296,7 +281,7 @@ public void hostServer(){
 	public static void DisableButtons() {
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
-				MultiGameHost.enemyButtons[i][x].setEnabled(false);
+				MultiGameClient.enemyButtons[i][x].setEnabled(false);
 			}
 		}
 	}

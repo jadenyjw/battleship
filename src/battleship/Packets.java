@@ -7,8 +7,7 @@ public class Packets {
 	public static class Packet02Message{String message; String userName;}
 	public static class Packet03Coords{int x; int y;}
 	public static class Packet04Hit{boolean isHit; int x; int y;}
-	public static class Packet05Victory{boolean victoryAchieved;}
-	
+	public static class Packet05Remaining{int remainingShips;}
 	//public static class Packet05ServerTurn{boolean serverTurn;}
 	
 }
