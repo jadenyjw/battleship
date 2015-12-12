@@ -67,7 +67,7 @@ public class SingleGame {
 	private void initialize() {
 		GridButton buttons[][] = new GridButton[10][10];
 		frame = new JFrame();
-		frame.setBounds(100, 100, 970, 600);
+		frame.setBounds(100, 100, 970, 450);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -140,39 +140,6 @@ public class SingleGame {
 		lblEventLog.setBounds(450, 10, 57, 14);
 		frame.getContentPane().add(lblEventLog);
 
-		JTextArea textArea = new JTextArea();
-		JScrollPane scroll = new JScrollPane(textArea);
-		DefaultCaret caret = (DefaultCaret) textArea.getCaret();
-		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		textArea.setEditable(false);
-		scroll.setBounds(10, 411, 934, 108);
-		frame.getContentPane().add(scroll);
-
-		textField = new JTextField();
-		textField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!(textField.getText().trim().equals(""))) {
-					textArea.append(MultiMenu.userName + ": " + textField.getText() + "\n");
-					textField.setText("");
-				}
-
-			}
-		});
-		textField.setBounds(113, 530, 732, 20);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
-
-		JLabel lblEnterAMesage = new JLabel("Enter a mesage:");
-		lblEnterAMesage.setBounds(10, 533, 93, 14);
-		frame.getContentPane().add(lblEnterAMesage);
-
-		JButton btnNewButton = new JButton("Send");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnNewButton.setBounds(855, 529, 89, 23);
-		frame.getContentPane().add(btnNewButton);
 
 		JLabel lblABC = new JLabel(
 				"A         B         C           D          E          F         G          H           I           J");
