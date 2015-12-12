@@ -93,7 +93,7 @@ public class ClientListener extends Listener {
 			Packets.Packet05Victory p = (Packets.Packet05Victory) o;
 			if (p.victory) {
 				JOptionPane.showMessageDialog(null, "You won!");
-				MultiGameClient.DisableButtons();
+				MultiGameClient.disableButtons();
 			}
 
 		}

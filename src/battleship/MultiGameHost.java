@@ -231,7 +231,7 @@ public class MultiGameHost {
 						coordPacket.x = tempX;
 						coordPacket.y = tempY;
 						server.sendToAllTCP(coordPacket);
-						DisableButtons();
+						disableButtons();
 
 					}
 				});
@@ -288,7 +288,7 @@ public class MultiGameHost {
 		}
 	}
 
-	public static void DisableButtons() {
+	public static void disableButtons() {
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 				MultiGameHost.enemyButtons[i][x].setEnabled(false);

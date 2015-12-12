@@ -98,7 +98,7 @@ public class ServerListener extends Listener {
 			Packets.Packet05Victory p = (Packets.Packet05Victory) o;
 			if (p.victory) {
 				JOptionPane.showMessageDialog(null, "You won!");
-				MultiGameHost.DisableButtons();
+				MultiGameHost.disableButtons();
 			}
 
 		}
