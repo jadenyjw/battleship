@@ -30,8 +30,8 @@ public class MultiGameClient {
 
 	JFrame frame;
 	private JTextField textField;
-    String ipAddress = MultiMenu.ipAddress;
-    
+    //String ipAddress = MultiMenu.ipAddress;
+	String ipAddress = "localhost";
     public Client client;
     private ClientListener cl;
     
