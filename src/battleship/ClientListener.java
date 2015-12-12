@@ -1,5 +1,7 @@
 package battleship;
 
+import javax.swing.JOptionPane;
+
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -32,6 +34,7 @@ public class ClientListener extends Listener {
 	
 			else{
 				c.close();
+				 JOptionPane.showMessageDialog(null, "That host already has a connected user. Please choose a different one.");
 			}
 			
 		}

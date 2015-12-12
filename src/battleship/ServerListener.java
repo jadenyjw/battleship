@@ -8,8 +8,9 @@ import com.esotericsoftware.kryonet.Listener;
 
 import battleship.Packets.Packet01Response;
 
-public class ServerListener extends Listener {
 
+public class ServerListener extends Listener {
+boolean uniqueConnection = true;
 	public ServerListener() {
 
 	}
@@ -25,9 +26,16 @@ public class ServerListener extends Listener {
 	public void received(Connection c, Object o) {
 		if (o instanceof Packets.Packet00Request) {
 			Packet01Response answer = new Packets.Packet01Response();
+			if (uniqueConnection){
 			answer.accepted = true;
 			c.sendTCP(answer);
-			answer.accepted = false;
+			uniqueConnection = false;
+			}
+			else{
+				answer.accepted = false;
+				c.sendTCP(answer);
+			}
+			
 		}
 		if (o instanceof Packets.Packet02Message) {
 			Packets.Packet02Message p = (Packets.Packet02Message) o;
