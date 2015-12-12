@@ -230,8 +230,9 @@ public class MultiGameHost {
 						Packets.Packet03Coords coordPacket = new Packets.Packet03Coords();
 						coordPacket.x = tempX;
 						coordPacket.y = tempY;
-						server.sendToAllTCP(coordPacket);
 						disableButtons();
+						server.sendToAllTCP(coordPacket);
+						
 
 					}
 				});
