@@ -78,6 +78,8 @@ boolean uniqueConnection = true;
 				Packets.Packet05Victory victoryPacket = new Packets.Packet05Victory();
 				victoryPacket.victory = true;
 				c.sendTCP(victoryPacket);
+				JOptionPane.showMessageDialog(null, "You lost!");
+				
 			}
 		    MultiGameHost.reEnableButtons();
 		    

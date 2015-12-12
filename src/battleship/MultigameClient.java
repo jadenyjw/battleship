@@ -172,6 +172,7 @@ public class MultiGameClient {
 					messagePacket.userName = MultiMenu.userName;
 					messagePacket.message = textField.getText();
 					client.sendTCP(messagePacket);
+					DisableButtons();
 					textField.setText("");
 
 				}
