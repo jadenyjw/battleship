@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -36,13 +37,22 @@ public class MultiGameHost {
 
 	JFrame frame;
 	private JTextField textField;
-	public static boolean hasNewText;
+	
 	public static String message;
+	
 	public static javax.swing.JTextArea textArea;
+	public static GridButton buttons[][] = new GridButton[10][10];
+	public static GridButton enemyButtons[][] = new GridButton[10][10];
+	
 	int port = 1337;
 	Server server;
 	ServerListener sl;
+	
+	public static JPanel panel;
+    public static JPanel panel_1;
 
+	
+	
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable() {
@@ -73,7 +83,7 @@ public class MultiGameHost {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		GridButton buttons[][] = new GridButton[10][10];
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 970, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -216,10 +226,23 @@ public class MultiGameHost {
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 
-				buttons[i][x] = new GridButton();
-				buttons[i][x].setIcon(GridButton.water);
-				buttons[i][x].setEnabled(true);
-				panel_1.add(buttons[i][x]);
+				enemyButtons[i][x] = new GridButton();
+				enemyButtons[i][x].setIcon(GridButton.water);
+				enemyButtons[i][x].setDisabledIcon(GridButton.water);
+				enemyButtons[i][x].setEnabled(false);
+				final int tempX = i;
+				final int tempY = x;
+				enemyButtons[i][x].addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Packets.Packet03Coords coordPacket = new Packets.Packet03Coords();
+						coordPacket.x = tempX;
+						coordPacket.y = tempY;
+						server.sendToAllTCP(coordPacket);
+						disableButtons();
+						
+					}
+				});
+				panel_1.add(enemyButtons[i][x]);
 			}
 		}
 		DefaultListModel listModel;
@@ -256,11 +279,28 @@ public void hostServer(){
 		kryo.register(Packets.Packet00Request.class);
 		kryo.register(Packets.Packet01Response.class);
 		kryo.register(Packets.Packet02Message.class);
+		kryo.register(Packets.Packet03Coords.class);
+		kryo.register(Packets.Packet04Hit.class);
+		kryo.register(Packets.Packet05Victory.class);
 		
 	}
-	
+	public static void reEnableButtons() {
+		for (int i = 0; i < 10; i++) {
+			for (int x = 0; x < 10; x++) {
+				if (MultiGameHost.enemyButtons[i][x].getDisabledIcon() != GridButton.hit
+						&& MultiGameHost.enemyButtons[i][x].getDisabledIcon() != GridButton.miss)
+					MultiGameHost.enemyButtons[i][x].setEnabled(true);
+			}
+		}
+	}
 
-	
+	public static void disableButtons() {
+		for (int i = 0; i < 10; i++) {
+			for (int x = 0; x < 10; x++) {
+				MultiGameHost.enemyButtons[i][x].setEnabled(false);
+			}
+		}
+	}
 	
 
 }
