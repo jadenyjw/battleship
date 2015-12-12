@@ -266,6 +266,7 @@ public class MultiGameClient {
 		kryo.register(Packets.Packet02Message.class);
 		kryo.register(Packets.Packet03Coords.class);
 		kryo.register(Packets.Packet04Hit.class);
+		kryo.register(Packets.Packet05Victory.class);
 	}
 
 	public static void reEnableButtons() {

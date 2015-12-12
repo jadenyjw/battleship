@@ -16,11 +16,11 @@ boolean uniqueConnection = true;
 	}
 
 	public void connected(Connection c) {
-		System.out.println("Connected");
+	
 	}
 
 	public void disconnected(Connection c) {
-		System.out.println("Disconnected");
+	
 	}
 
 	public void received(Connection c, Object o) {
@@ -29,7 +29,7 @@ boolean uniqueConnection = true;
 			if (uniqueConnection){
 			answer.accepted = true;
 			c.sendTCP(answer);
-			MultiGameHost.textArea.append(((Packets.Packet00Request) o).clientName + " has joined your game.\nYou will go first.");
+			MultiGameHost.textArea.append(((Packets.Packet00Request) o).clientName + " has joined your game.\nYou will go first.\n");
 			uniqueConnection = false;
 			for (int i = 0; i < 10; i++) {
 				for (int x = 0; x < 10; x++) {
@@ -56,12 +56,29 @@ boolean uniqueConnection = true;
 			hitPacket.x = p.x;
 			hitPacket.y = p.y;
 		    if (MultiGameHost.buttons[p.x][p.y].getDisabledIcon()== GridButton.shipIcon[0]){
+		    	
+		    	MultiGameHost.buttons[p.x][p.y].setDisabledIcon(GridButton.hit);
 		    	hitPacket.isHit = true;
 		    }
 		    else{
+		    	MultiGameHost.buttons[p.x][p.y].setDisabledIcon(GridButton.miss);
 		    	hitPacket.isHit = false;
 		    }
 		    c.sendTCP(hitPacket);
+		    int count = 0;
+			for (int i = 0; i < 10; i++) {
+				for (int x = 0; x < 10; x++) {
+					if (MultiGameHost.buttons[i][x].getDisabledIcon() == GridButton.hit) {
+                     count++;
+					}
+
+				}
+			}
+			if (count == 17){
+				Packets.Packet05Victory victoryPacket = new Packets.Packet05Victory();
+				victoryPacket.victory = true;
+				c.sendTCP(victoryPacket);
+			}
 		    MultiGameHost.reEnableButtons();
 		    
 			
@@ -77,6 +94,15 @@ boolean uniqueConnection = true;
 			   MultiGameHost.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.miss);
 		   }
 		   
+		   
+		}
+		if (o instanceof Packets.Packet05Victory) {
+			Packets.Packet05Victory p = (Packets.Packet05Victory) o;
+			if (p.victory){
+				JOptionPane.showMessageDialog(null, "You won!");
+				MultiGameHost.DisableButtons();
+			}
+			
 		}
 	}
 	
