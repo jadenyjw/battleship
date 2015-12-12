@@ -172,7 +172,7 @@ public class MultiGameClient {
 					messagePacket.userName = MultiMenu.userName;
 					messagePacket.message = textField.getText();
 					client.sendTCP(messagePacket);
-					DisableButtons();
+					
 					textField.setText("");
 
 				}
@@ -225,6 +225,7 @@ public class MultiGameClient {
 						Packets.Packet03Coords coordPacket = new Packets.Packet03Coords();
 						coordPacket.x = tempX;
 						coordPacket.y = tempY;
+						disableButtons();
 						client.sendTCP(coordPacket);
 					}
 				});
@@ -280,7 +281,7 @@ public class MultiGameClient {
 		}
 	}
 
-	public static void DisableButtons() {
+	public static void disableButtons() {
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 				MultiGameClient.enemyButtons[i][x].setEnabled(false);

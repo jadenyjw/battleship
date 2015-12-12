@@ -63,17 +63,17 @@ public class ClientListener extends Listener {
 			for (int i = 0; i < 10; i++) {
 				for (int x = 0; x < 10; x++) {
 					if (MultiGameClient.buttons[i][x].getDisabledIcon() == GridButton.hit) {
-                      count++;
+						count++;
 					}
 
 				}
 			}
-			if (count == 17){
+			if (count == 17) {
 				Packets.Packet05Victory victoryPacket = new Packets.Packet05Victory();
 				victoryPacket.victory = true;
 				c.sendTCP(victoryPacket);
 				JOptionPane.showMessageDialog(null, "You lost!");
-			}  
+			}
 			MultiGameClient.reEnableButtons();
 
 		}
@@ -87,7 +87,6 @@ public class ClientListener extends Listener {
 			} else {
 				MultiGameClient.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.miss);
 			}
-			
 
 		}
 		if (o instanceof Packets.Packet05Victory) {
