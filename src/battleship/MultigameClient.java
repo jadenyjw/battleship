@@ -36,6 +36,7 @@ public class MultiGameClient {
     private ClientListener cl;
     public static boolean hasNewText;
     public static String message;
+    public static javax.swing.JTextArea textArea;
     
 	/**
 	 * Launch the application.
@@ -142,7 +143,7 @@ public class MultiGameClient {
 		lblEventLog.setBounds(450, 10, 57, 14);
 		frame.getContentPane().add(lblEventLog);
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		JScrollPane scroll = new JScrollPane(textArea);
 		DefaultCaret caret = (DefaultCaret) textArea.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
@@ -151,16 +152,7 @@ public class MultiGameClient {
 		frame.getContentPane().add(scroll);
 		
 		textField = new JTextField();
-		textField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (!(textField.getText().trim().equals(""))) {
-					textArea.append(MultiMenu.userName + ": " + textField.getText() + "\n");
-					message = textField.getText();
-					textField.setText("");
-					hasNewText = true;
-				}
-			}
-		});
+		
 		textField.setBounds(113, 530, 732, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
@@ -174,6 +166,22 @@ public class MultiGameClient {
 		JButton btnNewButton = new JButton("Send");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if (!(textField.getText().trim().equals(""))) {
+					textArea.append(MultiMenu.userName + ": " + textField.getText() + "\n");
+					Packets.Packet02Message messagePacket = new Packets.Packet02Message();
+					messagePacket.userName = MultiMenu.userName;
+					messagePacket.message = textField.getText();
+					client.sendTCP(messagePacket);
+					textField.setText("");
+					
+			
+				}
+			}
+		});
+		textField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnNewButton.doClick();
+				
 			}
 		});
 		btnNewButton.setBounds(855, 529, 89, 23);
@@ -242,4 +250,5 @@ public class MultiGameClient {
 		kryo.register(Packets.Packet01Response.class);
 		kryo.register(Packets.Packet02Message.class);
 	}
+
 }

@@ -13,7 +13,7 @@ public class ClientListener extends Listener {
 
 	public void connected(Connection c) {
 
-		//client.sendTCP(new Packets.Packet00Request());
+		client.sendTCP(new Packets.Packet00Request());
 	}
 
 	public void disconnected(Connection c) {
@@ -25,26 +25,21 @@ public class ClientListener extends Listener {
 			boolean serverAnswer = ((Packets.Packet01Response) o).accepted;
 			
 			if (serverAnswer == true){
-				while(true){
-					if(MultiGameClient.hasNewText == true){
-						Packets.Packet02Message messagePacket = new Packets.Packet02Message();
-						messagePacket.userName = MultiMenu.userName;
-						messagePacket.message = MultiGameClient.message;
-						System.out.println("testing");
-						MultiGameClient.hasNewText = false;
-						c.sendTCP(messagePacket);
+				
+				System.out.println("Accepted");
+			}
 			
-				}
-			}
-			}
+	
 			else{
 				c.close();
 			}
 			
 		}
+
 		if (o instanceof Packets.Packet02Message) {
 			Packets.Packet02Message p = (Packets.Packet02Message) o;
-			System.out.println(p.message);
+			MultiGameClient.textArea.append(p.userName + ": " + p.message + "\n");
+			
 		}
 	}
 }

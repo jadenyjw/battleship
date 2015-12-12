@@ -38,6 +38,7 @@ public class MultiGameHost {
 	private JTextField textField;
 	public static boolean hasNewText;
 	public static String message;
+	public static javax.swing.JTextArea textArea;
 	int port = 1337;
 	Server server;
 	ServerListener sl;
@@ -146,8 +147,9 @@ public class MultiGameHost {
 		JLabel lblEventLog = new JLabel("Event Log");
 		lblEventLog.setBounds(450, 10, 57, 14);
 		frame.getContentPane().add(lblEventLog);
-
-		JTextArea textArea = new JTextArea();
+		
+	    textArea = new JTextArea();
+	    
 		JScrollPane scroll = new JScrollPane(textArea);
 		DefaultCaret caret = (DefaultCaret) textArea.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
@@ -156,15 +158,7 @@ public class MultiGameHost {
 		frame.getContentPane().add(scroll);
 
 		textField = new JTextField();
-		textField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!(textField.getText().trim().equals(""))) {
-					textArea.append(MultiMenu.userName + ": " + textField.getText() + "\n");
-					textField.setText("");
-				}
-
-			}
-		});
+		
 		textField.setBounds(113, 530, 732, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
@@ -176,6 +170,20 @@ public class MultiGameHost {
 		JButton btnNewButton = new JButton("Send");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if (!(textField.getText().trim().equals(""))) {
+					textArea.append(MultiMenu.userName + ": " + textField.getText() + "\n");
+					Packets.Packet02Message messagePacket = new Packets.Packet02Message();
+					messagePacket.userName = MultiMenu.userName;
+					messagePacket.message = textField.getText();
+					server.sendToAllTCP(messagePacket);
+					textField.setText("");
+				}
+			}
+		});
+		textField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnNewButton.doClick();
+				
 			}
 		});
 		btnNewButton.setBounds(855, 529, 89, 23);
@@ -250,5 +258,9 @@ public void hostServer(){
 		kryo.register(Packets.Packet02Message.class);
 		
 	}
+	
+
+	
+	
 
 }

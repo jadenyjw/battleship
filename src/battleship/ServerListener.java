@@ -1,6 +1,7 @@
 package battleship;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -26,11 +27,13 @@ public class ServerListener extends Listener {
 			Packet01Response answer = new Packets.Packet01Response();
 			answer.accepted = true;
 			c.sendTCP(answer);
+			answer.accepted = false;
 		}
 		if (o instanceof Packets.Packet02Message) {
 			Packets.Packet02Message p = (Packets.Packet02Message) o;
-
-			JOptionPane.showMessageDialog(null, p.message);
+			MultiGameHost.textArea.append(p.userName + ": " + p.message + "\n");
+			
 		}
 	}
+	
 }
