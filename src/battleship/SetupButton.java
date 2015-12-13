@@ -10,12 +10,12 @@ import java.awt.event.ActionEvent;
 
 public class SetupButton extends JButton{
   
-  static ImageIcon shipIcon[] = {new ImageIcon("img/shipA.png")
-		  						, new ImageIcon("img/shipB.png")
-		  						, new ImageIcon("img/shipC.png")
-		  						, new ImageIcon("img/shipS.png")
-		  						, new ImageIcon("img/shipP.png")};
-  static ImageIcon water = new ImageIcon("img/water.png");
+  static ImageIcon shipIcon[] = {new ImageIcon(Battleship.class.getResource("/shipA.png"))
+		  						, new ImageIcon(Battleship.class.getResource("/shipB.png"))
+		  						, new ImageIcon(Battleship.class.getResource("/shipC.png"))
+		  						, new ImageIcon(Battleship.class.getResource("/shipS.png"))
+		  						, new ImageIcon(Battleship.class.getResource("/shipP.png"))};
+  static ImageIcon water = new ImageIcon(Battleship.class.getResource("/water.png"));
  
 	
 }

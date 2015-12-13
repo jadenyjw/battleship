@@ -5,10 +5,13 @@ import javax.swing.JButton;
 
 public class GridButton extends JButton {
 
-	static ImageIcon shipIcon[] = { new ImageIcon("img/ship.png"), new ImageIcon("img/ship.png"),
-			new ImageIcon("img/ship.png"), new ImageIcon("img/ship.png"), new ImageIcon("img/ship.png") };
-	static ImageIcon water = new ImageIcon("img/water.png");
-	static ImageIcon hit = new ImageIcon("img/hit.png");
-	static ImageIcon miss = new ImageIcon("img/miss.png");
+	static ImageIcon shipIcon[] = { new ImageIcon(Battleship.class.getResource("/ship.png")),
+			new ImageIcon(Battleship.class.getResource("/ship.png")),
+			new ImageIcon(Battleship.class.getResource("/ship.png")),
+			new ImageIcon(Battleship.class.getResource("/ship.png")),
+			new ImageIcon(Battleship.class.getResource("/ship.png")) };
+	static ImageIcon water = new ImageIcon(Battleship.class.getResource("/water.png"));
+	static ImageIcon hit = new ImageIcon(Battleship.class.getResource("/hit.png"));
+	static ImageIcon miss = new ImageIcon(Battleship.class.getResource("/miss.png"));
 
 }

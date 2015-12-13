@@ -125,7 +125,8 @@ private JFrame frame;
   
   JLabel lblNewLabel = new JLabel("");
   lblNewLabel.setBounds(-92, 0, 629, 349);
-  lblNewLabel.setIcon(new ImageIcon("img/battleship.jpg"));
+  ImageIcon image = new ImageIcon(getClass().getResource("/battleship.jpg"));
+  lblNewLabel.setIcon(image);
   layeredPane.add(lblNewLabel);
   
  }//End initMain

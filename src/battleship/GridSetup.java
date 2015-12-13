@@ -99,7 +99,7 @@ public class GridSetup extends JDialog {
 						image.setIcon(null);
 						refresh(tempX, tempY);
 						if(error)
-							image.setIcon(new ImageIcon("/img/invalid.png"));
+							image.setIcon(new ImageIcon(Battleship.class.getResource("/invalid.png")));
 					}
 				});
 				panel.add(buttons[i][x]);
