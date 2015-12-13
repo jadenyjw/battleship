@@ -58,11 +58,14 @@ public class ServerListener extends Listener {
 			hitPacket.x = p.x;
 			hitPacket.y = p.y;
 			if (MultiGameHost.buttons[p.x][p.y].getDisabledIcon() == GridButton.shipIcon[0]) {
-
 				MultiGameHost.buttons[p.x][p.y].setDisabledIcon(GridButton.hit);
+				MultiGameHost.listModel
+						.addElement("Opponent hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 				hitPacket.isHit = true;
 			} else {
 				MultiGameHost.buttons[p.x][p.y].setDisabledIcon(GridButton.miss);
+				MultiGameHost.listModel
+						.addElement("Opponent missed: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 				hitPacket.isHit = false;
 			}
 			c.sendTCP(hitPacket);
@@ -93,9 +96,12 @@ public class ServerListener extends Listener {
 			MultiGameHost.enemyButtons[p.x][p.y].setEnabled(false);
 			if (p.isHit == true) {
 				MultiGameHost.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.hit);
+				MultiGameHost.listModel.addElement("Hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 
 			} else {
 				MultiGameHost.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.miss);
+				MultiGameHost.listModel
+						.addElement("Missed: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 			}
 
 		}

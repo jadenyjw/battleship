@@ -55,9 +55,13 @@ public class ClientListener extends Listener {
 			hitPacket.y = p.y;
 			if (MultiGameClient.buttons[p.x][p.y].getDisabledIcon() == GridButton.shipIcon[0]) {
 				MultiGameClient.buttons[p.x][p.y].setDisabledIcon(GridButton.hit);
+				MultiGameClient.listModel
+						.addElement("Opponent hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 				hitPacket.isHit = true;
 			} else {
 				MultiGameClient.buttons[p.x][p.y].setDisabledIcon(GridButton.miss);
+				MultiGameClient.listModel
+						.addElement("Opponent missed: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 				hitPacket.isHit = false;
 			}
 			client.sendTCP(hitPacket);
@@ -89,8 +93,12 @@ public class ClientListener extends Listener {
 			if (p.isHit == true) {
 
 				MultiGameClient.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.hit);
+				MultiGameClient.listModel
+						.addElement("You hit missed: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 			} else {
 				MultiGameClient.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.miss);
+				MultiGameClient.listModel
+						.addElement("You missed: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 			}
 
 		}

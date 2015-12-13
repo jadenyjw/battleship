@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -40,7 +41,8 @@ public class MultiGameHost {
 	public static javax.swing.JTextArea textArea;
 	public static GridButton buttons[][] = new GridButton[10][10];
 	public static GridButton enemyButtons[][] = new GridButton[10][10];
-
+	public static DefaultListModel<String> listModel;
+	
 	int port = 1337;
 	Server server;
 	ServerListener sl;
@@ -141,11 +143,14 @@ public class MultiGameHost {
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(new GridLayout(10, 10));
 
-		JList list = new JList();
-		list.setBounds(410, 27, 134, 373);
+		JList<String> list = new JList<String>();
+		listModel = new DefaultListModel<String>();
+		list.setModel(listModel);
 		Border listBorder = BorderFactory.createLineBorder(Color.BLACK);
 		list.setBorder(BorderFactory.createCompoundBorder(listBorder, null));
-		frame.getContentPane().add(list);
+		JScrollPane scrollLog = new JScrollPane(list);
+		scrollLog.setBounds(410, 27, 134, 373);
+		frame.getContentPane().add(scrollLog);
 
 		JLabel lblEventLog = new JLabel("Event Log");
 		lblEventLog.setBounds(450, 10, 57, 14);
@@ -239,8 +244,8 @@ public class MultiGameHost {
 				panel_1.add(enemyButtons[i][x]);
 			}
 		}
-		DefaultListModel listModel;
-		listModel = new DefaultListModel();
+		
+		listModel = new DefaultListModel<String>();
 		list.setModel(listModel);
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		textArea.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));

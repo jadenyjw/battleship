@@ -9,6 +9,7 @@ import javax.swing.JScrollPane;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JLabel;
@@ -16,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -40,6 +42,7 @@ public class MultiGameClient {
 	public static javax.swing.JTextArea textArea;
 	public static JPanel panel;
 	public static JPanel panel_1;
+	public static DefaultListModel<String> listModel;
 
 	/**
 	 * Launch the application.
@@ -135,11 +138,14 @@ public class MultiGameClient {
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(new GridLayout(10, 10));
 
-		JList list = new JList();
+		JList<String> list = new JList<String>();
+		listModel = new DefaultListModel<String>();
+		list.setModel(listModel);
 		Border listBorder = BorderFactory.createLineBorder(Color.BLACK);
 		list.setBorder(BorderFactory.createCompoundBorder(listBorder, null));
-		list.setBounds(410, 27, 134, 373);
-		frame.getContentPane().add(list);
+		JScrollPane scrollLog = new JScrollPane(list);
+		scrollLog.setBounds(410, 27, 134, 373);
+		frame.getContentPane().add(scrollLog);
 
 		JLabel lblEventLog = new JLabel("Event Log");
 		lblEventLog.setBounds(450, 10, 57, 14);

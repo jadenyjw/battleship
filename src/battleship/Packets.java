@@ -16,14 +16,14 @@ public class Packets {
 	}
 
 	public static class Packet03Coords {
-		byte x;
-		byte y;
+		int x;
+		int y;
 	}
 
 	public static class Packet04Hit {
 		boolean isHit;
-		byte x;
-		byte y;
+		int x;
+		int y;
 	}
 
 	public static class Packet05Victory {
@@ -31,8 +31,8 @@ public class Packets {
 	}
 	
 	public static class Packet06Missed {
-		byte x;
-		byte y;
+		int x;
+		int y;
 		
 	}
 	
