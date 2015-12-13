@@ -43,6 +43,7 @@ public class MultiGameClient {
 	public static JPanel panel;
 	public static JPanel panel_1;
 	public static DefaultListModel<String> listModel;
+	public static JList<String> list = new JList<String>();
 
 	/**
 	 * Launch the application.
@@ -138,7 +139,7 @@ public class MultiGameClient {
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(new GridLayout(10, 10));
 
-		JList<String> list = new JList<String>();
+		
 		listModel = new DefaultListModel<String>();
 		list.setModel(listModel);
 		Border listBorder = BorderFactory.createLineBorder(Color.BLACK);
@@ -293,6 +294,12 @@ public class MultiGameClient {
 			for (int x = 0; x < 10; x++) {
 				MultiGameClient.enemyButtons[i][x].setEnabled(false);
 			}
+		}
+	}
+	public static void scrollList(){
+		int lastIndex = list.getModel().getSize();
+		if (lastIndex >= 0) {
+			list.ensureIndexIsVisible(lastIndex);
 		}
 	}
 
