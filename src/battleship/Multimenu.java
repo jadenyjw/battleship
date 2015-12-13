@@ -77,14 +77,14 @@ public class MultiMenu extends JDialog {
 				btnHostGame.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						userName = txtName.getText();
-						if (!(userName.trim().length() > 10 || userName.trim().length() < 4)) {
+						if (!(userName.trim().length() > 15 || userName.trim().length() < 4)) {
 
 							Battleship.referer = "host";
 
 							serve();
 
 						} else
-							JOptionPane.showMessageDialog(null, "Please enter a username between 4 to 10 characters");
+							JOptionPane.showMessageDialog(null, "Please enter a username between 4 to 15 characters");
 					}
 				});
 				panel.add(btnHostGame);
@@ -94,13 +94,13 @@ public class MultiMenu extends JDialog {
 				btnJoinGame.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						userName = txtName.getText();
-						if (!(userName.trim().length() > 10 || userName.trim().length() < 4)) {
+						if (!(userName.trim().length() > 15 || userName.trim().length() < 4)) {
 
 							Battleship.referer = "client";
 							join();
 
 						} else
-							JOptionPane.showMessageDialog(null, "Please enter a username between 4 to 10 characters");
+							JOptionPane.showMessageDialog(null, "Please enter a username between 4 to 15 characters");
 
 					}
 				});
@@ -118,7 +118,7 @@ public class MultiMenu extends JDialog {
 				txtName = new JTextField();
 				txtName.setHorizontalAlignment(SwingConstants.LEFT);
 				panel_1.add(txtName);
-				txtName.setColumns(10);
+				txtName.setColumns(15);
 			}
 		}
 		{
