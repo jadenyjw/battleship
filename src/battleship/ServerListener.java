@@ -98,13 +98,13 @@ public class ServerListener extends Listener {
 			MultiGameHost.enemyButtons[p.x][p.y].setEnabled(false);
 			if (p.isHit == true) {
 				MultiGameHost.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.hit);
-				MultiGameHost.listModel.addElement("Hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
+				MultiGameHost.listModel.addElement("You hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 				MultiGameHost.scrollList();
 
 			} else {
 				MultiGameHost.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.miss);
 				MultiGameHost.listModel
-						.addElement("Missed: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
+						.addElement("You missed: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 				MultiGameHost.scrollList();
 			}
 
