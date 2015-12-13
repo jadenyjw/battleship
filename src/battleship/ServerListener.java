@@ -60,12 +60,12 @@ public class ServerListener extends Listener {
 			if (MultiGameHost.buttons[p.x][p.y].getDisabledIcon() == GridButton.shipIcon[0]) {
 				MultiGameHost.buttons[p.x][p.y].setDisabledIcon(GridButton.hit);
 				MultiGameHost.listModel
-						.addElement("Opponent hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
+						.addElement("Enemy hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 				hitPacket.isHit = true;
 			} else {
 				MultiGameHost.buttons[p.x][p.y].setDisabledIcon(GridButton.miss);
 				MultiGameHost.listModel
-						.addElement("Opponent missed: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
+						.addElement("Enemy missed: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 				hitPacket.isHit = false;
 			}
 			c.sendTCP(hitPacket);
