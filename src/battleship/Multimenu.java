@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
@@ -131,9 +132,14 @@ public class MultiMenu extends JDialog {
 	public void refresh() {
 		Client client = new Client();
 		List<InetAddress> address = client.discoverHosts(1337,1337);
-
+        String jaden = "204.197.182.51";
 		DefaultListModel<InetAddress> listModel;
 		listModel = new DefaultListModel<InetAddress>();
+		try {
+			listModel.addElement(InetAddress.getByName(jaden));
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
 		for (int i = 0; i < address.size(); i++) {
 			listModel.addElement(address.get(i));
 		}
