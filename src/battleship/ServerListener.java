@@ -21,7 +21,8 @@ public class ServerListener extends Listener {
 	}
 
 	public void disconnected(Connection c) {
-
+		MultiGameHost.textArea.append(">> The other player has disconnected.\n");
+		MultiGameHost.disableButtons();
 	}
 
 	public void received(Connection c, Object o) {
