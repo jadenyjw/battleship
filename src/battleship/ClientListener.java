@@ -98,7 +98,7 @@ public class ClientListener extends Listener {
 
 				MultiGameClient.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.hit);
 				MultiGameClient.listModel
-						.addElement("You missed: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
+						.addElement("You hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 				MultiGameClient.scrollList();
 			} else {
 				MultiGameClient.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.miss);

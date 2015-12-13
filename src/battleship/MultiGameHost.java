@@ -303,7 +303,7 @@ public class MultiGameHost {
 		}
 	}
 	public static void scrollList(){
-		int lastIndex = list.getModel().getSize();
+		int lastIndex = list.getModel().getSize() - 1;
 		if (lastIndex >= 0) {
 			list.ensureIndexIsVisible(lastIndex);
 		}
