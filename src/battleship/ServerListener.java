@@ -31,8 +31,8 @@ public class ServerListener extends Listener {
 			if (uniqueConnection) {
 				answer.accepted = true;
 				c.sendTCP(answer);
-				MultiGameHost.textArea.append(
-						(">> " +((Packets.Packet00Request) o).clientName + " has joined your game.\n>> You will go first.\n"));
+				MultiGameHost.textArea.append((">> " + ((Packets.Packet00Request) o).clientName
+						+ " has joined your game.\n>> You will go first.\n"));
 				uniqueConnection = false;
 				for (int i = 0; i < 10; i++) {
 					for (int x = 0; x < 10; x++) {
@@ -83,8 +83,8 @@ public class ServerListener extends Listener {
 				JOptionPane.showMessageDialog(null, "You lost!");
 
 			}
-			if (gameDone == false){
-			MultiGameHost.reEnableButtons();
+			if (gameDone == false) {
+				MultiGameHost.reEnableButtons();
 			}
 
 		}
@@ -104,10 +104,26 @@ public class ServerListener extends Listener {
 			if (p.victory) {
 				gameDone = true;
 				MultiGameHost.disableButtons();
+				for (int i = 0; i < 10; i++) {
+					for (int x = 0; x < 10; x++) {
+						if (MultiGameHost.buttons[i][x].getDisabledIcon() == GridButton.shipIcon[0]) {
+							Packets.Packet06Missed coordPacket = new Packets.Packet06Missed();
+							coordPacket.x = i;
+							coordPacket.y = x;
+
+							c.sendTCP(coordPacket);
+						}
+
+					}
+				}
 				JOptionPane.showMessageDialog(null, "You won!");
-				
+
 			}
 
+		}
+		if (o instanceof Packets.Packet06Missed) {
+			Packets.Packet06Missed p = (Packets.Packet06Missed) o;
+			MultiGameHost.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.shipIcon[0]);
 		}
 	}
 

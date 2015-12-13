@@ -77,9 +77,9 @@ public class ClientListener extends Listener {
 				gameDone = true;
 				JOptionPane.showMessageDialog(null, "You lost!");
 			}
-			if (gameDone == false){
+			if (gameDone == false) {
 				MultiGameClient.reEnableButtons();
-				}
+			}
 
 		}
 
@@ -99,10 +99,28 @@ public class ClientListener extends Listener {
 			if (p.victory) {
 				gameDone = true;
 				MultiGameClient.disableButtons();
+
+				for (int i = 0; i < 10; i++) {
+					for (int x = 0; x < 10; x++) {
+						if (MultiGameClient.buttons[i][x].getDisabledIcon() == GridButton.shipIcon[0]) {
+							Packets.Packet06Missed coordPacket = new Packets.Packet06Missed();
+							coordPacket.x = i;
+							coordPacket.y = x;
+
+							c.sendTCP(coordPacket);
+						}
+
+					}
+				}
+
 				JOptionPane.showMessageDialog(null, "You won!");
-				
+
 			}
 
+		}
+		if (o instanceof Packets.Packet06Missed) {
+			Packets.Packet06Missed p = (Packets.Packet06Missed) o;
+			MultiGameClient.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.shipIcon[0]);
 		}
 	}
 }
