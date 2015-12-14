@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
 
 public class GridSetup extends JDialog {
 
@@ -70,7 +72,7 @@ public class GridSetup extends JDialog {
 		SetupButton ship[] = new SetupButton[6];
 
 		frame = new JFrame("Battleship X Pro Limited Edition 2 | Grid Setup");
-		frame.setBounds(100, 100, 550, 450);
+		frame.setBounds(100, 100, 555, 450);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -82,7 +84,7 @@ public class GridSetup extends JDialog {
 		panel.setSize(370, 370);
 		
 		image = new JLabel();
-		image.setBounds(425,200,95,88);
+		image.setBounds(445,210,64,90);
 		image.setIcon(null);
 		frame.getContentPane().add(image);
 		
@@ -107,10 +109,6 @@ public class GridSetup extends JDialog {
 			}
 		}
 
-		JLabel lblEventLog = new JLabel("Ships");
-		lblEventLog.setBounds(450, 10, 57, 14);
-		frame.getContentPane().add(lblEventLog);
-
 		JLabel lblABC = new JLabel(
 				"A         B          C          D          E          F         G          H           I           J");
 		lblABC.setBounds(45, 10, 367, 14);
@@ -128,6 +126,9 @@ public class GridSetup extends JDialog {
 		frame.getContentPane().add(panel_1);
 
 		JComboBox shipNames = new JComboBox();
+		TitledBorder title;//used for titles around combo boxes
+		title = BorderFactory.createTitledBorder("Ships");
+		shipNames.setBorder(title);	
 		shipNames.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				shipName = (String) shipNames.getSelectedItem();
@@ -138,6 +139,9 @@ public class GridSetup extends JDialog {
 		panel_1.add(shipNames);
 
 		JComboBox orient = new JComboBox();
+		TitledBorder orientation;//used for titles around combo boxes
+		orientation = BorderFactory.createTitledBorder("Orientation");
+		orient.setBorder(orientation);
 		orient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				shipOrient = (String) orient.getSelectedItem();
@@ -147,6 +151,8 @@ public class GridSetup extends JDialog {
 		panel_1.add(orient);
 
 		JButton btnFinish = new JButton("Done");
+		btnFinish.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnFinish.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnFinish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -190,6 +196,8 @@ public class GridSetup extends JDialog {
 		});
 		
 		JButton btnRandomDeploy = new JButton("Random Deploy");
+		btnRandomDeploy.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnRandomDeploy.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnRandomDeploy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				randomDeploy();
