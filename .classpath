@@ -5,8 +5,6 @@
 	<classpathentry kind="src" path="lib"/>
 	<classpathentry excluding="src/|img/|lib/" kind="src" path=""/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="lib" path="jgoodies-common-1.8.0.jar" sourcepath="jgoodies-common-1.8.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="jgoodies-forms-1.8.0.jar" sourcepath="jgoodies-forms-1.8.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/kryonet-2.21-dev-all.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
