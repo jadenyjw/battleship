@@ -139,7 +139,6 @@ public class MultiGameClient {
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(new GridLayout(10, 10));
 
-		
 		listModel = new DefaultListModel<String>();
 		list.setModel(listModel);
 		Border listBorder = BorderFactory.createLineBorder(Color.BLACK);
@@ -179,7 +178,7 @@ public class MultiGameClient {
 					messagePacket.userName = MultiMenu.userName;
 					messagePacket.message = textField.getText();
 					client.sendTCP(messagePacket);
-					
+
 					textField.setText("");
 
 				}
@@ -296,7 +295,8 @@ public class MultiGameClient {
 			}
 		}
 	}
-	public static void scrollList(){
+
+	public static void scrollList() {
 		int lastIndex = list.getModel().getSize() - 1;
 		if (lastIndex >= 0) {
 			list.ensureIndexIsVisible(lastIndex);

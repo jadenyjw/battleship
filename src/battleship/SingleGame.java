@@ -23,13 +23,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.text.DefaultCaret;
 
-
 import java.awt.Font;
 
 public class SingleGame {
-	
-	
-		  
 
 	JFrame frame;
 	private JTextField textField;
@@ -40,7 +36,7 @@ public class SingleGame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					
+
 					MultiGameHost window = new MultiGameHost();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -54,10 +50,8 @@ public class SingleGame {
 	 * Create the application.
 	 */
 	public SingleGame() {
-		
+
 		initialize();
-		
-		
 
 	}
 
@@ -139,7 +133,6 @@ public class SingleGame {
 		JLabel lblEventLog = new JLabel("Event Log");
 		lblEventLog.setBounds(450, 10, 57, 14);
 		frame.getContentPane().add(lblEventLog);
-
 
 		JLabel lblABC = new JLabel(
 				"A         B         C           D          E          F         G          H           I           J");

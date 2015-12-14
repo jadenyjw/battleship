@@ -43,7 +43,7 @@ public class MultiGameHost {
 	public static GridButton enemyButtons[][] = new GridButton[10][10];
 	public static DefaultListModel<String> listModel;
 	public static JList<String> list = new JList<String>();
-	
+
 	int port = 1337;
 	Server server;
 	ServerListener sl;
@@ -144,7 +144,6 @@ public class MultiGameHost {
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(new GridLayout(10, 10));
 
-		
 		listModel = new DefaultListModel<String>();
 		list.setModel(listModel);
 		Border listBorder = BorderFactory.createLineBorder(Color.BLACK);
@@ -238,14 +237,13 @@ public class MultiGameHost {
 						coordPacket.y = tempY;
 						disableButtons();
 						server.sendToAllTCP(coordPacket);
-						
 
 					}
 				});
 				panel_1.add(enemyButtons[i][x]);
 			}
 		}
-		
+
 		listModel = new DefaultListModel<String>();
 		list.setModel(listModel);
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
@@ -302,7 +300,8 @@ public class MultiGameHost {
 			}
 		}
 	}
-	public static void scrollList(){
+
+	public static void scrollList() {
 		int lastIndex = list.getModel().getSize() - 1;
 		if (lastIndex >= 0) {
 			list.ensureIndexIsVisible(lastIndex);
