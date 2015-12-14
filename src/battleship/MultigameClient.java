@@ -76,8 +76,9 @@ public class MultiGameClient {
 	 */
 	private void initialize() {
 
-		frame = new JFrame();
+		frame = new JFrame("Battleship X Pro Limited Edition 2 | Multiplayer");
 		frame.setBounds(100, 100, 970, 600);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 

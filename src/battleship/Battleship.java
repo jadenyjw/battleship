@@ -47,8 +47,9 @@ public class Battleship {
 	 * Initialize the contents of the main menu.
 	 */
 	private void initMain() {
-		frame = new JFrame("Battleship X");
+		frame = new JFrame("Battleship X Pro Limited Edition 2 | Main Menu");
 		frame.setBounds(100, 100, 630, 400);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel panel_1 = new JPanel();

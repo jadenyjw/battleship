@@ -69,8 +69,9 @@ public class GridSetup extends JDialog {
         
 		SetupButton ship[] = new SetupButton[6];
 
-		frame = new JFrame();
+		frame = new JFrame("Battleship X Pro Limited Edition 2 | Grid Setup");
 		frame.setBounds(100, 100, 550, 450);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 

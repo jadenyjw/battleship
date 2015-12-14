@@ -62,6 +62,7 @@ public class SingleGame {
 		GridButton buttons[][] = new GridButton[10][10];
 		frame = new JFrame();
 		frame.setBounds(100, 100, 970, 450);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
