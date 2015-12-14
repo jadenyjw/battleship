@@ -48,7 +48,7 @@ public class Battleship {
 	 */
 	private void initMain() {
 		frame = new JFrame("Battleship X Pro Limited Edition 2 | Main Menu");
-		frame.setBounds(100, 100, 630, 400);
+		frame.setBounds(100, 100, 625, 400);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
