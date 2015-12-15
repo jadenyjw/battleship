@@ -43,7 +43,7 @@ public class MultiGameHost {
 	public static GridButton enemyButtons[][] = new GridButton[10][10];
 	public static DefaultListModel<String> listModel;
 	public static JList<String> list = new JList<String>();
-	
+
 	public static JLabel lblYourTurn;
 
 	int port = 1337;
@@ -188,7 +188,7 @@ public class MultiGameHost {
 					messagePacket.message = textField.getText();
 					server.sendToAllTCP(messagePacket);
 					textField.setText("");
-					
+
 				}
 			}
 		});
@@ -254,7 +254,7 @@ public class MultiGameHost {
 		list.setModel(listModel);
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		textArea.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-		
+
 		lblYourTurn = new JLabel("");
 		lblYourTurn.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblYourTurn.setForeground(Color.GREEN);

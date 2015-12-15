@@ -237,7 +237,7 @@ public class MultiGameClient {
 						lblEnemysTurn.setText("Enemy's Turn");
 						lblEnemysTurn.setForeground(Color.RED);
 						client.sendTCP(coordPacket);
-						
+
 					}
 				});
 				panel_1.add(enemyButtons[i][x]);
@@ -247,7 +247,7 @@ public class MultiGameClient {
 
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		textArea.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-		
+
 		lblEnemysTurn = new JLabel("Enemy's Turn");
 		lblEnemysTurn.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblEnemysTurn.setForeground(Color.RED);

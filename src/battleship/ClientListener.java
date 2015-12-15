@@ -60,7 +60,6 @@ public class ClientListener extends Listener {
 				MultiGameClient.listModel
 						.addElement("Enemy hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 				MultiGameClient.scrollList();
-				
 
 				hitPacket.isHit = true;
 			} else {

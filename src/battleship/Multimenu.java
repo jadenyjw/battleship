@@ -131,11 +131,11 @@ public class MultiMenu extends JDialog {
 
 	public void refresh() {
 		Client client = new Client();
-		List<InetAddress> address = client.discoverHosts(1337,1337);
-        
+		List<InetAddress> address = client.discoverHosts(1337, 1337);
+
 		DefaultListModel<InetAddress> listModel;
 		listModel = new DefaultListModel<InetAddress>();
-	
+
 		for (int i = 0; i < address.size(); i++) {
 			listModel.addElement(address.get(i));
 		}

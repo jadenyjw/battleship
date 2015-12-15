@@ -71,7 +71,7 @@ public class ServerListener extends Listener {
 						.addElement("Enemy missed: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 				MultiGameHost.scrollList();
 				hitPacket.isHit = false;
-				
+
 			}
 			MultiGameHost.lblYourTurn.setText("Your Turn");
 			MultiGameHost.lblYourTurn.setForeground(Color.GREEN);
@@ -102,10 +102,11 @@ public class ServerListener extends Listener {
 		if (o instanceof Packets.Packet04Hit) {
 			Packets.Packet04Hit p = (Packets.Packet04Hit) o;
 			MultiGameHost.enemyButtons[p.x][p.y].setEnabled(false);
-			
+
 			if (p.isHit == true) {
 				MultiGameHost.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.hit);
-				MultiGameHost.listModel.addElement("You hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
+				MultiGameHost.listModel
+						.addElement("You hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 				MultiGameHost.scrollList();
 
 			} else {
