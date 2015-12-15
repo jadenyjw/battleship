@@ -5,6 +5,6 @@
 	<classpathentry kind="src" path="lib"/>
 	<classpathentry excluding="src/|img/|lib/" kind="src" path=""/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="lib" path="lib/kryonet-2.21-dev-all.jar"/>
+	<classpathentry kind="lib" path="lib/kryonet-2.21-all.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

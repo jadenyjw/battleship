@@ -3,10 +3,9 @@ package battleship;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import sun.applet.Main;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+
 
 public class SetupButton extends JButton{
   

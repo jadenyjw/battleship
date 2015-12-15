@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
 
 public class Battleship {
-	public static String referer;
+	public static String referer = "";
 	private JFrame frame;
 
 	/**
