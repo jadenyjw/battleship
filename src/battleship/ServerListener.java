@@ -1,5 +1,7 @@
 package battleship;
 
+import java.awt.Color;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
@@ -33,6 +35,7 @@ public class ServerListener extends Listener {
 				c.sendTCP(answer);
 				MultiGameHost.textArea.append((">> " + ((Packets.Packet00Request) o).clientName
 						+ " has joined your game.\n>> You will go first.\n"));
+				MultiGameHost.lblYourTurn.setText("Your Turn");
 				uniqueConnection = false;
 				for (int i = 0; i < 10; i++) {
 					for (int x = 0; x < 10; x++) {
@@ -53,7 +56,6 @@ public class ServerListener extends Listener {
 		if (o instanceof Packets.Packet03Coords) {
 
 			Packets.Packet03Coords p = (Packets.Packet03Coords) o;
-			System.out.println(p.x + " " + p.y);
 			Packets.Packet04Hit hitPacket = new Packets.Packet04Hit();
 			hitPacket.x = p.x;
 			hitPacket.y = p.y;
@@ -69,7 +71,10 @@ public class ServerListener extends Listener {
 						.addElement("Enemy missed: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 				MultiGameHost.scrollList();
 				hitPacket.isHit = false;
+				
 			}
+			MultiGameHost.lblYourTurn.setText("Your Turn");
+			MultiGameHost.lblYourTurn.setForeground(Color.GREEN);
 			c.sendTCP(hitPacket);
 			int count = 0;
 			for (int i = 0; i < 10; i++) {
@@ -85,6 +90,7 @@ public class ServerListener extends Listener {
 				victoryPacket.victory = true;
 				c.sendTCP(victoryPacket);
 				gameDone = true;
+				MultiGameHost.lblYourTurn.setText("");
 				JOptionPane.showMessageDialog(null, "You lost!");
 
 			}
@@ -96,6 +102,7 @@ public class ServerListener extends Listener {
 		if (o instanceof Packets.Packet04Hit) {
 			Packets.Packet04Hit p = (Packets.Packet04Hit) o;
 			MultiGameHost.enemyButtons[p.x][p.y].setEnabled(false);
+			
 			if (p.isHit == true) {
 				MultiGameHost.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.hit);
 				MultiGameHost.listModel.addElement("You hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
@@ -126,6 +133,7 @@ public class ServerListener extends Listener {
 
 					}
 				}
+				MultiGameHost.lblYourTurn.setText("");
 				JOptionPane.showMessageDialog(null, "You won!");
 
 			}

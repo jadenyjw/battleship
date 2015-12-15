@@ -44,6 +44,7 @@ public class MultiGameClient {
 	public static JPanel panel_1;
 	public static DefaultListModel<String> listModel;
 	public static JList<String> list = new JList<String>();
+	public static JLabel lblEnemysTurn;
 
 	/**
 	 * Launch the application.
@@ -145,7 +146,7 @@ public class MultiGameClient {
 		Border listBorder = BorderFactory.createLineBorder(Color.BLACK);
 		list.setBorder(BorderFactory.createCompoundBorder(listBorder, null));
 		JScrollPane scrollLog = new JScrollPane(list);
-		scrollLog.setBounds(410, 27, 134, 373);
+		scrollLog.setBounds(410, 27, 134, 345);
 		frame.getContentPane().add(scrollLog);
 
 		JLabel lblEventLog = new JLabel("Event Log");
@@ -233,7 +234,10 @@ public class MultiGameClient {
 						coordPacket.x = tempX;
 						coordPacket.y = tempY;
 						disableButtons();
+						lblEnemysTurn.setText("Enemy's Turn");
+						lblEnemysTurn.setForeground(Color.RED);
 						client.sendTCP(coordPacket);
+						
 					}
 				});
 				panel_1.add(enemyButtons[i][x]);
@@ -243,6 +247,13 @@ public class MultiGameClient {
 
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		textArea.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		
+		lblEnemysTurn = new JLabel("Enemy's Turn");
+		lblEnemysTurn.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblEnemysTurn.setForeground(Color.RED);
+		lblEnemysTurn.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEnemysTurn.setBounds(410, 383, 135, 14);
+		frame.getContentPane().add(lblEnemysTurn);
 
 	}
 
@@ -303,5 +314,4 @@ public class MultiGameClient {
 			list.ensureIndexIsVisible(lastIndex);
 		}
 	}
-
 }

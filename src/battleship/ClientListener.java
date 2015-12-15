@@ -1,5 +1,7 @@
 package battleship;
 
+import java.awt.Color;
+
 import javax.swing.JOptionPane;
 
 import com.esotericsoftware.kryonet.Client;
@@ -68,6 +70,8 @@ public class ClientListener extends Listener {
 				MultiGameClient.scrollList();
 				hitPacket.isHit = false;
 			}
+			MultiGameClient.lblEnemysTurn.setText("Your Turn");
+			MultiGameClient.lblEnemysTurn.setForeground(Color.GREEN);
 			client.sendTCP(hitPacket);
 			int count = 0;
 			for (int i = 0; i < 10; i++) {
@@ -83,6 +87,7 @@ public class ClientListener extends Listener {
 				victoryPacket.victory = true;
 				c.sendTCP(victoryPacket);
 				gameDone = true;
+				MultiGameClient.lblEnemysTurn.setText("");
 				JOptionPane.showMessageDialog(null, "You lost!");
 			}
 			if (gameDone == false) {
@@ -126,7 +131,7 @@ public class ClientListener extends Listener {
 
 					}
 				}
-
+				MultiGameClient.lblEnemysTurn.setText("");
 				JOptionPane.showMessageDialog(null, "You won!");
 
 			}
