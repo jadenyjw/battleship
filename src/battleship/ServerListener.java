@@ -36,6 +36,7 @@ public class ServerListener extends Listener {
 				MultiGameHost.textArea.append((">> " + ((Packets.Packet00Request) o).clientName
 						+ " has joined your game.\n>> You will go first.\n"));
 				MultiGameHost.lblYourTurn.setText("Your Turn");
+				MultiGameHost.frame.toFront();
 				uniqueConnection = false;
 				for (int i = 0; i < 10; i++) {
 					for (int x = 0; x < 10; x++) {

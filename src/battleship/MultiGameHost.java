@@ -33,7 +33,7 @@ import java.awt.Font;
 
 public class MultiGameHost {
 
-	JFrame frame;
+	public static JFrame frame;
 	private JTextField textField;
 
 	public static String message;
