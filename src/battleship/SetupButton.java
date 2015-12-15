@@ -4,8 +4,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 51b514c33ef0eac3e51ab9f529eb3602f6d5b41c
 
 public class SetupButton extends JButton{
   
