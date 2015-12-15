@@ -241,7 +241,7 @@ public class MultiGameHost {
 						coordPacket.y = tempY;
 						disableButtons();
 						lblYourTurn.setText("Enemy's Turn");
-						lblYourTurn.setForeground(Color.RED);
+						lblYourTurn.setForeground(Color.decode("#df7b40"));
 						server.sendToAllTCP(coordPacket);
 
 					}
@@ -257,7 +257,7 @@ public class MultiGameHost {
 
 		lblYourTurn = new JLabel("");
 		lblYourTurn.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblYourTurn.setForeground(Color.GREEN);
+		lblYourTurn.setForeground(Color.decode("#40df7b"));
 		lblYourTurn.setHorizontalAlignment(SwingConstants.CENTER);
 		lblYourTurn.setBounds(410, 383, 135, 14);
 		frame.getContentPane().add(lblYourTurn);

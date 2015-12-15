@@ -74,7 +74,7 @@ public class ServerListener extends Listener {
 
 			}
 			MultiGameHost.lblYourTurn.setText("Your Turn");
-			MultiGameHost.lblYourTurn.setForeground(Color.GREEN);
+			MultiGameHost.lblYourTurn.setForeground(Color.decode("#40df7b"));
 			c.sendTCP(hitPacket);
 			int count = 0;
 			for (int i = 0; i < 10; i++) {

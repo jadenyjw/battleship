@@ -70,7 +70,7 @@ public class ClientListener extends Listener {
 				hitPacket.isHit = false;
 			}
 			MultiGameClient.lblEnemysTurn.setText("Your Turn");
-			MultiGameClient.lblEnemysTurn.setForeground(Color.GREEN);
+			MultiGameClient.lblEnemysTurn.setForeground(Color.decode("#40df7b"));
 			client.sendTCP(hitPacket);
 			int count = 0;
 			for (int i = 0; i < 10; i++) {

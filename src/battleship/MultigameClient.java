@@ -235,7 +235,7 @@ public class MultiGameClient {
 						coordPacket.y = tempY;
 						disableButtons();
 						lblEnemysTurn.setText("Enemy's Turn");
-						lblEnemysTurn.setForeground(Color.RED);
+						lblEnemysTurn.setForeground(Color.decode("#df7b40"));
 						client.sendTCP(coordPacket);
 
 					}
@@ -250,7 +250,7 @@ public class MultiGameClient {
 
 		lblEnemysTurn = new JLabel("Enemy's Turn");
 		lblEnemysTurn.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblEnemysTurn.setForeground(Color.RED);
+		lblEnemysTurn.setForeground(Color.decode("#df7b40"));
 		lblEnemysTurn.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEnemysTurn.setBounds(410, 383, 135, 14);
 		frame.getContentPane().add(lblEnemysTurn);
