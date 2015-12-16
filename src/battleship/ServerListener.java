@@ -3,7 +3,6 @@ package battleship;
 import java.awt.Color;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;

@@ -1,33 +1,23 @@
 package battleship;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import com.esotericsoftware.kryonet.Client;
-import com.esotericsoftware.kryonet.Server;
-
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-
-import java.awt.CardLayout;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JLabel;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
-import java.awt.event.ActionEvent;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import com.esotericsoftware.kryonet.Client;
 
 public class MultiMenu extends JDialog {
 	private JPanel panel;
