@@ -83,29 +83,30 @@ public class MultiGameHost {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
-		    @Override
-		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		    	if (ServerListener.gameDone == false){
-		        if (JOptionPane.showConfirmDialog(frame, 
-		            "Closing this window will end the game. Are you sure?", "Really Closing?", 
-		            JOptionPane.YES_NO_OPTION,
-		            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-		        	 server.close();
-				     frame.dispose();
-		        	MultiMenu newWindow = new MultiMenu();
-					newWindow.setVisible(true);
-			       
-		            
-		        }
-		    	}
-		    	else if (ServerListener.gameDone == true){
-		    		server.close();
-			        frame.dispose();
-		    			MultiMenu newWindow = new MultiMenu();
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				if (ServerListener.gameDone == false) {
+					if (JOptionPane.showConfirmDialog(frame, "Closing this window will end the game. Are you sure?",
+							"Really Closing?", JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+						ServerListener.gameDone = false;
+						ServerListener.uniqueConnection = true;
+						server.close();
+						frame.dispose();
+						MultiMenu newWindow = new MultiMenu();
 						newWindow.setVisible(true);
-				        
-		    	}
-		    }
+
+					}
+				} else if (ServerListener.gameDone == true) {
+					ServerListener.gameDone = false;
+					ServerListener.uniqueConnection = true;
+					server.close();
+					frame.dispose();
+					MultiMenu newWindow = new MultiMenu();
+					newWindow.setVisible(true);
+
+				}
+			}
 		});
 		frame.getContentPane().setLayout(null);
 

@@ -87,6 +87,7 @@ public class MultiGameClient {
 							"Really Closing?", JOptionPane.YES_NO_OPTION,
 							JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
 						client.close();
+						ClientListener.gameDone = false;
 						frame.dispose();
 						MultiMenu newWindow = new MultiMenu();
 						newWindow.setVisible(true);
@@ -94,6 +95,7 @@ public class MultiGameClient {
 					}
 				} else if (ClientListener.gameDone == true) {
 					client.close();
+					ClientListener.gameDone = false;
 					frame.dispose();
 					MultiMenu newWindow = new MultiMenu();
 					newWindow.setVisible(true);

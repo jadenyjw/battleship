@@ -10,7 +10,7 @@ import com.esotericsoftware.kryonet.Listener;
 import battleship.Packets.Packet01Response;
 
 public class ServerListener extends Listener {
-	boolean uniqueConnection = true;
+	public static boolean uniqueConnection = true;
 	public static boolean gameDone = false;
 
 	public ServerListener() {
