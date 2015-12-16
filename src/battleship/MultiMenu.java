@@ -48,6 +48,7 @@ public class MultiMenu extends JDialog {
 	 * Create the dialog.
 	 */
 	public MultiMenu() {
+		setTitle("Battleship X Pro Limited Edition 2 | Multiplayer Lobby");
 		setBounds(100, 100, 400, 300);
 		getContentPane().setLayout(new BorderLayout());
 		{

@@ -69,6 +69,7 @@ public class Battleship {
 			public void actionPerformed(ActionEvent e) {
 				// Initialize Multiplayer
 				MultiMenu newWindow = new MultiMenu();
+				
 				newWindow.setVisible(true);
 				frame.dispose();
 			}
@@ -91,7 +92,7 @@ public class Battleship {
 				JOptionPane.showMessageDialog(frame,
 						"This is the standard Battleship game.\nCreated by Jaden Wang and Yuting Liu "
 								+ "for ICS3U1.\nThis project can be tracked and bugs can be reported at "
-								+ "https://github.com/yuting9/battleship");
+								+ "https://github.com/jaden71/battleship");
 			}
 		});
 		panel_1.add(btnNewButton_3);
