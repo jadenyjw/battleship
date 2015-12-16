@@ -12,7 +12,7 @@ import battleship.Packets.Packet01Response;
 
 public class ServerListener extends Listener {
 	boolean uniqueConnection = true;
-	boolean gameDone = false;
+	public static boolean gameDone = false;
 
 	public ServerListener() {
 

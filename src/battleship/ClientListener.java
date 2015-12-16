@@ -10,7 +10,7 @@ import com.esotericsoftware.kryonet.Listener;
 
 public class ClientListener extends Listener {
 	private Client client;
-	boolean gameDone = false;
+	public static boolean gameDone = false;
 
 	public void init(Client client) {
 		this.client = client;
