@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.JRadioButton;
+import javax.swing.JCheckBox;
 
 public class GridSetup extends JDialog {
 
@@ -32,6 +34,7 @@ public class GridSetup extends JDialog {
 	public static int[][] aiArray = { { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 } };
 	private static int shipNum = -1;
 	private static boolean error = false;
+	public static boolean cheatTog = false;
 
 	public static int clientShip[][] = new int[5][3] ;
 	public static int hostShip[][] = new int[5][3] ;
@@ -167,14 +170,30 @@ public class GridSetup extends JDialog {
 			
 				if (count == 17){
 				if (Battleship.referer.equals("single")){
-					int tempShipArray[][] = shipArray;
+					frame.dispose();
+					int tempShipArray[][] = new int[5][3];
+					for(int x = 0; x<5; x++){
+						for(int y = 0; y<3; y++){
+							System.out.println("Hey");
+							tempShipArray[x][y] = shipArray[x][y];
+						}
+					}
 					randomDeploy();
-					aiArray = shipArray;
-					shipArray = tempShipArray;
+					for(int x = 0; x<5; x++){
+						for(int y = 0; y<3; y++){
+							System.out.println("There");
+							aiArray[x][y] = shipArray[x][y];
+						}
+					}
+					for(int x = 0; x<5; x++){
+						for(int y = 0; y<3; y++){
+							System.out.println("Error not here");
+							shipArray[x][y] = tempShipArray[x][y];
+						}
+					}
 					
 					SingleGame newClient = new SingleGame();
 					newClient.frame.setVisible(true);
-					frame.dispose();
 				}
 				else if (Battleship.referer.equals("host")){
 					MultiGameHost newClient = new MultiGameHost();
@@ -207,6 +226,12 @@ public class GridSetup extends JDialog {
 		panel_1.add(btnRandomDeploy);
 		panel_1.add(btnFinish);
 		
+		if(Battleship.referer.equals("single")){
+			JCheckBox cheatMode = new JCheckBox("Cheat Mode");
+			cheatMode.setBounds(422, 391, 97, 23);
+			frame.getContentPane().add(cheatMode);
+			cheatTog = cheatMode.isSelected();
+		}
 
 	}
 

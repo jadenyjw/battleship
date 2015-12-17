@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -15,7 +16,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 public class SingleGame {
-
+	
+	
+	
 	JFrame frame;
 	private JTextField textField;
 	public static boolean hasNewText;
@@ -26,7 +29,7 @@ public class SingleGame {
 			public void run() {
 				try {
 
-					MultiGameHost window = new MultiGameHost();
+					SingleGame window = new SingleGame();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,12 +38,11 @@ public class SingleGame {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public SingleGame() {
 
 		initialize();
+		
+		
 
 	}
 
@@ -49,6 +51,9 @@ public class SingleGame {
 	 */
 	private void initialize() {
 		GridButton buttons[][] = new GridButton[10][10];
+		GridButton enemyButtons[][] = new GridButton[10][10];
+		
+		System.out.println("Check 1");
 		frame = new JFrame();
 		frame.setBounds(100, 100, 970, 450);
 		frame.setResizable(false);
@@ -60,6 +65,7 @@ public class SingleGame {
 		frame.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(10, 10));
 		panel.setSize(370, 370);
+		System.out.println("Check 2");
 
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
@@ -71,6 +77,7 @@ public class SingleGame {
 				panel.add(buttons[i][x]);
 			}
 		}
+		System.out.println("Check 3");
 
 		int shipLen;
 		for (int i = 0; i < 5; i++) {
@@ -108,6 +115,8 @@ public class SingleGame {
 
 			}
 		}
+		
+		System.out.println("Check 4");
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(555, 27, 370, 370);
@@ -115,7 +124,7 @@ public class SingleGame {
 		panel_1.setLayout(new GridLayout(10, 10));
 
 		JList list = new JList();
-		list.setBounds(410, 27, 134, 373);
+		list.setBounds(410, 27, 134, 329);
 		Border listBorder = BorderFactory.createLineBorder(Color.BLACK);
 		list.setBorder(BorderFactory.createCompoundBorder(listBorder, null));
 		frame.getContentPane().add(list);
@@ -147,15 +156,67 @@ public class SingleGame {
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		label_2.setBounds(935, 27, 46, 370);
 		frame.getContentPane().add(label_2);
-
+		
+		System.out.println("Check 5");
+		
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 
-				buttons[i][x] = new GridButton();
-				buttons[i][x].setIcon(GridButton.water);
-				buttons[i][x].setEnabled(true);
-				panel_1.add(buttons[i][x]);
+				enemyButtons[i][x] = new GridButton();
+				enemyButtons[i][x].setIcon(GridButton.water);
+				enemyButtons[i][x].setEnabled(true);
+				panel_1.add(enemyButtons[i][x]);
 			}
 		}
+		
+		if(GridSetup.cheatTog){
+			GridButton.hiddenShip = new ImageIcon(Battleship.class.getResource("/ship.png"));
+		}
+		
+		for (int i = 0; i < 5; i++) {
+			switch (i) {
+				case 0:
+					shipLen = 5;
+					break;
+				case 1:
+					shipLen = 4;
+					break;
+				case 2:
+					shipLen = 3;
+					break;
+				case 3:
+					shipLen = 3;
+					break;
+				case 4:
+					shipLen = 2;
+					break;
+				default:
+					shipLen = 0;
+			
+
+			}
+			System.out.println("Check 5.1");
+			System.out.println(GridSetup.aiArray[i][2]);
+			if (GridSetup.aiArray[i][2] == 0) {
+				int last = shipLen + GridSetup.aiArray[i][0];
+				for (int x = GridSetup.aiArray[i][0]; x < last; x++) {
+
+					enemyButtons[GridSetup.aiArray[i][1]][x].setIcon(GridButton.hiddenShip);
+				}
+			} else if (GridSetup.aiArray[i][2] == 1) {
+				int last = shipLen + GridSetup.aiArray[i][1];
+				for (int y = GridSetup.aiArray[i][1]; y < last; y++) {
+					enemyButtons[y][GridSetup.aiArray[i][0]].setIcon(GridButton.hiddenShip);
+				}
+
+			}
+		}
+		
+	}
+	
+	public static int[] aiRun(){
+		int[] shot = new int[] {0,0};
+		
+		return shot;
 	}
 }
