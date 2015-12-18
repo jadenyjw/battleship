@@ -25,7 +25,7 @@ public class GridSetup extends JDialog {
 
 	JFrame frame;
 	static JLabel image;
-	
+
 	public static SetupButton buttons[][] = new SetupButton[10][10];
 
 	private static String shipName = "Aircraft Carrier";
@@ -36,9 +36,8 @@ public class GridSetup extends JDialog {
 	private static boolean error = false;
 	public static boolean cheatTog = false;
 
-	public static int clientShip[][] = new int[5][3] ;
-	public static int hostShip[][] = new int[5][3] ;
-
+	public static int clientShip[][] = new int[5][3];
+	public static int hostShip[][] = new int[5][3];
 
 	/**
 	 * Launch the application.
@@ -63,14 +62,14 @@ public class GridSetup extends JDialog {
 	 */
 	public GridSetup() {
 		initialize();
-		
+
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-        
+
 		SetupButton ship[] = new SetupButton[6];
 
 		frame = new JFrame("Battleship X Pro Limited Edition 2 | Grid Setup");
@@ -85,12 +84,12 @@ public class GridSetup extends JDialog {
 		frame.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(10, 10));
 		panel.setSize(370, 370);
-		
+
 		image = new JLabel();
-		image.setBounds(445,210,64,90);
+		image.setBounds(445, 210, 64, 90);
 		image.setIcon(null);
 		frame.getContentPane().add(image);
-		
+
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 
@@ -104,7 +103,7 @@ public class GridSetup extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						image.setIcon(null);
 						refresh(tempX, tempY);
-						if(error)
+						if (error)
 							image.setIcon(new ImageIcon(Battleship.class.getResource("/invalid.png")));
 					}
 				});
@@ -123,21 +122,20 @@ public class GridSetup extends JDialog {
 		label_1.setVerticalAlignment(SwingConstants.TOP);
 		label_1.setBounds(10, 28, 46, 370);
 		frame.getContentPane().add(label_1);
-		
+
 		JCheckBox cheatMode = new JCheckBox("Cheat Mode");
 		cheatMode.setBounds(422, 391, 97, 23);
 		cheatTog = cheatMode.isSelected();
 		System.out.println(cheatMode.isSelected());
-		
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(412, 27, 126, 370);
 		frame.getContentPane().add(panel_1);
 
 		JComboBox shipNames = new JComboBox();
-		TitledBorder title;//used for titles around combo boxes
+		TitledBorder title;// used for titles around combo boxes
 		title = BorderFactory.createTitledBorder("Ships");
-		shipNames.setBorder(title);	
+		shipNames.setBorder(title);
 		shipNames.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				shipName = (String) shipNames.getSelectedItem();
@@ -148,7 +146,7 @@ public class GridSetup extends JDialog {
 		panel_1.add(shipNames);
 
 		JComboBox orient = new JComboBox();
-		TitledBorder orientation;//used for titles around combo boxes
+		TitledBorder orientation;// used for titles around combo boxes
 		orientation = BorderFactory.createTitledBorder("Orientation");
 		orient.setBorder(orientation);
 		orient.addActionListener(new ActionListener() {
@@ -166,61 +164,57 @@ public class GridSetup extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 
 				int count = 0;
-				for (int r = 0; r <= 9; r++){
-					for (int c = 0; c <= 9; c++){
-						if(buttons[r][c].getIcon()!= SetupButton.water)
+				for (int r = 0; r <= 9; r++) {
+					for (int c = 0; c <= 9; c++) {
+						if (buttons[r][c].getIcon() != SetupButton.water)
 							count++;
 					}
-					
-					
+
 				}
-			
-				if (count == 17){
-				if (Battleship.referer.equals("single")){
-					frame.dispose();
-					int tempShipArray[][] = new int[5][3];
-					for(int x = 0; x<5; x++){
-						for(int y = 0; y<3; y++){
-							System.out.println("Hey");
-							cheatTog = cheatMode.isSelected();
-							tempShipArray[x][y] = shipArray[x][y];
+
+				if (count == 17) {
+					if (Battleship.referer.equals("single")) {
+						frame.dispose();
+						int tempShipArray[][] = new int[5][3];
+						for (int x = 0; x < 5; x++) {
+							for (int y = 0; y < 3; y++) {
+								System.out.println("Hey");
+								cheatTog = cheatMode.isSelected();
+								tempShipArray[x][y] = shipArray[x][y];
+							}
 						}
-					}
-					randomDeploy();
-					for(int x = 0; x<5; x++){
-						for(int y = 0; y<3; y++){
-							System.out.println("There");
-							aiArray[x][y] = shipArray[x][y];
+						randomDeploy();
+						for (int x = 0; x < 5; x++) {
+							for (int y = 0; y < 3; y++) {
+								System.out.println("There");
+								aiArray[x][y] = shipArray[x][y];
+							}
 						}
-					}
-					for(int x = 0; x<5; x++){
-						for(int y = 0; y<3; y++){
-							System.out.println("Error not here");
-							shipArray[x][y] = tempShipArray[x][y];
+						for (int x = 0; x < 5; x++) {
+							for (int y = 0; y < 3; y++) {
+								System.out.println("Error not here");
+								shipArray[x][y] = tempShipArray[x][y];
+							}
 						}
+
+						SingleGame newClient = new SingleGame();
+						newClient.frame.setVisible(true);
+					} else if (Battleship.referer.equals("host")) {
+						MultiGameHost newClient = new MultiGameHost();
+						newClient.frame.setVisible(true);
+						frame.dispose();
+
+					} else if (Battleship.referer.equals("client")) {
+						MultiGameClient newClient = new MultiGameClient();
+						newClient.frame.setVisible(true);
+						frame.dispose();
 					}
-					
-					SingleGame newClient = new SingleGame();
-					newClient.frame.setVisible(true);
-				}
-				else if (Battleship.referer.equals("host")){
-					MultiGameHost newClient = new MultiGameHost();
-					newClient.frame.setVisible(true);
-					frame.dispose();
-					
-				}
-				else if (Battleship.referer.equals("client")){
-					MultiGameClient newClient = new MultiGameClient();
-					newClient.frame.setVisible(true);
-					frame.dispose();
-				}
-				}
-				else
+				} else
 					JOptionPane.showMessageDialog(null, "Please place all your ships before deploying.");
-			
+
 			}
 		});
-		
+
 		JButton btnRandomDeploy = new JButton("Random Deploy");
 		btnRandomDeploy.setVerticalAlignment(SwingConstants.BOTTOM);
 		btnRandomDeploy.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -228,20 +222,20 @@ public class GridSetup extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				randomDeploy();
 				shipName = (String) shipNames.getSelectedItem();
-			
+
 			}
 		});
 		panel_1.add(btnRandomDeploy);
 		panel_1.add(btnFinish);
-		
-		if(Battleship.referer.equals("single")){
+
+		if (Battleship.referer.equals("single")) {
 			frame.getContentPane().add(cheatMode);
 		}
 
 	}
 
-
-	private static boolean check(byte shipLen, String shipOrient, int yCoord, int xCoord, int shipArray[][],int shipNum){
+	private static boolean check(byte shipLen, String shipOrient, int yCoord, int xCoord, int shipArray[][],
+			int shipNum) {
 
 		if (shipOrient.equals("Horizontal")) {
 
@@ -249,7 +243,8 @@ public class GridSetup extends JDialog {
 				int last = shipLen + xCoord;
 
 				for (int t = xCoord; t < last; t++) {
-					if (buttons[yCoord][t].getIcon() != SetupButton.shipIcon[shipNum] && buttons[yCoord][t].getIcon() != SetupButton.water) {
+					if (buttons[yCoord][t].getIcon() != SetupButton.shipIcon[shipNum]
+							&& buttons[yCoord][t].getIcon() != SetupButton.water) {
 						return false;
 					}
 				}
@@ -260,7 +255,8 @@ public class GridSetup extends JDialog {
 			if (yCoord < 11 - shipLen) {
 				int last = shipLen + yCoord;
 				for (int t = yCoord; t < last; t++) {
-					if (buttons[t][xCoord].getIcon() != SetupButton.shipIcon[shipNum] && buttons[t][xCoord].getIcon() != SetupButton.water) {
+					if (buttons[t][xCoord].getIcon() != SetupButton.shipIcon[shipNum]
+							&& buttons[t][xCoord].getIcon() != SetupButton.water) {
 						return false;
 					}
 				}
@@ -272,51 +268,55 @@ public class GridSetup extends JDialog {
 				return false;
 		}
 	}
-	
-	public static void randomDeploy(){
+
+	public static void randomDeploy() {
 		reset();
-		
-		byte shipLen[] = {5,4,3,3,2};
-		for(shipNum = 0; shipNum<5; shipNum++){
-			
-			switch(shipNum){
-				case 0: shipName = "Aircraft Carrier";
-						break;
-				case 1: shipName = "Battleship";
-						break;
-				case 2: shipName = "Cruiser";
-						break;
-				case 3: shipName = "Submarine";
-						break;
-				default: shipName = "Patrol Boat";
-						break;
+
+		byte shipLen[] = { 5, 4, 3, 3, 2 };
+		for (shipNum = 0; shipNum < 5; shipNum++) {
+
+			switch (shipNum) {
+			case 0:
+				shipName = "Aircraft Carrier";
+				break;
+			case 1:
+				shipName = "Battleship";
+				break;
+			case 2:
+				shipName = "Cruiser";
+				break;
+			case 3:
+				shipName = "Submarine";
+				break;
+			default:
+				shipName = "Patrol Boat";
+				break;
 			}
-			
+
 			shipOrient = "Horizontal";
-			int x,y,o;
-			do{
+			int x, y, o;
+			do {
 				x = rng(9);
 				y = rng(9);
 				o = rng(2);
-				
-				if(o == 1)
+
+				if (o == 1)
 					shipOrient = "Vertical";
 				else
 					shipOrient = "Horizontal";
-				
-				refresh(x,y);
-			}while(error);
-			
-			
+
+				refresh(x, y);
+			} while (error);
+
 		}
-		
+
 	}
-	
-	public static int rng(int range){
+
+	public static int rng(int range) {
 		return (int) (Math.random() * range);
 	}
-	
-	private static void refresh(int tempX, int tempY){
+
+	private static void refresh(int tempX, int tempY) {
 
 		byte shipLen;
 		if (shipName.equals("Aircraft Carrier")) {
@@ -335,9 +335,9 @@ public class GridSetup extends JDialog {
 			shipLen = 3;
 			shipNum = 3;
 		}
-		
+
 		if (check(shipLen, shipOrient, tempX, tempY, shipArray, shipNum)) {
-			
+
 			error = false;
 			if (shipOrient.equals("Horizontal")) {
 				int orientation = 0;
@@ -402,19 +402,19 @@ public class GridSetup extends JDialog {
 					buttons[a][tempY].setIcon(SetupButton.shipIcon[shipNum]);
 				}
 			}
-		}
-		else
+		} else
 			error = true;
-	
+
 	}
-	private static void reset(){
-		
-		for(int i = 0; i<10; i++){
-			for(int x = 0; x<10; x++){
+
+	private static void reset() {
+
+		for (int i = 0; i < 10; i++) {
+			for (int x = 0; x < 10; x++) {
 				buttons[i][x].setIcon(SetupButton.water);
 			}
 		}
 		shipArray = new int[][] { { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 }, { -1, -1, 0 } };
-		
+
 	}
 }
