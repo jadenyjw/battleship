@@ -132,6 +132,7 @@ public class MultiMenu extends JDialog {
 		}
 		list.setModel(listModel);
 		String jaden = "204.197.182.51";
+		//String jaden = "192.168.0.62";
 		try {
 			listModel.addElement(InetAddress.getByName(jaden));
 		} catch (UnknownHostException e) {
