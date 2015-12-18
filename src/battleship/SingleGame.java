@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.JCheckBox;
 
 public class SingleGame {
 	
@@ -159,6 +160,23 @@ public class SingleGame {
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		label_2.setBounds(935, 27, 46, 370);
 		frame.getContentPane().add(label_2);
+		
+		JCheckBox cheatMode = new JCheckBox("Cheat Mode");
+		cheatMode.setBounds(420, 363, 97, 23);
+		frame.getContentPane().add(cheatMode);
+		cheatMode.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GridSetup.cheatTog = cheatMode.isSelected();
+				if(GridSetup.cheatTog){
+					GridButton.hiddenShip = new ImageIcon(Battleship.class.getResource("/ship.png"));
+					System.out.println("Change");
+				}
+				else{
+					GridButton.hiddenShip = new ImageIcon(Battleship.class.getResource("/water.png"));
+					System.out.println("ThisThing");
+				}
+			}
+		});
 		
 		System.out.println("Check 5");
 		
