@@ -296,8 +296,13 @@ public class MultiGameClient {
 			client.connect(5000, ipAddress, 1337, 1337);
 
 		} catch (IOException e) {
-
-			e.printStackTrace();
+			
+			
+			frame.dispose();
+			JOptionPane.showMessageDialog(null, "Jaden hasn't completed setting up his grid. Please try again later.");
+			MultiMenu newWindow = new MultiMenu();
+			newWindow.setVisible(true);
+			
 		}
 	}
 
