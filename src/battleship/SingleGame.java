@@ -62,6 +62,7 @@ public class SingleGame {
 		frame.setBounds(100, 100, 970, 450);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setIconImage(Battleship.img.getImage());
 		frame.getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();

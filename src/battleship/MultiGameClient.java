@@ -79,6 +79,7 @@ public class MultiGameClient {
 		frame.setBounds(100, 100, 970, 600);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.setIconImage(Battleship.img.getImage());
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
