@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 public class Battleship{
 	public static String referer = "";
 	private JFrame frame;
+	public static ImageIcon img = new ImageIcon("/icon.png");
 
 	/**
 	 * Launch the application.
@@ -50,7 +51,8 @@ public class Battleship{
 		frame.setBounds(100, 100, 625, 400);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
+        frame.setIconImage(img.getImage());
 		JPanel panel_1 = new JPanel();
 		frame.getContentPane().add(panel_1, BorderLayout.SOUTH);
 
