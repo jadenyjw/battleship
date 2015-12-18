@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 public class Battleship{
 	public static String referer = "";
 	private JFrame frame;
-	public static ImageIcon img = new ImageIcon("/icon.png");
+	public ImageIcon img = new ImageIcon(getClass().getResource("/icon.png"));
 
 	/**
 	 * Launch the application.
