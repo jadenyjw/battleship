@@ -16,6 +16,6 @@ public class GridButton extends JButton {
 	static ImageIcon miss = new ImageIcon(Battleship.class.getResource("/miss.png"));
 
 }
-}
+
 
 

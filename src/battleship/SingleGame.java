@@ -4,12 +4,15 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -17,9 +20,11 @@ import javax.swing.border.Border;
 
 public class SingleGame {
 	
+	public static GridButton buttons[][] = new GridButton[10][10];
+	public static GridButton enemyButtons[][] = new GridButton[10][10];
 	
 	
-	JFrame frame;
+	static JFrame frame;
 	private JTextField textField;
 	public static boolean hasNewText;
 
@@ -50,8 +55,6 @@ public class SingleGame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		GridButton buttons[][] = new GridButton[10][10];
-		GridButton enemyButtons[][] = new GridButton[10][10];
 		
 		System.out.println("Check 1");
 		frame = new JFrame();
@@ -164,8 +167,40 @@ public class SingleGame {
 
 				enemyButtons[i][x] = new GridButton();
 				enemyButtons[i][x].setIcon(GridButton.water);
+				
 				enemyButtons[i][x].setEnabled(true);
 				panel_1.add(enemyButtons[i][x]);
+				final int tempX = i;
+				final int tempY = x;
+				enemyButtons[i][x].addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e) {
+						shotOut(tempX, tempY);
+						disableButtons();
+						int enemyCount = 0, playerCount = 0;
+						for (int r = 0; r <= 9; r++){
+							for (int c = 0; c <= 9; c++){
+								if(enemyButtons[r][c].getIcon()== GridButton.hit)
+									enemyCount++;
+							}
+						}
+						if(enemyCount >= 17){
+							endGame(true);
+						}
+						aiRun();
+						for (int r = 0; r <= 9; r++){
+							for (int c = 0; c <= 9; c++){
+								if(buttons[r][c].getIcon()== GridButton.hit)
+									playerCount++;
+							}
+						}
+						if(playerCount >= 17){
+							endGame(false);
+							
+						}
+							
+						enableButtons();
+					}
+				});
 			}
 		}
 		
@@ -214,9 +249,57 @@ public class SingleGame {
 		
 	}
 	
-	public static int[] aiRun(){
+	private static int[] aiRun(){
 		int[] shot = new int[] {0,0};
 		
 		return shot;
+	}
+	
+	private static void shotOut(int x, int y){
+		if(enemyButtons[x][y].getIcon() == GridButton.hiddenShip){
+			enemyButtons[x][y].setIcon(GridButton.hit);
+		}
+		else{
+			enemyButtons[x][y].setIcon(GridButton.miss);
+		}
+	}
+	
+	private static void disableButtons(){
+		for (int i = 0; i < 10; i++) {
+			for (int x = 0; x < 10; x++) {
+				enemyButtons[i][x].setDisabledIcon(enemyButtons[i][x].getIcon());
+				enemyButtons[i][x].setEnabled(false);
+			}
+		}
+	}
+	
+	private static void enableButtons(){
+		for (int i = 0; i < 10; i++) {
+			for (int x = 0; x < 10; x++) {
+				if(enemyButtons[i][x].getIcon() != GridButton.hit && enemyButtons[i][x].getIcon() != GridButton.miss){
+					enemyButtons[i][x].setEnabled(true);
+				}
+			}
+		}
+	}
+	
+	private static void endGame(boolean win){
+		int choice;
+		if(win){
+			choice = JOptionPane.showConfirmDialog(null, "You Win\nPlay Again?", null, 0);
+		}
+		else{
+			choice = JOptionPane.showConfirmDialog(null, "You Lose\nPlay Again?", null, 0);
+		}
+		if(choice == 0){
+			Battleship.referer = "single";
+			GridSetup newClient = new GridSetup();
+			newClient.frame.setVisible(true);
+			frame.dispose();
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "Thank you for playing!");
+			frame.dispose();
+		}
 	}
 }

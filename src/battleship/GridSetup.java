@@ -122,6 +122,12 @@ public class GridSetup extends JDialog {
 		label_1.setVerticalAlignment(SwingConstants.TOP);
 		label_1.setBounds(10, 28, 46, 370);
 		frame.getContentPane().add(label_1);
+		
+		JCheckBox cheatMode = new JCheckBox("Cheat Mode");
+		cheatMode.setBounds(422, 391, 97, 23);
+		cheatTog = cheatMode.isSelected();
+		System.out.println(cheatMode.isSelected());
+		
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(412, 27, 126, 370);
@@ -175,6 +181,7 @@ public class GridSetup extends JDialog {
 					for(int x = 0; x<5; x++){
 						for(int y = 0; y<3; y++){
 							System.out.println("Hey");
+							cheatTog = cheatMode.isSelected();
 							tempShipArray[x][y] = shipArray[x][y];
 						}
 					}
@@ -227,10 +234,7 @@ public class GridSetup extends JDialog {
 		panel_1.add(btnFinish);
 		
 		if(Battleship.referer.equals("single")){
-			JCheckBox cheatMode = new JCheckBox("Cheat Mode");
-			cheatMode.setBounds(422, 391, 97, 23);
 			frame.getContentPane().add(cheatMode);
-			cheatTog = cheatMode.isSelected();
 		}
 
 	}
