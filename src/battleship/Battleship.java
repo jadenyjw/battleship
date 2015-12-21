@@ -85,7 +85,8 @@ public class Battleship{
 				JOptionPane.showMessageDialog(frame,
 						"Rules can be found documented online.\nIf you are experiencing errors with "
 								+ "network mode, try allowing this program through your firewall.\n"
-								+ "If you cannot find other servers, make sure you can establish a TCP/UDP connection with the other computer on port 1337.\n"
+								+ "If you cannot find other servers, make sure you can establish a TCP/UDP"
+								+ " connection with the other computer on port 1337.\n"
 								+ "If you would like to host a server online, contact Jaden Wang.");
 			}
 		});

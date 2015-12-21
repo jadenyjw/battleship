@@ -23,6 +23,8 @@ public class SingleGame {
 	
 	public static GridButton buttons[][] = new GridButton[10][10];
 	public static GridButton enemyButtons[][] = new GridButton[10][10];
+	private static int hitCombo[][] = {{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+									   {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}};
 	
 	
 	static JFrame frame;
@@ -109,12 +111,13 @@ public class SingleGame {
 			if (GridSetup.shipArray[i][2] == 0) {
 				int last = shipLen + GridSetup.shipArray[i][0];
 				for (int x = GridSetup.shipArray[i][0]; x < last; x++) {
-
+					buttons[GridSetup.shipArray[i][1]][x].setIcon(GridButton.shipIcon[0]);
 					buttons[GridSetup.shipArray[i][1]][x].setDisabledIcon(GridButton.shipIcon[0]);
 				}
 			} else if (GridSetup.shipArray[i][2] == 1) {
 				int last = shipLen + GridSetup.shipArray[i][1];
 				for (int y = GridSetup.shipArray[i][1]; y < last; y++) {
+					buttons[y][GridSetup.shipArray[i][0]].setIcon(GridButton.shipIcon[0]);
 					buttons[y][GridSetup.shipArray[i][0]].setDisabledIcon(GridButton.shipIcon[0]);
 				}
 
@@ -161,23 +164,6 @@ public class SingleGame {
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		label_2.setBounds(935, 27, 46, 370);
 		frame.getContentPane().add(label_2);
-		
-		JCheckBox cheatMode = new JCheckBox("Cheat Mode");
-		cheatMode.setBounds(420, 363, 97, 23);
-		frame.getContentPane().add(cheatMode);
-		cheatMode.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GridSetup.cheatTog = cheatMode.isSelected();
-				if(GridSetup.cheatTog){
-					GridButton.hiddenShip = new ImageIcon(Battleship.class.getResource("/ship.png"));
-					System.out.println("Change");
-				}
-				else{
-					GridButton.hiddenShip = new ImageIcon(Battleship.class.getResource("/water.png"));
-					System.out.println("ThisThing");
-				}
-			}
-		});
 		
 		System.out.println("Check 5");
 		
@@ -268,15 +254,41 @@ public class SingleGame {
 		
 	}
 	
-	private static int[] aiRun(){
-		int[] shot = new int[] {0,0};
-		
-		return shot;
+	private static void aiRun(){
+		int shotX, shotY;
+		for (int i = 0; i < 10; i++) {
+			for (int x = 0; x < 10; x++) {
+				if(buttons[i][x].getIcon() != GridButton.hit && buttons[i][x].getIcon() != GridButton.miss){
+					buttons[i][x].setEnabled(true);
+				}
+			}
+		}
+		do{
+			shotX = GridSetup.rng(10); shotY = GridSetup.rng(10);
+		}while(buttons[shotX][shotY].getIcon() == GridButton.hit || buttons[shotX][shotY].getIcon() == GridButton.miss);
+		System.out.println(shotX + " " + shotY);
+		System.out.println(buttons[shotX][shotY].getIcon());
+		if(buttons[shotX][shotY].getIcon() != GridButton.water){
+			buttons[shotX][shotY].setIcon(GridButton.hit);
+			buttons[shotX][shotY].setDisabledIcon(GridButton.hit);
+			System.out.println("Hit");
+		}
+		else{
+			buttons[shotX][shotY].setIcon(GridButton.miss);
+			buttons[shotX][shotY].setDisabledIcon(GridButton.miss);
+			System.out.println("Miss");
+		}
+		for (int i = 0; i < 10; i++) {
+			for (int x = 0; x < 10; x++) {
+				buttons[i][x].setEnabled(false);
+			}
+		}
 	}
 	
 	private static void shotOut(int x, int y){
 		if(enemyButtons[x][y].getIcon() == GridButton.hiddenShip){
 			enemyButtons[x][y].setIcon(GridButton.hit);
+			
 		}
 		else{
 			enemyButtons[x][y].setIcon(GridButton.miss);

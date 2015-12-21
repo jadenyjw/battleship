@@ -123,14 +123,9 @@ public class GridSetup extends JDialog {
 		label_1.setBounds(10, 28, 46, 370);
 		frame.getContentPane().add(label_1);
 		
-		JCheckBox cheatMode = new JCheckBox("Cheat Mode");
-		cheatMode.setBounds(422, 391, 97, 23);
-		cheatTog = cheatMode.isSelected();
-		System.out.println(cheatMode.isSelected());
-		
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(412, 27, 126, 370);
+		panel_1.setBounds(412, 27, 126, 209);
 		frame.getContentPane().add(panel_1);
 
 		JComboBox shipNames = new JComboBox();
@@ -142,6 +137,9 @@ public class GridSetup extends JDialog {
 				shipName = (String) shipNames.getSelectedItem();
 			}
 		});
+		JCheckBox cheatMode = new JCheckBox("Cheat Mode");
+		cheatMode.setBounds(433, 325, 100, 23);
+		
 		shipNames.setModel(new DefaultComboBoxModel(
 				new String[] { "Aircraft Carrier", "Battleship", "Cruiser", "Submarine", "Patrol Boat" }));
 		panel_1.add(shipNames);
@@ -235,6 +233,9 @@ public class GridSetup extends JDialog {
 		
 		if(Battleship.referer.equals("single")){
 			frame.getContentPane().add(cheatMode);
+			cheatMode.setSelected(false);
+			cheatTog = cheatMode.isSelected();
+			System.out.println(cheatMode.isSelected());
 		}
 
 	}
@@ -294,8 +295,8 @@ public class GridSetup extends JDialog {
 			shipOrient = "Horizontal";
 			int x,y,o;
 			do{
-				x = rng(9);
-				y = rng(9);
+				x = rng(10);
+				y = rng(10);
 				o = rng(2);
 				
 				if(o == 1)
