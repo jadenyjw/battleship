@@ -264,10 +264,12 @@ public class SingleGame {
 			}
 		}
 		do{
+			//Do all crazy AI code things here
+			if(prevHits = true){
+				//Thing
+			}
 			shotX = GridSetup.rng(10); shotY = GridSetup.rng(10);
 		}while(buttons[shotX][shotY].getIcon() == GridButton.hit || buttons[shotX][shotY].getIcon() == GridButton.miss);
-		System.out.println(shotX + " " + shotY);
-		System.out.println(buttons[shotX][shotY].getIcon());
 		if(buttons[shotX][shotY].getIcon() != GridButton.water){
 			buttons[shotX][shotY].setIcon(GridButton.hit);
 			buttons[shotX][shotY].setDisabledIcon(GridButton.hit);
