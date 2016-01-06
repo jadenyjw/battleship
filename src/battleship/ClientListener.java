@@ -55,7 +55,7 @@ public class ClientListener extends Listener {
 			Packets.Packet04Hit hitPacket = new Packets.Packet04Hit();
 			hitPacket.x = p.x;
 			hitPacket.y = p.y;
-			if (MultiGameClient.buttons[p.x][p.y].getDisabledIcon() == GridButton.shipIcon[0]) {
+			if (MultiGameClient.buttons[p.x][p.y].getDisabledIcon() == GridButton.shipIcon) {
 				MultiGameClient.buttons[p.x][p.y].setDisabledIcon(GridButton.hit);
 				MultiGameClient.listModel
 						.addElement("Enemy hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
@@ -120,7 +120,7 @@ public class ClientListener extends Listener {
 
 				for (int i = 0; i < 10; i++) {
 					for (int x = 0; x < 10; x++) {
-						if (MultiGameClient.buttons[i][x].getDisabledIcon() == GridButton.shipIcon[0]) {
+						if (MultiGameClient.buttons[i][x].getDisabledIcon() == GridButton.shipIcon) {
 							Packets.Packet06Missed coordPacket = new Packets.Packet06Missed();
 							coordPacket.x = i;
 							coordPacket.y = x;
@@ -138,7 +138,7 @@ public class ClientListener extends Listener {
 		}
 		if (o instanceof Packets.Packet06Missed) {
 			Packets.Packet06Missed p = (Packets.Packet06Missed) o;
-			MultiGameClient.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.shipIcon[0]);
+			MultiGameClient.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.shipIcon);
 		}
 	}
 }
