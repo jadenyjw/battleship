@@ -23,8 +23,12 @@ public class SingleGame {
 	
 	public static GridButton buttons[][] = new GridButton[10][10];
 	public static GridButton enemyButtons[][] = new GridButton[10][10];
-	private static int hitCombo[][] = {{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-									   {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}};
+	private static int firstHit[] = {-1,-1};
+	private static int pointHit[] = {-1,-1};
+	private static int shotDirect = GridSetup.rng(4);
+	private static boolean backUp = false;
+	private static String aiMode = "search";
+	private static int shotX, shotY;
 	
 	
 	static JFrame frame;
@@ -212,6 +216,9 @@ public class SingleGame {
 		if(GridSetup.cheatTog){
 			GridButton.hiddenShip = new ImageIcon(Battleship.class.getResource("/ship.png"));
 		}
+		else{
+			GridButton.hiddenShip = new ImageIcon(Battleship.class.getResource("/water.png"));
+		}
 		
 		for (int i = 0; i < 5; i++) {
 			switch (i) {
@@ -255,7 +262,7 @@ public class SingleGame {
 	}
 	
 	private static void aiRun(){
-		int shotX, shotY;
+		int prevrngs[] = {-1,-1,-1,-1};
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 				if(buttons[i][x].getIcon() != GridButton.hit && buttons[i][x].getIcon() != GridButton.miss){
@@ -263,21 +270,123 @@ public class SingleGame {
 				}
 			}
 		}
+		int counter = 0;
 		do{
 			//Do all crazy AI code things here
-			if(prevHits = true){
-				//Thing
+			if(firstHit[0] != -1 && !aiMode.equals("back")){
+				do{
+					if(aiMode.equals("pinpoint"))
+						shotDirect = GridSetup.rng(4);
+					switch(shotDirect){
+						case 0: 
+							shotX = pointHit[0]-1; shotY = pointHit[1];
+							break;
+						case 1:
+							shotX = pointHit[0]; shotY = pointHit[1]+1;
+							break;
+						case 2:
+							shotX = pointHit[0]+1; shotY = pointHit[1];
+							break;
+						case 3:
+							shotX = pointHit[0]; shotY = pointHit[1]-1;
+							break;
+						default:
+							System.out.println("Error");
+							System.out.println("Shotdirect is " + shotDirect);
+							shotX = 0; shotY = 0;
+					}
+					if(!check(shotX,shotY) && !aiMode.equals("pinpoint")){
+						aiMode = "back";
+						pointHit = firstHit;
+						switch(shotDirect){
+							case 0: 
+								shotX = pointHit[0]+1; shotY = pointHit[1];
+								break;
+							case 1:
+								shotX = pointHit[0]; shotY = pointHit[1]-1;
+								break;
+							case 2:
+								shotX = pointHit[0]-1; shotY = pointHit[1];
+								break;
+							case 3:
+								shotX = pointHit[0]; shotY = pointHit[1]+1;
+								break;
+							default:
+								System.out.println("Error");
+								System.out.println("Shotdirect is " + shotDirect);
+								shotX = 0; shotY = 0;
+						}
+						if(!check(shotX,shotY)){
+							aiMode = "search";
+							firstHit = new int[] {-1,-1};
+							shotX = GridSetup.rng(10); shotY = GridSetup.rng(10);
+						}
+					
+					}
+				}while(!check(shotX,shotY));
 			}
-			shotX = GridSetup.rng(10); shotY = GridSetup.rng(10);
+			else if(firstHit[0] != -1 && aiMode.equals("back")){
+				switch(shotDirect){
+					case 0: 
+						shotX = pointHit[0]+1; shotY = pointHit[1];
+						break;
+					case 1:
+						shotX = pointHit[0]; shotY = pointHit[1]-1;
+						break;
+					case 2:
+						shotX = pointHit[0]-1; shotY = pointHit[1];
+						break;
+					case 3:
+						shotX = pointHit[0]; shotY = pointHit[1]+1;
+						break;
+					default:
+						System.out.println("Error");
+						System.out.println("Shotdirect is " + shotDirect);
+						shotX = 0; shotY = 0;
+				}
+				if(!check(shotX,shotY)){
+					aiMode = "search";
+					firstHit = new int[] {-1,-1};
+					do{
+						shotX = GridSetup.rng(10); shotY = GridSetup.rng(10);
+					}while(checkRound(shotX,shotY));
+				}
+			}
+			else{
+				do{
+					shotX = GridSetup.rng(10); shotY = GridSetup.rng(10);
+				}while(checkRound(shotX,shotY));
+				firstHit = new int[] {-1,-1};
+			}
 		}while(buttons[shotX][shotY].getIcon() == GridButton.hit || buttons[shotX][shotY].getIcon() == GridButton.miss);
+		System.out.println(shotX +" "+ shotY);
 		if(buttons[shotX][shotY].getIcon() != GridButton.water){
 			buttons[shotX][shotY].setIcon(GridButton.hit);
 			buttons[shotX][shotY].setDisabledIcon(GridButton.hit);
+			if(firstHit[0] == -1){
+				firstHit = new int[] {shotX,shotY};
+				pointHit = firstHit;
+			}
+			else{
+				pointHit = new int[] {shotX,shotY};
+			}
+			if(aiMode.equals("search"))
+				aiMode = "pinpoint";
+			else if(aiMode.equals("pinpoint"))
+				aiMode = "combo";
 			System.out.println("Hit");
 		}
 		else{
 			buttons[shotX][shotY].setIcon(GridButton.miss);
 			buttons[shotX][shotY].setDisabledIcon(GridButton.miss);
+			if(aiMode.equals("back")){
+				aiMode = "search";
+				firstHit = new int[] {-1,-1};
+			}
+			else if(aiMode.equals("combo")){
+				aiMode = "back";
+				pointHit = firstHit;
+			}
 			System.out.println("Miss");
 		}
 		for (int i = 0; i < 10; i++) {
@@ -305,7 +414,11 @@ public class SingleGame {
 			}
 		}
 	}
-	
+	/*
+	private static boolean restrictCheck(int xVar){
+		
+	}
+	*/
 	private static void enableButtons(){
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
@@ -315,7 +428,44 @@ public class SingleGame {
 			}
 		}
 	}
-	
+	private static boolean checkRound(int xVal, int yVal){
+		System.out.println(buttons[xVal][yVal].getIcon());
+		if(buttons[xVal][yVal].getIcon() != GridButton.water && buttons[xVal][yVal].getIcon() != GridButton.miss && buttons[xVal][yVal].getIcon() != GridButton.hit){
+			return false;
+		}
+		if(xVal <= 8){
+			if(buttons[xVal+1][yVal].getIcon() == GridButton.miss){
+				return true;
+			}
+		}
+		if(yVal <= 8){
+			if(buttons[xVal][yVal+1].getIcon() == GridButton.miss){
+				return true;
+			}
+		}
+		if(xVal >= 1){
+			if(buttons[xVal-1][yVal].getIcon() == GridButton.miss){
+				return true;
+			}
+		}
+		if(yVal >= 1){
+			if(buttons[xVal][yVal-1].getIcon() == GridButton.miss){
+				return true;
+			}
+		}
+		return false;
+	}
+	private static boolean check(int xVal, int yVal){
+		if(xVal > 9 || yVal > 9 || xVal < 0 || yVal < 0){
+			return false;
+		}
+		else if(buttons[xVal][yVal].getIcon() != GridButton.hit && buttons[xVal][yVal].getIcon() != GridButton.miss){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 	private static void endGame(boolean win){
 		int choice;
 		if(win){

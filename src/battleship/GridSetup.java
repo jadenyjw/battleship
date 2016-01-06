@@ -176,13 +176,16 @@ public class GridSetup extends JDialog {
 				if (Battleship.referer.equals("single")){
 					frame.dispose();
 					int tempShipArray[][] = new int[5][3];
+					cheatTog = false;
+					cheatTog = cheatMode.isSelected();
 					for(int x = 0; x<5; x++){
 						for(int y = 0; y<3; y++){
 							System.out.println("Hey");
-							cheatTog = cheatMode.isSelected();
 							tempShipArray[x][y] = shipArray[x][y];
 						}
 					}
+					System.out.println("CHEATMODE " + cheatMode.isSelected());
+					System.out.println("CHEATMODE " + cheatTog);
 					randomDeploy();
 					for(int x = 0; x<5; x++){
 						for(int y = 0; y<3; y++){
