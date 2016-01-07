@@ -20,6 +20,7 @@ import javax.swing.border.Border;
 import javax.swing.JCheckBox;
 
 public class SingleGame {
+	
 	public static GridButton buttons[][] = new GridButton[10][10];
 	public static GridButton enemyButtons[][] = new GridButton[10][10];
 	private static int firstHit[] = {-1,-1};
@@ -33,9 +34,9 @@ public class SingleGame {
 	static JFrame frame;
 	private JTextField textField;
 	public static boolean hasNewText;
-	
+
 	public static void main(String[] args) {
-		System.out.println("Check");
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -50,7 +51,7 @@ public class SingleGame {
 	}
 
 	public SingleGame() {
-		System.out.println("Initialized");
+
 		initialize();
 		
 		
@@ -61,6 +62,7 @@ public class SingleGame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		System.out.println("Check 1");
 		frame = new JFrame();
 		frame.setBounds(100, 100, 970, 450);
@@ -260,7 +262,7 @@ public class SingleGame {
 	}
 	
 	private static void aiRun(){
-		System.out.println("CheckAI/n");
+		int prevrngs[] = {-1,-1,-1,-1};
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 				if(buttons[i][x].getIcon() != GridButton.hit && buttons[i][x].getIcon() != GridButton.miss){
@@ -268,15 +270,12 @@ public class SingleGame {
 				}
 			}
 		}
-		System.out.println("Check1");
+		int counter = 0;
 		do{
 			//Do all crazy AI code things here
-			System.out.println("Check2");
 			if(firstHit[0] != -1 && !aiMode.equals("back")){
-				System.out.println("Checknotback");
 				do{
 					if(aiMode.equals("pinpoint"))
-						System.out.println("Checkpinpoint");
 						shotDirect = GridSetup.rng(4);
 					switch(shotDirect){
 						case 0: 
@@ -296,9 +295,7 @@ public class SingleGame {
 							System.out.println("Shotdirect is " + shotDirect);
 							shotX = 0; shotY = 0;
 					}
-					System.out.println("Checkswitch");
 					if(!check(shotX,shotY) && !aiMode.equals("pinpoint")){
-						System.out.println("Checknotpinpointnotcheck");
 						aiMode = "back";
 						pointHit = firstHit;
 						switch(shotDirect){
@@ -319,22 +316,16 @@ public class SingleGame {
 								System.out.println("Shotdirect is " + shotDirect);
 								shotX = 0; shotY = 0;
 						}
-						System.out.println("Checkswitchback");
 						if(!check(shotX,shotY)){
 							aiMode = "search";
 							firstHit = new int[] {-1,-1};
-							System.out.println("Checkreturn");
-							do{
-								shotX = GridSetup.rng(10); shotY = GridSetup.rng(10);
-							}while(checkRound(shotX,shotY) && !check(shotX,shotY));
+							shotX = GridSetup.rng(10); shotY = GridSetup.rng(10);
 						}
-						System.out.println("Checkend");
+					
 					}
 				}while(!check(shotX,shotY));
-				System.out.println("Checkend");
 			}
 			else if(firstHit[0] != -1 && aiMode.equals("back")){
-				System.out.println("Checkback");
 				switch(shotDirect){
 					case 0: 
 						shotX = pointHit[0]+1; shotY = pointHit[1];
@@ -353,29 +344,23 @@ public class SingleGame {
 						System.out.println("Shotdirect is " + shotDirect);
 						shotX = 0; shotY = 0;
 				}
-				System.out.println("Checkswitch");
 				if(!check(shotX,shotY)){
-					System.out.println("Check");
 					aiMode = "search";
 					firstHit = new int[] {-1,-1};
 					do{
 						shotX = GridSetup.rng(10); shotY = GridSetup.rng(10);
 					}while(checkRound(shotX,shotY));
-					System.out.println("Checkrerng");
 				}
 			}
 			else{
 				do{
 					shotX = GridSetup.rng(10); shotY = GridSetup.rng(10);
 				}while(checkRound(shotX,shotY));
-				System.out.println("Checkrerng");
 				firstHit = new int[] {-1,-1};
 			}
 		}while(buttons[shotX][shotY].getIcon() == GridButton.hit || buttons[shotX][shotY].getIcon() == GridButton.miss);
-		System.out.println("Checkend");
 		System.out.println(shotX +" "+ shotY);
 		if(buttons[shotX][shotY].getIcon() != GridButton.water){
-			System.out.println("Checkhit");
 			buttons[shotX][shotY].setIcon(GridButton.hit);
 			buttons[shotX][shotY].setDisabledIcon(GridButton.hit);
 			if(firstHit[0] == -1){
@@ -392,7 +377,6 @@ public class SingleGame {
 			System.out.println("Hit");
 		}
 		else{
-			System.out.println("Checkmiss");
 			buttons[shotX][shotY].setIcon(GridButton.miss);
 			buttons[shotX][shotY].setDisabledIcon(GridButton.miss);
 			if(aiMode.equals("back")){
