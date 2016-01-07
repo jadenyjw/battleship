@@ -148,12 +148,12 @@ public class MultiGameClient {
 				int last = shipLen + GridSetup.shipArray[i][0];
 				for (int x = GridSetup.shipArray[i][0]; x < last; x++) {
 
-					buttons[GridSetup.shipArray[i][1]][x].setDisabledIcon(GridButton.shipIcon);
+					buttons[GridSetup.shipArray[i][1]][x].setDisabledIcon(GridButton.shipIcon[0]);
 				}
 			} else if (GridSetup.shipArray[i][2] == 1) {
 				int last = shipLen + GridSetup.shipArray[i][1];
 				for (int y = GridSetup.shipArray[i][1]; y < last; y++) {
-					buttons[y][GridSetup.shipArray[i][0]].setDisabledIcon(GridButton.shipIcon);
+					buttons[y][GridSetup.shipArray[i][0]].setDisabledIcon(GridButton.shipIcon[0]);
 				}
 
 			}

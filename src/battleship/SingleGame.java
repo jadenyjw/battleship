@@ -113,14 +113,14 @@ public class SingleGame {
 			if (GridSetup.shipArray[i][2] == 0) {
 				int last = shipLen + GridSetup.shipArray[i][0];
 				for (int x = GridSetup.shipArray[i][0]; x < last; x++) {
-					buttons[GridSetup.shipArray[i][1]][x].setIcon(GridButton.shipIcon[0]);
-					buttons[GridSetup.shipArray[i][1]][x].setDisabledIcon(GridButton.shipIcon[0]);
+					buttons[GridSetup.shipArray[i][1]][x].setIcon(GridButton.shipIcon);
+					buttons[GridSetup.shipArray[i][1]][x].setDisabledIcon(GridButton.shipIcon);
 				}
 			} else if (GridSetup.shipArray[i][2] == 1) {
 				int last = shipLen + GridSetup.shipArray[i][1];
 				for (int y = GridSetup.shipArray[i][1]; y < last; y++) {
-					buttons[y][GridSetup.shipArray[i][0]].setIcon(GridButton.shipIcon[0]);
-					buttons[y][GridSetup.shipArray[i][0]].setDisabledIcon(GridButton.shipIcon[0]);
+					buttons[y][GridSetup.shipArray[i][0]].setIcon(GridButton.shipIcon);
+					buttons[y][GridSetup.shipArray[i][0]].setDisabledIcon(GridButton.shipIcon);
 				}
 
 			}
@@ -446,7 +446,7 @@ public class SingleGame {
 	}
 	private static boolean checkRound(int xVal, int yVal){
 		System.out.println(buttons[xVal][yVal].getIcon());
-		if(buttons[xVal][yVal].getIcon() != GridButton.water && buttons[xVal][yVal].getIcon() != GridButton.miss && buttons[xVal][yVal].getIcon() != GridButton.hit){
+		if(buttons[xVal][yVal].getIcon() == GridButton.shipIcon){
 			return false;
 		}
 		if(xVal <= 8){
@@ -484,6 +484,7 @@ public class SingleGame {
 	}
 	private static void endGame(boolean win){
 		int choice;
+		GridButton.hiddenShip = new ImageIcon(Battleship.class.getResource("/ship.png"));
 		if(win){
 			choice = JOptionPane.showConfirmDialog(null, "You Win\nPlay Again?", null, 0);
 		}
@@ -492,6 +493,14 @@ public class SingleGame {
 		}
 		if(choice == 0){
 			Battleship.referer = "single";
+			buttons = new GridButton[10][10];
+			enemyButtons = new GridButton[10][10];
+			firstHit = new int[] {-1,-1};
+			pointHit = new int[] {-1,-1};
+			shotDirect = GridSetup.rng(4);
+			backUp = false;
+			aiMode = "search";
+			shotX = 0; shotY = 0;
 			GridSetup newClient = new GridSetup();
 			newClient.frame.setVisible(true);
 			frame.dispose();
