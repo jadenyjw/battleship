@@ -113,14 +113,14 @@ public class SingleGame {
 			if (GridSetup.shipArray[i][2] == 0) {
 				int last = shipLen + GridSetup.shipArray[i][0];
 				for (int x = GridSetup.shipArray[i][0]; x < last; x++) {
-					buttons[GridSetup.shipArray[i][1]][x].setIcon(GridButton.shipIcon);
-					buttons[GridSetup.shipArray[i][1]][x].setDisabledIcon(GridButton.shipIcon);
+					buttons[GridSetup.shipArray[i][1]][x].setIcon(GridButton.shipIcon[0]);
+					buttons[GridSetup.shipArray[i][1]][x].setDisabledIcon(GridButton.shipIcon[0]);
 				}
 			} else if (GridSetup.shipArray[i][2] == 1) {
 				int last = shipLen + GridSetup.shipArray[i][1];
 				for (int y = GridSetup.shipArray[i][1]; y < last; y++) {
-					buttons[y][GridSetup.shipArray[i][0]].setIcon(GridButton.shipIcon);
-					buttons[y][GridSetup.shipArray[i][0]].setDisabledIcon(GridButton.shipIcon);
+					buttons[y][GridSetup.shipArray[i][0]].setIcon(GridButton.shipIcon[0]);
+					buttons[y][GridSetup.shipArray[i][0]].setDisabledIcon(GridButton.shipIcon[0]);
 				}
 
 			}
@@ -446,7 +446,7 @@ public class SingleGame {
 	}
 	private static boolean checkRound(int xVal, int yVal){
 		System.out.println(buttons[xVal][yVal].getIcon());
-		if(buttons[xVal][yVal].getIcon() == GridButton.shipIcon){
+		if(buttons[xVal][yVal].getIcon() != GridButton.water && buttons[xVal][yVal].getIcon() != GridButton.miss && buttons[xVal][yVal].getIcon() != GridButton.hit){
 			return false;
 		}
 		if(xVal <= 8){
