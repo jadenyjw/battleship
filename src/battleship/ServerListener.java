@@ -10,10 +10,8 @@ import com.esotericsoftware.kryonet.Listener;
 import battleship.Packets.Packet01Response;
 
 public class ServerListener extends Listener {
-	public static boolean uniqueConnection = true; // allows only 1 connection
-													// per host
-	public static boolean gameDone = false; // determines if the game has been
-											// finished
+	public static boolean uniqueConnection = true; //allows only 1 connection per host
+	public static boolean gameDone = false; //determines if the game has been finished
 
 	public ServerListener() {
 
@@ -22,56 +20,55 @@ public class ServerListener extends Listener {
 	public void connected(Connection c) {
 
 	}
-
-	// Disconnection handling
+    //Disconnection handling
 	public void disconnected(Connection c) {
 		MultiGameHost.textArea.append(">> The other player has disconnected.\n");
 		MultiGameHost.disableButtons();
 	}
-
+    
 	public void received(Connection c, Object o) {
-		// When server receives a request to join
+		//When server receives a request to join
 		if (o instanceof Packets.Packet00Request) {
 			Packet01Response answer = new Packets.Packet01Response();
-			// Determine if the server already has an existing connection
+			//Determine if the server already has an existing connection
 			if (uniqueConnection) {
 				answer.accepted = true;
-				// accept the connection
+				//accept the connection
 				c.sendTCP(answer);
 				MultiGameHost.textArea.append((">> " + ((Packets.Packet00Request) o).clientName
 						+ " has joined your game.\n>> You will go first.\n"));
 				MultiGameHost.lblYourTurn.setText("Your Turn");
 				MultiGameHost.frame.toFront();
 				uniqueConnection = false;
-				// enable input for server
+				//enable input for server
 				for (int i = 0; i < 10; i++) {
 					for (int x = 0; x < 10; x++) {
 						MultiGameHost.enemyButtons[i][x].setEnabled(true);
 					}
 				}
 			} else {
-				// deny the connection
+				//deny the connection
 				answer.accepted = false;
 				c.sendTCP(answer);
 			}
 
 		}
-		// when server receives a chat message
+		//when server receives a chat message
 		if (o instanceof Packets.Packet02Message) {
-			// display it on screen
+			//display it on screen
 			Packets.Packet02Message p = (Packets.Packet02Message) o;
 			MultiGameHost.textArea.append(p.userName + ": " + p.message + "\n");
 
 		}
-		// when server receives a coordinate to hit
+		//when server receives a coordinate to hit
 		if (o instanceof Packets.Packet03Coords) {
 
 			Packets.Packet03Coords p = (Packets.Packet03Coords) o;
 			Packets.Packet04Hit hitPacket = new Packets.Packet04Hit();
 			hitPacket.x = p.x;
 			hitPacket.y = p.y;
-			// check whether if there is an existing ship on that coordinate
-			if (MultiGameHost.buttons[p.x][p.y].getDisabledIcon() == GridButton.shipIcon) {
+			//check whether if there is an existing ship on that coordinate
+			if (MultiGameHost.buttons[p.x][p.y].getDisabledIcon() == GridButton.shipIcon[0]) {
 				MultiGameHost.buttons[p.x][p.y].setDisabledIcon(GridButton.hit);
 				MultiGameHost.listModel
 						.addElement("Enemy hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
@@ -85,12 +82,12 @@ public class ServerListener extends Listener {
 				hitPacket.isHit = false;
 
 			}
-			// update server gui
+			//update server gui
 			MultiGameHost.lblYourTurn.setText("Your Turn");
 			MultiGameHost.lblYourTurn.setForeground(Color.decode("#40df7b"));
 			c.sendTCP(hitPacket);
 			int count = 0;
-			// checks to see if all ships are destroyed
+			//checks to see if all ships are destroyed
 			for (int i = 0; i < 10; i++) {
 				for (int x = 0; x < 10; x++) {
 					if (MultiGameHost.buttons[i][x].getDisabledIcon() == GridButton.hit) {
@@ -99,7 +96,7 @@ public class ServerListener extends Listener {
 
 				}
 			}
-			// if yes, finish the game
+			//if yes, finish the game
 			if (count == 17) {
 				Packets.Packet05Victory victoryPacket = new Packets.Packet05Victory();
 				victoryPacket.victory = true;
@@ -108,17 +105,17 @@ public class ServerListener extends Listener {
 				MultiGameHost.lblYourTurn.setText("");
 				JOptionPane.showMessageDialog(null, "You lost!");
 
-			} // if not, continue
+			}//if not, continue
 			if (gameDone == false) {
 				MultiGameHost.reEnableButtons();
 			}
 
 		}
-		// if server receives a response for the corresponding coordinate
+		//if server receives a response for the corresponding coordinate
 		if (o instanceof Packets.Packet04Hit) {
 			Packets.Packet04Hit p = (Packets.Packet04Hit) o;
 			MultiGameHost.enemyButtons[p.x][p.y].setEnabled(false);
-			// update gui according to the response
+            //update gui according to the response
 			if (p.isHit == true) {
 				MultiGameHost.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.hit);
 				MultiGameHost.listModel
@@ -133,16 +130,16 @@ public class ServerListener extends Listener {
 			}
 
 		}
-		// if server has won
+		//if server has won
 		if (o instanceof Packets.Packet05Victory) {
 			Packets.Packet05Victory p = (Packets.Packet05Victory) o;
 			if (p.victory) {
 				gameDone = true;
 				MultiGameHost.disableButtons();
-				// send all the ships that opponent missed
+				//send all the ships that opponent missed
 				for (int i = 0; i < 10; i++) {
 					for (int x = 0; x < 10; x++) {
-						if (MultiGameHost.buttons[i][x].getDisabledIcon() == GridButton.shipIcon) {
+						if (MultiGameHost.buttons[i][x].getDisabledIcon() == GridButton.shipIcon[0]) {
 							Packets.Packet06Missed coordPacket = new Packets.Packet06Missed();
 							coordPacket.x = i;
 							coordPacket.y = x;
@@ -158,10 +155,10 @@ public class ServerListener extends Listener {
 			}
 
 		}
-		// when received, update current board to show missed ships
+		//when received, update current board to show missed ships
 		if (o instanceof Packets.Packet06Missed) {
 			Packets.Packet06Missed p = (Packets.Packet06Missed) o;
-			MultiGameHost.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.shipIcon);
+			MultiGameHost.enemyButtons[p.x][p.y].setDisabledIcon(GridButton.shipIcon[0]);
 		}
 	}
 

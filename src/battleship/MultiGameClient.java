@@ -148,12 +148,12 @@ public class MultiGameClient {
 				int last = shipLen + GridSetup.shipArray[i][0];
 				for (int x = GridSetup.shipArray[i][0]; x < last; x++) {
 
-					buttons[GridSetup.shipArray[i][1]][x].setDisabledIcon(GridButton.shipIcon);
+					buttons[GridSetup.shipArray[i][1]][x].setDisabledIcon(GridButton.shipIcon[0]);
 				}
 			} else if (GridSetup.shipArray[i][2] == 1) {
 				int last = shipLen + GridSetup.shipArray[i][1];
 				for (int y = GridSetup.shipArray[i][1]; y < last; y++) {
-					buttons[y][GridSetup.shipArray[i][0]].setDisabledIcon(GridButton.shipIcon);
+					buttons[y][GridSetup.shipArray[i][0]].setDisabledIcon(GridButton.shipIcon[0]);
 				}
 
 			}
@@ -269,9 +269,13 @@ public class MultiGameClient {
 		joinServer();
 
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
+<<<<<<< HEAD
 		Border borderwhite = BorderFactory.createLineBorder(Color.lightGray);
 		scroll.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 0, 0, 0)));
         textArea.setBorder(BorderFactory.createCompoundBorder(borderwhite, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+=======
+		textArea.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+>>>>>>> 4c745eac685f8fba3a3601c3297a21ad17178b72
 
 		lblEnemysTurn = new JLabel("Enemy's Turn");
 		lblEnemysTurn.setFont(new Font("Tahoma", Font.BOLD, 13));
