@@ -276,7 +276,7 @@ public class MultiGameHost {
 		listModel = new DefaultListModel<String>();
 		list.setModel(listModel);
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
-		scroll.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		textArea.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		lblYourTurn = new JLabel("");
 		lblYourTurn.setFont(new Font("Tahoma", Font.BOLD, 13));

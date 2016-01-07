@@ -269,7 +269,7 @@ public class MultiGameClient {
 		joinServer();
 
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
-		scroll.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		textArea.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		lblEnemysTurn = new JLabel("Enemy's Turn");
 		lblEnemysTurn.setFont(new Font("Tahoma", Font.BOLD, 13));
