@@ -197,7 +197,7 @@ public class MultiGameHost {
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 
-		JLabel lblEnterAMesage = new JLabel("Enter a mesage:");
+		JLabel lblEnterAMesage = new JLabel("Enter a message:");
 		lblEnterAMesage.setBounds(10, 533, 93, 14);
 		frame.getContentPane().add(lblEnterAMesage);
 
@@ -276,8 +276,9 @@ public class MultiGameHost {
 		listModel = new DefaultListModel<String>();
 		list.setModel(listModel);
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
-		scroll.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-
+		Border borderwhite = BorderFactory.createLineBorder(Color.lightGray);
+		scroll.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 0, 0, 0)));
+        textArea.setBorder(BorderFactory.createCompoundBorder(borderwhite, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 		lblYourTurn = new JLabel("");
 		lblYourTurn.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblYourTurn.setForeground(Color.decode("#40df7b"));
