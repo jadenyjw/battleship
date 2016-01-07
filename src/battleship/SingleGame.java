@@ -484,7 +484,6 @@ public class SingleGame {
 	}
 	private static void endGame(boolean win){
 		int choice;
-		GridButton.hiddenShip = new ImageIcon(Battleship.class.getResource("/ship.png"));
 		if(win){
 			choice = JOptionPane.showConfirmDialog(null, "You Win\nPlay Again?", null, 0);
 		}
@@ -493,14 +492,6 @@ public class SingleGame {
 		}
 		if(choice == 0){
 			Battleship.referer = "single";
-			buttons = new GridButton[10][10];
-			enemyButtons = new GridButton[10][10];
-			firstHit = new int[] {-1,-1};
-			pointHit = new int[] {-1,-1};
-			shotDirect = GridSetup.rng(4);
-			backUp = false;
-			aiMode = "search";
-			shotX = 0; shotY = 0;
 			GridSetup newClient = new GridSetup();
 			newClient.frame.setVisible(true);
 			frame.dispose();
