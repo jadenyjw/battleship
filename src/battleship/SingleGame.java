@@ -479,10 +479,9 @@ public class SingleGame {
 	}
 	private static void endGame(boolean win){
 		int choice;
-		GridButton.hiddenShip = new ImageIcon(Battleship.class.getResource("/ship.png"));
 		for(int x = 0; x<10; x++){
 			for(int y = 0; y<10; y++){
-				enemyButtons[x][y].setIcon(GridButton.hiddenShip);
+				enemyButtons[x][y].setIcon(GridButton.shipIcon);
 			}
 		}
 		
