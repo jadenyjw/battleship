@@ -273,7 +273,9 @@ public class SingleGame {
 		int counter = 0;
 		do{
 			//Do all crazy AI code things here
+			System.out.println("check");
 			if(firstHit[0] != -1 && !aiMode.equals("back")){
+				System.out.println("check1");
 				do{
 					if(aiMode.equals("pinpoint"))
 						shotDirect = GridSetup.rng(4);
@@ -295,6 +297,7 @@ public class SingleGame {
 							System.out.println("Shotdirect is " + shotDirect);
 							shotX = 0; shotY = 0;
 					}
+					System.out.println("check2");
 					if(!check(shotX,shotY) && !aiMode.equals("pinpoint")){
 						aiMode = "back";
 						pointHit = firstHit;
@@ -316,11 +319,13 @@ public class SingleGame {
 								System.out.println("Shotdirect is " + shotDirect);
 								shotX = 0; shotY = 0;
 						}
+						System.out.println("check3");
 						if(!check(shotX,shotY)){
 							aiMode = "search";
 							firstHit = new int[] {-1,-1};
 							shotX = GridSetup.rng(10); shotY = GridSetup.rng(10);
 						}
+						System.out.println("check4");
 					
 					}
 				}while(!check(shotX,shotY));
@@ -344,7 +349,9 @@ public class SingleGame {
 						System.out.println("Shotdirect is " + shotDirect);
 						shotX = 0; shotY = 0;
 				}
+				System.out.println("check5");
 				if(!check(shotX,shotY)){
+					System.out.println("check6");
 					aiMode = "search";
 					firstHit = new int[] {-1,-1};
 					do{
@@ -354,11 +361,13 @@ public class SingleGame {
 			}
 			else{
 				do{
+					System.out.println("check7");
 					shotX = GridSetup.rng(10); shotY = GridSetup.rng(10);
 				}while(checkRound(shotX,shotY));
 				firstHit = new int[] {-1,-1};
 			}
 		}while(buttons[shotX][shotY].getIcon() == GridButton.hit || buttons[shotX][shotY].getIcon() == GridButton.miss);
+		System.out.println("check8");
 		System.out.println(shotX +" "+ shotY);
 		if(buttons[shotX][shotY].getIcon() != GridButton.water){
 			buttons[shotX][shotY].setIcon(GridButton.hit);
