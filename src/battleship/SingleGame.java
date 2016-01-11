@@ -195,19 +195,21 @@ public class SingleGame {
 						if(enemyCount >= 17){
 							endGame(true);
 						}
-						aiRun();
-						for (int r = 0; r <= 9; r++){
-							for (int c = 0; c <= 9; c++){
-								if(buttons[r][c].getIcon()== GridButton.hit)
-									playerCount++;
+						else{
+							aiRun();
+							for (int r = 0; r <= 9; r++){
+								for (int c = 0; c <= 9; c++){
+									if(buttons[r][c].getIcon()== GridButton.hit)
+										playerCount++;
+								}
+							}
+							if(playerCount >= 17){
+								endGame(false);
+							}
+							else{
+								enableButtons();
 							}
 						}
-						if(playerCount >= 17){
-							endGame(false);
-							
-						}
-							
-						enableButtons();
 					}
 				});
 			}
