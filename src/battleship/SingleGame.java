@@ -8,12 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -23,6 +25,8 @@ public class SingleGame {
 	
 	public static GridButton buttons[][] = new GridButton[10][10];
 	public static GridButton enemyButtons[][] = new GridButton[10][10];
+	public static DefaultListModel<String> listModel;
+	public static JList<String> list = new JList<String>();
 	private static int firstHit[] = {-1,-1};
 	private static int pointHit[] = {-1,-1};
 	private static int shotDirect = GridSetup.rng(4);
@@ -135,11 +139,13 @@ public class SingleGame {
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(new GridLayout(10, 10));
 
-		JList list = new JList();
-		list.setBounds(410, 27, 134, 329);
+		listModel = new DefaultListModel<String>();
+		list.setModel(listModel);
 		Border listBorder = BorderFactory.createLineBorder(Color.BLACK);
 		list.setBorder(BorderFactory.createCompoundBorder(listBorder, null));
-		frame.getContentPane().add(list);
+		JScrollPane scrollLog = new JScrollPane(list);
+		scrollLog.setBounds(410, 27, 134, 345);
+		frame.getContentPane().add(scrollLog);
 
 		JLabel lblEventLog = new JLabel("Event Log");
 		lblEventLog.setBounds(450, 10, 57, 14);
@@ -202,6 +208,11 @@ public class SingleGame {
 									if(buttons[r][c].getIcon()== GridButton.hit)
 										playerCount++;
 								}
+							}
+							listModel.addElement("");
+							int lastIndex = list.getModel().getSize() - 1;
+							if (lastIndex >= 0) {
+								list.ensureIndexIsVisible(lastIndex);
 							}
 							if(playerCount >= 17){
 								endGame(false);
@@ -300,6 +311,8 @@ public class SingleGame {
 							shotX = 0; shotY = 0;
 					}
 					System.out.println("check2");
+					System.out.println(shotX + shotY);
+					System.out.println(shotDirect);
 					if(!check(shotX,shotY) && !aiMode.equals("pinpoint")){
 						aiMode = "back";
 						pointHit = firstHit;
@@ -374,6 +387,7 @@ public class SingleGame {
 		if(buttons[shotX][shotY].getIcon() != GridButton.water){
 			buttons[shotX][shotY].setIcon(GridButton.hit);
 			buttons[shotX][shotY].setDisabledIcon(GridButton.hit);
+			output(true, shotX+1, shotY+1, "The AI");
 			if(firstHit[0] == -1){
 				firstHit = new int[] {shotX,shotY};
 				pointHit = firstHit;
@@ -390,6 +404,7 @@ public class SingleGame {
 		else{
 			buttons[shotX][shotY].setIcon(GridButton.miss);
 			buttons[shotX][shotY].setDisabledIcon(GridButton.miss);
+			output(false, shotX+1, shotY+1, "The AI");
 			if(aiMode.equals("back")){
 				aiMode = "search";
 				firstHit = new int[] {-1,-1};
@@ -410,10 +425,12 @@ public class SingleGame {
 	private static void shotOut(int x, int y){
 		if(enemyButtons[x][y].getIcon() == GridButton.hiddenShip){
 			enemyButtons[x][y].setIcon(GridButton.hit);
+			output(true, x+1, y+1, "You");
 			
 		}
 		else{
 			enemyButtons[x][y].setIcon(GridButton.miss);
+			output(false, x+1, y+1, "You");
 		}
 	}
 	
@@ -477,13 +494,45 @@ public class SingleGame {
 			return false;
 		}
 	}
+	private static void output(boolean hit, int xVar, int yVar, String whoShot){
+		char yCord = 'A';
+		switch(yVar){
+		case 1: yCord = 'A';
+				break;
+		case 2: yCord = 'B';
+				break;
+		case 3: yCord = 'C';
+				break;
+		case 4: yCord = 'D';
+				break;
+		case 5: yCord = 'E';
+				break;
+		case 6: yCord = 'F';
+				break;
+		case 7: yCord = 'G';
+				break;
+		case 8: yCord = 'H';
+				break;
+		case 9: yCord = 'I';
+				break;
+		case 10: yCord = 'J';
+				break;
+		}
+		if(hit){
+			listModel.addElement(whoShot + " hit:    " + xVar + "," + yCord);
+		}
+		else{
+			listModel.addElement(whoShot + " missed: " + xVar + "," + yCord);
+		}
+	}
+	
 	private static void endGame(boolean win){
 		int choice;
 		for(int x = 0; x<10; x++){
 			for(int y = 0; y<10; y++){
 				if(enemyButtons[x][y].getDisabledIcon() == GridButton.hiddenShip){
 					enemyButtons[x][y].setDisabledIcon(GridButton.shipIcon);
-				}
+				} 	 	
 			}
 		}
 		
