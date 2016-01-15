@@ -21,7 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.JCheckBox;
 
-public class SingleGame {
+public class TuitSingle {
 	
 	public static GridButton buttons[][] = new GridButton[10][10];
 	public static GridButton enemyButtons[][] = new GridButton[10][10];
@@ -47,7 +47,7 @@ public class SingleGame {
 			public void run() {
 				try {
 
-					SingleGame window = new SingleGame();
+					TuitSingle window = new TuitSingle();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,7 +56,7 @@ public class SingleGame {
 		});
 	}
 
-	public SingleGame() {
+	public TuitSingle() {
 
 		initialize();
 		
