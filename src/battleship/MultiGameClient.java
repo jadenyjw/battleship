@@ -111,7 +111,7 @@ public class MultiGameClient {
 		frame.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(10, 10));
 		panel.setSize(370, 370);
-
+//Initialize water icons
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 
@@ -123,6 +123,7 @@ public class MultiGameClient {
 			}
 		}
 		int shipLen;
+		//Ship lengths according to ship id
 		for (int i = 0; i < 5; i++) {
 			switch (i) {
 			case 0:
@@ -144,6 +145,7 @@ public class MultiGameClient {
 				shipLen = 0;
 
 			}
+			//Place ship according to orientation
 			if (GridSetup.shipArray[i][2] == 0) {
 				int last = shipLen + GridSetup.shipArray[i][0];
 				for (int x = GridSetup.shipArray[i][0]; x < last; x++) {
@@ -197,6 +199,7 @@ public class MultiGameClient {
 		JButton btnNewButton = new JButton("Send");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//Send chat message
 				if (!(textField.getText().trim().equals(""))) {
 					textArea.append(MultiMenu.userName + ": " + textField.getText() + "\n");
 					Packets.Packet02Message messagePacket = new Packets.Packet02Message();
@@ -244,13 +247,14 @@ public class MultiGameClient {
 
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
-
+//Initialize water
 				enemyButtons[i][x] = new GridButton();
 				enemyButtons[i][x].setIcon(GridButton.water);
 				enemyButtons[i][x].setDisabledIcon(GridButton.water);
 				enemyButtons[i][x].setEnabled(false);
 				final int tempX = i;
 				final int tempY = x;
+				//Button on click will send a coord packet
 				enemyButtons[i][x].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						Packets.Packet03Coords coordPacket = new Packets.Packet03Coords();
@@ -286,6 +290,7 @@ public class MultiGameClient {
 	}
 
 	public void joinServer() {
+		//Joins the server
 		client = new Client();
 		cl = new ClientListener();
 
@@ -313,6 +318,7 @@ public class MultiGameClient {
 	}
 
 	private void registerPackets() {
+		//Resgisters all the packets used by Kryo
 		Kryo kryo = client.getKryo();
 		kryo.register(Packets.Packet00Request.class);
 		kryo.register(Packets.Packet01Response.class);
@@ -324,6 +330,7 @@ public class MultiGameClient {
 	}
 
 	public static void reEnableButtons() {
+		//Enables the buttons
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 				if (MultiGameClient.enemyButtons[i][x].getDisabledIcon() != GridButton.hit
@@ -334,6 +341,7 @@ public class MultiGameClient {
 	}
 
 	public static void disableButtons() {
+		//Disable Buttons
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 				MultiGameClient.enemyButtons[i][x].setEnabled(false);
@@ -342,6 +350,7 @@ public class MultiGameClient {
 	}
 
 	public static void scrollList() {
+		//Scrolls the list
 		int lastIndex = list.getModel().getSize() - 1;
 		if (lastIndex >= 0) {
 			list.ensureIndexIsVisible(lastIndex);

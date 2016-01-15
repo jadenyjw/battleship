@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class GridButton extends JButton {
-
+// Import all icons
 	static ImageIcon shipIcon = new ImageIcon(Battleship.class.getResource("/ship.png"));
 	static ImageIcon hiddenShip = new ImageIcon(Battleship.class.getResource("/water.png"));
 	static ImageIcon water = new ImageIcon(Battleship.class.getResource("/water.png"));
