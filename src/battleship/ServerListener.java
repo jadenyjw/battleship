@@ -1,8 +1,11 @@
 package battleship;
 
 import java.awt.Color;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
+
+import org.apache.http.client.ClientProtocolException;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -10,8 +13,11 @@ import com.esotericsoftware.kryonet.Listener;
 import battleship.Packets.Packet01Response;
 
 public class ServerListener extends Listener {
-	public static boolean uniqueConnection = true; //allows only 1 connection per host
-	public static boolean gameDone = false; //determines if the game has been finished
+	public static boolean uniqueConnection = true; // allows only 1 connection
+													// per host
+	public static boolean gameDone = false; // determines if the game has been
+											// finished
+	public static String opponentName;
 
 	public ServerListener() {
 
@@ -20,12 +26,13 @@ public class ServerListener extends Listener {
 	public void connected(Connection c) {
 
 	}
-    //Disconnection handling
+
+	// Disconnection handling
 	public void disconnected(Connection c) {
 		MultiGameHost.textArea.append(">> The other player has disconnected.\n");
 		MultiGameHost.disableButtons();
 	}
-    
+
 	public void received(Connection c, Object o) {
 		//When server receives a request to join
 		if (o instanceof Packets.Packet00Request) {
@@ -33,10 +40,12 @@ public class ServerListener extends Listener {
 			//Determine if the server already has an existing connection
 			if (uniqueConnection) {
 				answer.accepted = true;
+				answer.name = MultiMenu.userName;
 				//accept the connection
 				c.sendTCP(answer);
 				MultiGameHost.textArea.append((">> " + ((Packets.Packet00Request) o).clientName
 						+ " has joined your game.\n>> You will go first.\n"));
+				opponentName = ((Packets.Packet00Request) o).clientName;
 				MultiGameHost.lblYourTurn.setText("Your Turn");
 				MultiGameHost.frame.toFront();
 				uniqueConnection = false;
@@ -104,6 +113,13 @@ public class ServerListener extends Listener {
 				gameDone = true;
 				MultiGameHost.lblYourTurn.setText("");
 				JOptionPane.showMessageDialog(null, "You lost!");
+				try {
+					HTTPHandler.UpdateSite(opponentName + " won against " + MultiMenu.userName);
+				} catch (ClientProtocolException e) {
+					JOptionPane.showMessageDialog(null, "An error occurred updating the website.");
+				} catch (IOException e) {
+					JOptionPane.showMessageDialog(null, "An error occurred updating the website.");
+				}
 
 			}//if not, continue
 			if (gameDone == false) {

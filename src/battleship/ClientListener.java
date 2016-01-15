@@ -1,8 +1,11 @@
 package battleship;
 
 import java.awt.Color;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
+
+import org.apache.http.client.ClientProtocolException;
 
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -12,7 +15,8 @@ public class ClientListener extends Listener {
 	// #variable
 	private Client client; // Kryonet client object
 	public static boolean gameDone = false; // Used to determine if game is finished
-
+	public static String opponentName;
+	
 	public void init(Client client) {
 		this.client = client;
 	}
@@ -37,7 +41,8 @@ public class ClientListener extends Listener {
 
 			if (serverAnswer == true) {
 				// Determine if server has accepted the connection
-				MultiGameClient.textArea.append(">> You have successfully connected. Server will go first.\n");
+				MultiGameClient.textArea.append(">> You have successfully connected. " + ((Packets.Packet01Response) o).name +" will go first.\n");
+				opponentName = ((Packets.Packet01Response) o).name;
 			}
 
 			else {
@@ -97,6 +102,13 @@ public class ClientListener extends Listener {
 				gameDone = true;
 				MultiGameClient.lblEnemysTurn.setText("");
 				JOptionPane.showMessageDialog(null, "You lost!");
+				try {
+					HTTPHandler.UpdateSite(opponentName + " won against " + MultiMenu.userName);
+				} catch (ClientProtocolException e) {
+					JOptionPane.showMessageDialog(null, "An error occurred updating the website.");
+				} catch (IOException e) {
+					JOptionPane.showMessageDialog(null, "An error occurred updating the website.");
+				}
 			}
 			if (gameDone == false) {
 				MultiGameClient.reEnableButtons();

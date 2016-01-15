@@ -8,6 +8,7 @@ public class Packets {
     //Whether or not the connection has been accepted
 	public static class Packet01Response {
 		boolean accepted;
+		String name;
 	}
     //Chat message class
 	public static class Packet02Message {
