@@ -20,16 +20,18 @@ import javax.swing.SwingConstants;
 import com.esotericsoftware.kryonet.Client;
 
 public class MultiMenu extends JDialog {
-	private JPanel panel;
-	private JButton btnHostGame;
-	private JButton btnJoinGame;
-	private JPanel panel_1;
-	private JTextField txtName;
-	private JList<InetAddress> list;
-	private JButton btnRefresh;
-	private JLabel lblEnterUsername;
-	public static String userName;
-	public static String ipAddress;
+
+	// #variable
+	private JPanel panel; // Panel
+	private JButton btnHostGame; // Host game button
+	private JButton btnJoinGame; // Join game button
+	private JPanel panel_1; // Panel for username
+	private JTextField txtName; // text field for username
+	private JList<InetAddress> list; // list of ip addresses
+	private JButton btnRefresh; // refresh hosts
+	private JLabel lblEnterUsername; // label to enter username
+	public static String userName; // username
+	public static String ipAddress; // ip address
 
 	/**
 	 * Launch the application.
@@ -121,7 +123,9 @@ public class MultiMenu extends JDialog {
 		}
 	}
 
+	// #method
 	public void refresh() {
+		// refresh hosts
 		Client client = new Client();
 		List<InetAddress> address = client.discoverHosts(1337, 1337);
 
@@ -133,7 +137,7 @@ public class MultiMenu extends JDialog {
 		}
 		list.setModel(listModel);
 		String jaden = "204.197.182.51";
-		//String jaden = "192.168.0.62";
+		// String jaden = "192.168.0.62";
 		try {
 			listModel.addElement(InetAddress.getByName(jaden));
 		} catch (UnknownHostException e) {
@@ -143,12 +147,14 @@ public class MultiMenu extends JDialog {
 	}
 
 	public void serve() {
+		// bring up setup for grid then host
 		GridSetup newWindow = new GridSetup();
 		newWindow.frame.setVisible(true);
 		dispose();
 	}
 
 	public void join() {
+		// bring up setup for grid then join
 		if (list.isSelectionEmpty() == false) {
 			ipAddress = String.valueOf(list.getSelectedValue()).substring(1);
 			GridSetup newClient = new GridSetup();

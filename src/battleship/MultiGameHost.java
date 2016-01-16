@@ -28,26 +28,26 @@ import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 
 public class MultiGameHost {
+// #variable
+	public static JFrame frame; // Swing Jframe object
+	private JTextField textField; //Text field for chat
 
-	public static JFrame frame;
-	private JTextField textField;
+	public static String message; // Chat message
 
-	public static String message;
+	public static javax.swing.JTextArea textArea; // Text area for chat
+	public static GridButton buttons[][] = new GridButton[10][10]; // Own buttons
+	public static GridButton enemyButtons[][] = new GridButton[10][10]; //Enemy buttons
+	public static DefaultListModel<String> listModel; // List model for event log
+	public static JList<String> list = new JList<String>(); // List for event log
 
-	public static javax.swing.JTextArea textArea;
-	public static GridButton buttons[][] = new GridButton[10][10];
-	public static GridButton enemyButtons[][] = new GridButton[10][10];
-	public static DefaultListModel<String> listModel;
-	public static JList<String> list = new JList<String>();
+	public static JLabel lblYourTurn; // Label for turn indication
 
-	public static JLabel lblYourTurn;
+	int port = 1337; //Port used to host server
+	Server server; //Kryonet server
+	ServerListener sl; //Kryonet server listener
 
-	int port = 1337;
-	Server server;
-	ServerListener sl;
-
-	public static JPanel panel;
-	public static JPanel panel_1;
+	public static JPanel ownPanel; //Panel for own buttons
+	public static JPanel enemyPanel; //Panel for enemy buttons
 
 	public static void main(String[] args) {
 
@@ -111,11 +111,11 @@ public class MultiGameHost {
 		});
 		frame.getContentPane().setLayout(null);
 
-		JPanel panel = new JPanel();
-		panel.setLocation(30, 27);
-		frame.getContentPane().add(panel);
-		panel.setLayout(new GridLayout(10, 10));
-		panel.setSize(370, 370);
+		JPanel ownPanel = new JPanel();
+		ownPanel.setLocation(30, 27);
+		frame.getContentPane().add(ownPanel);
+		ownPanel.setLayout(new GridLayout(10, 10));
+		ownPanel.setSize(370, 370);
 
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
@@ -124,7 +124,7 @@ public class MultiGameHost {
 				buttons[i][x].setIcon(GridButton.water);
 				buttons[i][x].setDisabledIcon(GridButton.water);
 				buttons[i][x].setEnabled(false);
-				panel.add(buttons[i][x]);
+				ownPanel.add(buttons[i][x]);
 			}
 		}
 
@@ -165,10 +165,10 @@ public class MultiGameHost {
 			}
 		}
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(555, 27, 370, 370);
-		frame.getContentPane().add(panel_1);
-		panel_1.setLayout(new GridLayout(10, 10));
+		JPanel enemyPanel = new JPanel();
+		enemyPanel.setBounds(555, 27, 370, 370);
+		frame.getContentPane().add(enemyPanel);
+		enemyPanel.setLayout(new GridLayout(10, 10));
 
 		listModel = new DefaultListModel<String>();
 		list.setModel(listModel);
@@ -269,7 +269,7 @@ public class MultiGameHost {
 
 					}
 				});
-				panel_1.add(enemyButtons[i][x]);
+				enemyPanel.add(enemyButtons[i][x]);
 			}
 		}
 
@@ -278,10 +278,10 @@ public class MultiGameHost {
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		Border borderwhite = BorderFactory.createLineBorder(Color.lightGray);
 		scroll.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 0, 0, 0)));
-        textArea.setBorder(BorderFactory.createCompoundBorder(borderwhite, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		textArea.setBorder(
+				BorderFactory.createCompoundBorder(borderwhite, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		textArea.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-
 
 		lblYourTurn = new JLabel("");
 		lblYourTurn.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -294,7 +294,7 @@ public class MultiGameHost {
 		textArea.append(">> Now waiting for a connection from another player. " + "\n");
 
 	}
-
+	// #method
 	public void hostServer() {
 		server = new Server();
 		sl = new ServerListener();
@@ -325,6 +325,7 @@ public class MultiGameHost {
 	}
 
 	public static void reEnableButtons() {
+		// #conditional #loop
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 				if (MultiGameHost.enemyButtons[i][x].getDisabledIcon() != GridButton.hit

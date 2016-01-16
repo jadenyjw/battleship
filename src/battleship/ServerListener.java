@@ -79,6 +79,7 @@ public class ServerListener extends Listener {
 			//check whether if there is an existing ship on that coordinate
 			if (MultiGameHost.buttons[p.x][p.y].getDisabledIcon() == GridButton.shipIcon) {
 				MultiGameHost.buttons[p.x][p.y].setDisabledIcon(GridButton.hit);
+				// #string
 				MultiGameHost.listModel
 						.addElement("Enemy hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 				MultiGameHost.scrollList();

@@ -100,7 +100,7 @@ public class Battleship {
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(frame,
-						"This is the standard Battleship game.\nCreated by Jaden Wang and Yuting Liu "
+						"This is the standard Battleship game. Multiplayer scores can be viewed at bit.ly/Dmj9.\nCreated by Jaden Wang and Yuting Liu "
 								+ "for ICS3U1.\nThis project can be tracked and bugs can be reported at "
 								+ "https://github.com/jaden71/battleship");
 			}

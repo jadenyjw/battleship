@@ -71,6 +71,7 @@ public class ClientListener extends Listener {
 			if (MultiGameClient.buttons[p.x][p.y].getDisabledIcon() == GridButton.shipIcon) {
 				MultiGameClient.buttons[p.x][p.y].setDisabledIcon(GridButton.hit);
 				MultiGameClient.listModel
+				// #string
 						.addElement("Enemy hit: " + Character.toString((char) ('A' + p.y)) + "" + (p.x + 1));
 				MultiGameClient.scrollList();
 

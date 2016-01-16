@@ -28,21 +28,26 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.minlog.Log;
 
 public class MultiGameClient {
-
-	JFrame frame;
-	private JTextField textField;
-	String ipAddress = MultiMenu.ipAddress;
-	public Client client;
-	private ClientListener cl;
-	public static GridButton buttons[][] = new GridButton[10][10];
-	public static GridButton enemyButtons[][] = new GridButton[10][10];
-	public static String message;
-	public static javax.swing.JTextArea textArea;
-	public static JPanel panel;
-	public static JPanel panel_1;
-	public static DefaultListModel<String> listModel;
-	public static JList<String> list = new JList<String>();
-	public static JLabel lblEnemysTurn;
+	// #variable
+	JFrame frame; // Swing JFrame object
+	private JTextField textField; // Text field for chat
+	String ipAddress = MultiMenu.ipAddress; // What IP address to connect to
+	public Client client; // Kryonet client object
+	private ClientListener cl; // Kryonet listener
+	public static GridButton buttons[][] = new GridButton[10][10]; // Buttons
+																	// for self
+	public static GridButton enemyButtons[][] = new GridButton[10][10]; // Buttons
+																		// for
+																		// enemy
+	public static String message; // Message to send in chat
+	public static javax.swing.JTextArea textArea; // Text area to view chat
+	public static JPanel ownPanel; // Panel containing own buttons
+	public static JPanel enemyPanel; // Panel containing enemy buttons
+	public static DefaultListModel<String> listModel; // List model used for
+														// event log
+	public static JList<String> list = new JList<String>(); // List for event
+															// log
+	public static JLabel lblEnemysTurn; // Label indicating turn
 
 	/**
 	 * Launch the application.
@@ -74,13 +79,14 @@ public class MultiGameClient {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-
+		// Initialize frame
 		frame = new JFrame("Battleship X Pro Limited Edition 2 | Multiplayer");
 		frame.setBounds(100, 100, 970, 600);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setIconImage(Battleship.img.getImage());
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+			// Closing action
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 				if (ClientListener.gameDone == false) {
@@ -106,12 +112,12 @@ public class MultiGameClient {
 		});
 		frame.getContentPane().setLayout(null);
 
-		JPanel panel = new JPanel();
-		panel.setLocation(30, 27);
-		frame.getContentPane().add(panel);
-		panel.setLayout(new GridLayout(10, 10));
-		panel.setSize(370, 370);
-//Initialize water icons
+		JPanel ownPanel = new JPanel();
+		ownPanel.setLocation(30, 27);
+		frame.getContentPane().add(ownPanel);
+		ownPanel.setLayout(new GridLayout(10, 10));
+		ownPanel.setSize(370, 370);
+		// Initialize water icons
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 
@@ -119,11 +125,11 @@ public class MultiGameClient {
 				buttons[i][x].setIcon(GridButton.water);
 				buttons[i][x].setDisabledIcon(GridButton.water);
 				buttons[i][x].setEnabled(false);
-				panel.add(buttons[i][x]);
+				ownPanel.add(buttons[i][x]);
 			}
 		}
 		int shipLen;
-		//Ship lengths according to ship id
+		// Ship lengths according to ship id
 		for (int i = 0; i < 5; i++) {
 			switch (i) {
 			case 0:
@@ -145,7 +151,7 @@ public class MultiGameClient {
 				shipLen = 0;
 
 			}
-			//Place ship according to orientation
+			// Place ship according to orientation
 			if (GridSetup.shipArray[i][2] == 0) {
 				int last = shipLen + GridSetup.shipArray[i][0];
 				for (int x = GridSetup.shipArray[i][0]; x < last; x++) {
@@ -160,11 +166,11 @@ public class MultiGameClient {
 
 			}
 		}
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(555, 27, 370, 370);
-		frame.getContentPane().add(panel_1);
-		panel_1.setLayout(new GridLayout(10, 10));
+		// Initialize swing objects
+		JPanel enemyPanel = new JPanel();
+		enemyPanel.setBounds(555, 27, 370, 370);
+		frame.getContentPane().add(enemyPanel);
+		enemyPanel.setLayout(new GridLayout(10, 10));
 
 		listModel = new DefaultListModel<String>();
 		list.setModel(listModel);
@@ -199,7 +205,7 @@ public class MultiGameClient {
 		JButton btnNewButton = new JButton("Send");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//Send chat message
+				// Send chat message
 				if (!(textField.getText().trim().equals(""))) {
 					textArea.append(MultiMenu.userName + ": " + textField.getText() + "\n");
 					Packets.Packet02Message messagePacket = new Packets.Packet02Message();
@@ -247,14 +253,14 @@ public class MultiGameClient {
 
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
-//Initialize water
+				// Initialize water
 				enemyButtons[i][x] = new GridButton();
 				enemyButtons[i][x].setIcon(GridButton.water);
 				enemyButtons[i][x].setDisabledIcon(GridButton.water);
 				enemyButtons[i][x].setEnabled(false);
 				final int tempX = i;
 				final int tempY = x;
-				//Button on click will send a coord packet
+				// Button on click will send a coord packet
 				enemyButtons[i][x].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						Packets.Packet03Coords coordPacket = new Packets.Packet03Coords();
@@ -267,7 +273,7 @@ public class MultiGameClient {
 
 					}
 				});
-				panel_1.add(enemyButtons[i][x]);
+				enemyPanel.add(enemyButtons[i][x]);
 			}
 		}
 		joinServer();
@@ -275,10 +281,10 @@ public class MultiGameClient {
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		Border borderwhite = BorderFactory.createLineBorder(Color.lightGray);
 		scroll.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 0, 0, 0)));
-        textArea.setBorder(BorderFactory.createCompoundBorder(borderwhite, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		textArea.setBorder(
+				BorderFactory.createCompoundBorder(borderwhite, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		textArea.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-
 
 		lblEnemysTurn = new JLabel("Enemy's Turn");
 		lblEnemysTurn.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -288,9 +294,9 @@ public class MultiGameClient {
 		frame.getContentPane().add(lblEnemysTurn);
 
 	}
-
+	// #method
 	public void joinServer() {
-		//Joins the server
+		// Joins the server
 		client = new Client();
 		cl = new ClientListener();
 
@@ -307,18 +313,17 @@ public class MultiGameClient {
 			client.connect(5000, ipAddress, 1337, 1337);
 
 		} catch (IOException e) {
-			
-			
+
 			frame.dispose();
 			JOptionPane.showMessageDialog(null, "Jaden hasn't completed setting up his grid. Please try again later.");
 			MultiMenu newWindow = new MultiMenu();
 			newWindow.setVisible(true);
-			
+
 		}
 	}
 
 	private void registerPackets() {
-		//Resgisters all the packets used by Kryo
+		// Resgisters all the packets used by Kryo
 		Kryo kryo = client.getKryo();
 		kryo.register(Packets.Packet00Request.class);
 		kryo.register(Packets.Packet01Response.class);
@@ -330,7 +335,8 @@ public class MultiGameClient {
 	}
 
 	public static void reEnableButtons() {
-		//Enables the buttons
+		// Enables the buttons
+		// #conditional #loop
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 				if (MultiGameClient.enemyButtons[i][x].getDisabledIcon() != GridButton.hit
@@ -341,7 +347,7 @@ public class MultiGameClient {
 	}
 
 	public static void disableButtons() {
-		//Disable Buttons
+		// Disable Buttons
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 				MultiGameClient.enemyButtons[i][x].setEnabled(false);
@@ -350,7 +356,7 @@ public class MultiGameClient {
 	}
 
 	public static void scrollList() {
-		//Scrolls the list
+		// Scrolls the list
 		int lastIndex = list.getModel().getSize() - 1;
 		if (lastIndex >= 0) {
 			list.ensureIndexIsVisible(lastIndex);
