@@ -140,7 +140,7 @@ public class GridSetup extends JDialog {
      shipName = (String) shipNames.getSelectedItem();
    }
   });
-  JCheckBox cheatMode = new JCheckBox("Cheat Mode");
+  final JCheckBox cheatMode = new JCheckBox("Cheat Mode");
   cheatMode.setBounds(433, 325, 100, 23);
 
   shipNames.setModel(new DefaultComboBoxModel(

@@ -28,26 +28,30 @@ import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 
 public class MultiGameHost {
-// #variable
+	// #variable
 	public static JFrame frame; // Swing Jframe object
-	private JTextField textField; //Text field for chat
+	private JTextField textField; // Text field for chat
 
 	public static String message; // Chat message
 
 	public static javax.swing.JTextArea textArea; // Text area for chat
-	public static GridButton buttons[][] = new GridButton[10][10]; // Own buttons
-	public static GridButton enemyButtons[][] = new GridButton[10][10]; //Enemy buttons
-	public static DefaultListModel<String> listModel; // List model for event log
-	public static JList<String> list = new JList<String>(); // List for event log
+	public static GridButton buttons[][] = new GridButton[10][10]; // Own
+																	// buttons
+	public static GridButton enemyButtons[][] = new GridButton[10][10]; // Enemy
+																		// buttons
+	public static DefaultListModel<String> listModel; // List model for event
+														// log
+	public static JList<String> list = new JList<String>(); // List for event
+															// log
 
 	public static JLabel lblYourTurn; // Label for turn indication
 
-	int port = 1337; //Port used to host server
-	Server server; //Kryonet server
-	ServerListener sl; //Kryonet server listener
+	int port = 1337; // Port used to host server
+	Server server; // Kryonet server
+	ServerListener sl; // Kryonet server listener
 
-	public static JPanel ownPanel; //Panel for own buttons
-	public static JPanel enemyPanel; //Panel for enemy buttons
+	public static JPanel ownPanel; // Panel for own buttons
+	public static JPanel enemyPanel; // Panel for enemy buttons
 
 	public static void main(String[] args) {
 
@@ -77,13 +81,14 @@ public class MultiGameHost {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-
+		// frame initialization
 		frame = new JFrame("Battleship X Pro Limited Edition 2 | Multiplayer");
 		frame.setBounds(100, 100, 970, 600);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setIconImage(Battleship.img.getImage());
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+			// close msgbox
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 				if (ServerListener.gameDone == false) {
@@ -127,7 +132,7 @@ public class MultiGameHost {
 				ownPanel.add(buttons[i][x]);
 			}
 		}
-
+		// Determine ship length
 		int shipLen;
 		for (int i = 0; i < 5; i++) {
 			switch (i) {
@@ -201,7 +206,7 @@ public class MultiGameHost {
 		lblEnterAMesage.setBounds(10, 533, 93, 14);
 		frame.getContentPane().add(lblEnterAMesage);
 
-		JButton btnNewButton = new JButton("Send");
+		final JButton btnNewButton = new JButton("Send");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!(textField.getText().trim().equals(""))) {
@@ -294,8 +299,10 @@ public class MultiGameHost {
 		textArea.append(">> Now waiting for a connection from another player. " + "\n");
 
 	}
+
 	// #method
 	public void hostServer() {
+		// hosts a server
 		server = new Server();
 		sl = new ServerListener();
 		server.addListener(sl);
@@ -314,6 +321,7 @@ public class MultiGameHost {
 	}
 
 	private void registerPackets() {
+		// register packets
 		Kryo kryo = server.getKryo();
 		kryo.register(Packets.Packet00Request.class);
 		kryo.register(Packets.Packet01Response.class);
@@ -325,6 +333,7 @@ public class MultiGameHost {
 	}
 
 	public static void reEnableButtons() {
+		// enables buttons
 		// #conditional #loop
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
@@ -336,6 +345,7 @@ public class MultiGameHost {
 	}
 
 	public static void disableButtons() {
+		// disables buttons
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 				MultiGameHost.enemyButtons[i][x].setEnabled(false);
@@ -344,6 +354,7 @@ public class MultiGameHost {
 	}
 
 	public static void scrollList() {
+		// scrolls the event log
 		int lastIndex = list.getModel().getSize() - 1;
 		if (lastIndex >= 0) {
 			list.ensureIndexIsVisible(lastIndex);
