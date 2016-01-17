@@ -25,21 +25,22 @@ public class SingleGame {
 	
 	public static GridButton buttons[][] = new GridButton[10][10];
 	public static GridButton enemyButtons[][] = new GridButton[10][10];
-	private static int posShot[][] = {{}};
-	public static DefaultListModel<String> listModel;
+	public static DefaultListModel<String> listModel;//#Variable
 	public static JList<String> list = new JList<String>();
 	private static int firstHit[] = {-1,-1};
 	private static int pointHit[] = {-1,-1};
 	private static int checkRound[] = new int[4];
 	private static int shotDirect = GridSetup.rng(4);
-	private static boolean backUp = false;
 	private static String aiMode = "search";
 	private static int shotX, shotY;
+	private static boolean letLive = true;
+	// Variables, public and private
 	
 	
 	static JFrame frame;
 	private JTextField textField;
 	public static boolean hasNewText;
+	//initialize frame and other required info
 
 	public static void main(String[] args) {
 
@@ -54,11 +55,11 @@ public class SingleGame {
 				}
 			}
 		});
-	}
+	}//End Main
 
 	public SingleGame() {
 
-		initialize();
+		initialize();//initialize the board
 		
 		
 
@@ -76,6 +77,7 @@ public class SingleGame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setIconImage(Battleship.img.getImage());
 		frame.getContentPane().setLayout(null);
+		// New frame, set the bounds and made it unresizable. Various customizations occur
 
 		JPanel panel = new JPanel();
 		panel.setLocation(30, 27);
@@ -83,6 +85,7 @@ public class SingleGame {
 		panel.setLayout(new GridLayout(10, 10));
 		panel.setSize(370, 370);
 		System.out.println("Check 2");
+		// Sets the playing boards
 
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
@@ -93,7 +96,7 @@ public class SingleGame {
 				buttons[i][x].setEnabled(false);
 				panel.add(buttons[i][x]);
 			}
-		}
+		}// Colors in the squares of the grid
 		System.out.println("Check 3");
 
 		int shipLen;
@@ -117,7 +120,7 @@ public class SingleGame {
 			default:
 				shipLen = 0;
 
-			}
+			}// Finds the switched ints
 			if (GridSetup.shipArray[i][2] == 0) {
 				int last = shipLen + GridSetup.shipArray[i][0];
 				for (int x = GridSetup.shipArray[i][0]; x < last; x++) {
@@ -132,7 +135,7 @@ public class SingleGame {
 				}
 
 			}
-		}
+		}// places the preset ships
 		
 		System.out.println("Check 4");
 
@@ -148,6 +151,7 @@ public class SingleGame {
 		JScrollPane scrollLog = new JScrollPane(list);
 		scrollLog.setBounds(410, 27, 134, 370);
 		frame.getContentPane().add(scrollLog);
+		// Sets the event log
 
 		JLabel lblEventLog = new JLabel("Event Log");
 		lblEventLog.setBounds(450, 10, 57, 14);
@@ -176,6 +180,7 @@ public class SingleGame {
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		label_2.setBounds(935, 27, 46, 370);
 		frame.getContentPane().add(label_2);
+		// Labels
 		
 		System.out.println("Check 5");
 		
@@ -227,14 +232,14 @@ public class SingleGame {
 				});
 			}
 		}
-		
-		if(GridSetup.cheatTog){
+		// What happens when you click
+		if(GridSetup.cheatTog){//#cheat
 			GridButton.hiddenShip = new ImageIcon(Battleship.class.getResource("/ship.png"));
 		}
 		else{
 			GridButton.hiddenShip = new ImageIcon(Battleship.class.getResource("/water.png"));
 		}
-		
+		// Refreshes the board
 		for (int i = 0; i < 5; i++) {
 			switch (i) {
 				case 0:
@@ -275,7 +280,7 @@ public class SingleGame {
 		}
 		
 	}
-	
+	// refreshes the AI board
 	private static void aiRun(){ // The AI searching algorithm
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
@@ -283,13 +288,13 @@ public class SingleGame {
 					buttons[i][x].setEnabled(true);
 				}
 			}
-		}
+		}//refreshes the screen
 		do{
 			System.out.println("check");
 			if(firstHit[0] != -1 && !aiMode.equals("back")){
 				System.out.println("check1");
 				do{
-					if(aiMode.equals("pinpoint")){
+					if(aiMode.equals("pinpoint")){//We hit something, so we see which direction we go.
 						do{
 							shotDirect = GridSetup.rng(4);
 						}while(checkRound[shotDirect] != 0);
@@ -314,7 +319,7 @@ public class SingleGame {
 							shotX = 0; shotY = 0;
 					}
 					System.out.println("check2");
-					System.out.println(shotX + shotY);
+					System.out.println(shotX + "" + shotY);
 					System.out.println(shotDirect);
 					if(!check(shotX,shotY) && !aiMode.equals("pinpoint")){
 						aiMode = "back";
@@ -346,10 +351,11 @@ public class SingleGame {
 						System.out.println("check4");
 					
 					}
+					System.out.println("CHECKKKK");
 				}while(!check(shotX,shotY));
 				checkRound = new int[4];
 			}
-			else if(firstHit[0] != -1 && aiMode.equals("back")){
+			else if(firstHit[0] != -1 && aiMode.equals("back")){//Check if there is anything behind what we just hit
 				switch(shotDirect){
 					case 0: 
 						shotX = pointHit[0]+1; shotY = pointHit[1];
@@ -411,6 +417,7 @@ public class SingleGame {
 			output(false, shotX+1, shotY+1, "The AI");
 			if(aiMode.equals("back")){
 				aiMode = "search";
+				letLive = true;
 				firstHit = new int[] {-1,-1};
 			}
 			else if(aiMode.equals("combo")){
@@ -426,7 +433,8 @@ public class SingleGame {
 		}
 	}
 	
-	private static void shotOut(int x, int y){
+	
+	private static void shotOut(int x, int y){//changes the square clicked
 		if(enemyButtons[x][y].getIcon() == GridButton.hiddenShip){
 			enemyButtons[x][y].setIcon(GridButton.hit);
 			output(true, x+1, y+1, "You");
@@ -438,7 +446,7 @@ public class SingleGame {
 		}
 	}
 	
-	private static void disableButtons(){
+	private static void disableButtons(){//Disables all buttons
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 				enemyButtons[i][x].setDisabledIcon(enemyButtons[i][x].getIcon());
@@ -446,12 +454,7 @@ public class SingleGame {
 			}
 		}
 	}
-	/*
-	private static boolean restrictCheck(int xVar){
-		
-	}
-	*/
-	private static void enableButtons(){
+	private static void enableButtons(){//Enables all buttons
 		for (int i = 0; i < 10; i++) {
 			for (int x = 0; x < 10; x++) {
 				if(enemyButtons[i][x].getIcon() != GridButton.hit && enemyButtons[i][x].getIcon() != GridButton.miss){
@@ -460,9 +463,11 @@ public class SingleGame {
 			}
 		}
 	}
-	private static boolean checkRound(int xVal, int yVal){
+	private static boolean checkRound(int xVal, int yVal){//Make sure there isn't a hit beside the shot about to be taken. RNG help make it easier
 		System.out.println(buttons[xVal][yVal].getIcon());
 		if(buttons[xVal][yVal].getIcon() == GridButton.shipIcon){
+			if(GridSetup.rng(2) == 1)// Makes it more fair.
+				return true;
 			return false;
 		}
 		if(xVal <= 8){
@@ -487,18 +492,22 @@ public class SingleGame {
 		}
 		return false;
 	}
-	private static boolean check(int xVal, int yVal){
+	private static boolean check(int xVal, int yVal){//Checks if the coordinates are valid
 		if(xVal > 9 || yVal > 9 || xVal < 0 || yVal < 0){
 			return false;
 		}
 		else if(buttons[xVal][yVal].getIcon() != GridButton.hit && buttons[xVal][yVal].getIcon() != GridButton.miss){
+			if((buttons[shotX][shotY].getIcon() == GridButton.shipIcon && letLive)){
+				letLive = false;
+				return false;
+			}
 			return true;
 		}
 		else{
 			return false;
 		}
 	}
-	private static void output(boolean hit, int xVar, int yVar, String whoShot){
+	private static void output(boolean hit, int xVar, int yVar, String whoShot){// outputs to the event log
 		char yCord = 'A';
 		switch(yVar){
 		case 1: yCord = 'A';
@@ -530,7 +539,7 @@ public class SingleGame {
 		}
 	}
 	
-	private static void endGame(boolean win){
+	private static void endGame(boolean win){//#method
 		int choice;
 		for(int x = 0; x<10; x++){
 			for(int y = 0; y<10; y++){
@@ -546,19 +555,19 @@ public class SingleGame {
 		else{
 			choice = JOptionPane.showConfirmDialog(null, "You Lose\nPlay Again?", null, 0);
 		}
-		if(choice == 0){
+		if(choice == 0){//#condition
 			Battleship.referer = "single";
 			buttons = new GridButton[10][10];
 			enemyButtons = new GridButton[10][10];
 			firstHit = new int[] {-1,-1};
 			pointHit = new int[] {-1,-1};
 			shotDirect = GridSetup.rng(4);
-			backUp = false;
 			aiMode = "search";
 			shotX = 0; shotY = 0;
 			GridSetup newClient = new GridSetup();
 			newClient.frame.setVisible(true);
 			frame.dispose();
+			//Reset the variables for a new game
 		}
 		else{
 			JOptionPane.showMessageDialog(null, "Thank you for playing!");
