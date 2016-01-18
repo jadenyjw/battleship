@@ -28,338 +28,338 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.minlog.Log;
 
 public class MultiGameClient {
-	// #variable
-	JFrame frame; // Swing JFrame object
-	private JTextField textField; // Text field for chat
-	String ipAddress = MultiMenu.ipAddress; // What IP address to connect to
-	public Client client; // Kryonet client object
-	private ClientListener cl; // Kryonet listener
-	public static GridButton buttons[][] = new GridButton[10][10]; // Buttons
-																	// for self
-	public static GridButton enemyButtons[][] = new GridButton[10][10]; // Buttons
-																		// for
-																		// enemy
-	public static String message; // Message to send in chat
-	public static javax.swing.JTextArea textArea; // Text area to view chat
-	public static JPanel ownPanel; // Panel containing own buttons
-	public static JPanel enemyPanel; // Panel containing enemy buttons
-	public static DefaultListModel<String> listModel; // List model used for
-														// event log
-	public static JList<String> list = new JList<String>(); // List for event
-															// log
-	public static JLabel lblEnemysTurn; // Label indicating turn
+ // #variable
+ JFrame frame; // Swing JFrame object
+ private JTextField textField; // Text field for chat
+ String ipAddress = MultiMenu.ipAddress; // What IP address to connect to
+ public Client client; // Kryonet client object
+ private ClientListener cl; // Kryonet listener
+ public static GridButton buttons[][] = new GridButton[10][10]; // Buttons
+                 // for self
+ public static GridButton enemyButtons[][] = new GridButton[10][10]; // Buttons
+                  // for
+                  // enemy
+ public static String message; // Message to send in chat
+ public static javax.swing.JTextArea textArea; // Text area to view chat
+ public static JPanel ownPanel; // Panel containing own buttons
+ public static JPanel enemyPanel; // Panel containing enemy buttons
+ public static DefaultListModel<String> listModel; // List model used for
+              // event log
+ public static JList<String> list = new JList<String>(); // List for event
+               // log
+ public static JLabel lblEnemysTurn; // Label indicating turn
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
+ /**
+  * Launch the application.
+  */
+ public static void main(String[] args) {
 
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
+  EventQueue.invokeLater(new Runnable() {
+   public void run() {
+    try {
 
-					MultiGameClient window = new MultiGameClient();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+     MultiGameClient window = new MultiGameClient();
+     window.frame.setVisible(true);
+    } catch (Exception e) {
+     e.printStackTrace();
+    }
+   }
+  });
+ }
 
-	/**
-	 * Create the application.
-	 */
-	public MultiGameClient() {
-		initialize();
+ /**
+  * Create the application.
+  */
+ public MultiGameClient() {
+  initialize();
 
-	}
+ }
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		// Initialize frame
-		frame = new JFrame("Battleship X Pro Limited Edition 2 | Multiplayer");
-		frame.setBounds(100, 100, 970, 600);
-		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frame.setIconImage(Battleship.img.getImage());
-		frame.addWindowListener(new java.awt.event.WindowAdapter() {
-			// Closing action
-			@Override
-			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				if (ClientListener.gameDone == false) {
-					if (JOptionPane.showConfirmDialog(frame, "Closing this window will end the game. Are you sure?",
-							"Really Closing?", JOptionPane.YES_NO_OPTION,
-							JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-						client.close();
-						ClientListener.gameDone = false;
-						frame.dispose();
-						MultiMenu newWindow = new MultiMenu();
-						newWindow.setVisible(true);
+ /**
+  * Initialize the contents of the frame.
+  */
+ private void initialize() {
+  // Initialize frame
+  frame = new JFrame("Battleship X Pro Limited Edition 2 | Multiplayer");
+  frame.setBounds(100, 100, 970, 600);
+  frame.setResizable(false);
+  frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+  frame.setIconImage(Battleship.img.getImage());
+  frame.addWindowListener(new java.awt.event.WindowAdapter() {
+   // Closing action
+   @Override
+   public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+    if (ClientListener.gameDone == false) {
+     if (JOptionPane.showConfirmDialog(frame, "Closing this window will end the game. Are you sure?",
+       "Really Closing?", JOptionPane.YES_NO_OPTION,
+       JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+      client.close();
+      ClientListener.gameDone = false;
+      frame.dispose();
+      MultiMenu newWindow = new MultiMenu();
+      newWindow.setVisible(true);
 
-					}
-				} else if (ClientListener.gameDone == true) {
-					client.close();
-					ClientListener.gameDone = false;
-					frame.dispose();
-					MultiMenu newWindow = new MultiMenu();
-					newWindow.setVisible(true);
+     }
+    } else if (ClientListener.gameDone == true) {
+     client.close();
+     ClientListener.gameDone = false;
+     frame.dispose();
+     MultiMenu newWindow = new MultiMenu();
+     newWindow.setVisible(true);
 
-				}
-			}
-		});
-		frame.getContentPane().setLayout(null);
+    }
+   }
+  });
+  frame.getContentPane().setLayout(null);
 
-		JPanel ownPanel = new JPanel();
-		ownPanel.setLocation(30, 27);
-		frame.getContentPane().add(ownPanel);
-		ownPanel.setLayout(new GridLayout(10, 10));
-		ownPanel.setSize(370, 370);
-		// Initialize water icons
-		for (int i = 0; i < 10; i++) {
-			for (int x = 0; x < 10; x++) {
+  JPanel ownPanel = new JPanel();
+  ownPanel.setLocation(30, 27);
+  frame.getContentPane().add(ownPanel);
+  ownPanel.setLayout(new GridLayout(10, 10));
+  ownPanel.setSize(370, 370);
+  // Initialize water icons
+  for (int i = 0; i < 10; i++) {
+   for (int x = 0; x < 10; x++) {
 
-				buttons[i][x] = new GridButton();
-				buttons[i][x].setIcon(GridButton.water);
-				buttons[i][x].setDisabledIcon(GridButton.water);
-				buttons[i][x].setEnabled(false);
-				ownPanel.add(buttons[i][x]);
-			}
-		}
-		int shipLen;
-		// Ship lengths according to ship id
-		for (int i = 0; i < 5; i++) {
-			switch (i) {
-			case 0:
-				shipLen = 5;
-				break;
-			case 1:
-				shipLen = 4;
-				break;
-			case 2:
-				shipLen = 3;
-				break;
-			case 3:
-				shipLen = 3;
-				break;
-			case 4:
-				shipLen = 2;
-				break;
-			default:
-				shipLen = 0;
+    buttons[i][x] = new GridButton();
+    buttons[i][x].setIcon(GridButton.water);
+    buttons[i][x].setDisabledIcon(GridButton.water);
+    buttons[i][x].setEnabled(false);
+    ownPanel.add(buttons[i][x]);
+   }
+  }
+  int shipLen;
+  // Ship lengths according to ship id
+  for (int i = 0; i < 5; i++) {
+   switch (i) {
+   case 0:
+    shipLen = 5;
+    break;
+   case 1:
+    shipLen = 4;
+    break;
+   case 2:
+    shipLen = 3;
+    break;
+   case 3:
+    shipLen = 3;
+    break;
+   case 4:
+    shipLen = 2;
+    break;
+   default:
+    shipLen = 0;
 
-			}
-			// Place ship according to orientation
-			if (GridSetup.shipArray[i][2] == 0) {
-				int last = shipLen + GridSetup.shipArray[i][0];
-				for (int x = GridSetup.shipArray[i][0]; x < last; x++) {
+   }
+   // Place ship according to orientation
+   if (GridSetup.shipArray[i][2] == 0) {
+    int last = shipLen + GridSetup.shipArray[i][0];
+    for (int x = GridSetup.shipArray[i][0]; x < last; x++) {
 
-					buttons[GridSetup.shipArray[i][1]][x].setDisabledIcon(GridButton.shipIcon);
-				}
-			} else if (GridSetup.shipArray[i][2] == 1) {
-				int last = shipLen + GridSetup.shipArray[i][1];
-				for (int y = GridSetup.shipArray[i][1]; y < last; y++) {
-					buttons[y][GridSetup.shipArray[i][0]].setDisabledIcon(GridButton.shipIcon);
-				}
+     buttons[GridSetup.shipArray[i][1]][x].setDisabledIcon(GridButton.shipIcon);
+    }
+   } else if (GridSetup.shipArray[i][2] == 1) {
+    int last = shipLen + GridSetup.shipArray[i][1];
+    for (int y = GridSetup.shipArray[i][1]; y < last; y++) {
+     buttons[y][GridSetup.shipArray[i][0]].setDisabledIcon(GridButton.shipIcon);
+    }
 
-			}
-		}
-		// Initialize swing objects
-		JPanel enemyPanel = new JPanel();
-		enemyPanel.setBounds(555, 27, 370, 370);
-		frame.getContentPane().add(enemyPanel);
-		enemyPanel.setLayout(new GridLayout(10, 10));
+   }
+  }
+  // Initialize swing objects
+  JPanel enemyPanel = new JPanel();
+  enemyPanel.setBounds(555, 27, 370, 370);
+  frame.getContentPane().add(enemyPanel);
+  enemyPanel.setLayout(new GridLayout(10, 10));
 
-		listModel = new DefaultListModel<String>();
-		list.setModel(listModel);
-		Border listBorder = BorderFactory.createLineBorder(Color.BLACK);
-		list.setBorder(BorderFactory.createCompoundBorder(listBorder, null));
-		JScrollPane scrollLog = new JScrollPane(list);
-		scrollLog.setBounds(410, 27, 134, 345);
-		frame.getContentPane().add(scrollLog);
+  listModel = new DefaultListModel<String>();
+  list.setModel(listModel);
+  Border listBorder = BorderFactory.createLineBorder(Color.BLACK);
+  list.setBorder(BorderFactory.createCompoundBorder(listBorder, null));
+  JScrollPane scrollLog = new JScrollPane(list);
+  scrollLog.setBounds(410, 27, 134, 345);
+  frame.getContentPane().add(scrollLog);
 
-		JLabel lblEventLog = new JLabel("Event Log");
-		lblEventLog.setBounds(450, 10, 57, 14);
-		frame.getContentPane().add(lblEventLog);
+  JLabel lblEventLog = new JLabel("Event Log");
+  lblEventLog.setBounds(450, 10, 57, 14);
+  frame.getContentPane().add(lblEventLog);
 
-		textArea = new JTextArea();
-		JScrollPane scroll = new JScrollPane(textArea);
-		DefaultCaret caret = (DefaultCaret) textArea.getCaret();
-		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		textArea.setEditable(false);
-		scroll.setBounds(10, 411, 934, 108);
-		frame.getContentPane().add(scroll);
+  textArea = new JTextArea();
+  JScrollPane scroll = new JScrollPane(textArea);
+  DefaultCaret caret = (DefaultCaret) textArea.getCaret();
+  caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+  textArea.setEditable(false);
+  scroll.setBounds(10, 411, 934, 108);
+  frame.getContentPane().add(scroll);
 
-		textField = new JTextField();
+  textField = new JTextField();
 
-		textField.setBounds(113, 530, 732, 20);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+  textField.setBounds(113, 530, 732, 20);
+  frame.getContentPane().add(textField);
+  textField.setColumns(10);
 
-		JLabel lblEnterAMesage = new JLabel("Enter a message:");
-		lblEnterAMesage.setBounds(10, 533, 93, 14);
-		frame.getContentPane().add(lblEnterAMesage);
+  JLabel lblEnterAMesage = new JLabel("Enter a message:");
+  lblEnterAMesage.setBounds(10, 533, 93, 14);
+  frame.getContentPane().add(lblEnterAMesage);
 
-		JButton btnNewButton = new JButton("Send");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				// Send chat message
-				if (!(textField.getText().trim().equals(""))) {
-					textArea.append(MultiMenu.userName + ": " + textField.getText() + "\n");
-					Packets.Packet02Message messagePacket = new Packets.Packet02Message();
-					messagePacket.userName = MultiMenu.userName;
-					messagePacket.message = textField.getText();
-					client.sendTCP(messagePacket);
+  final JButton btnNewButton = new JButton("Send");
+  btnNewButton.addActionListener(new ActionListener() {
+   public void actionPerformed(ActionEvent arg0) {
+    // Send chat message
+    if (!(textField.getText().trim().equals(""))) {
+     textArea.append(MultiMenu.userName + ": " + textField.getText() + "\n");
+     Packets.Packet02Message messagePacket = new Packets.Packet02Message();
+     messagePacket.userName = MultiMenu.userName;
+     messagePacket.message = textField.getText();
+     client.sendTCP(messagePacket);
 
-					textField.setText("");
+     textField.setText("");
 
-				}
-			}
-		});
-		textField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				btnNewButton.doClick();
+    }
+   }
+  });
+  textField.addActionListener(new ActionListener() {
+   public void actionPerformed(ActionEvent arg0) {
+    btnNewButton.doClick();
 
-			}
-		});
-		btnNewButton.setBounds(855, 529, 89, 23);
-		frame.getContentPane().add(btnNewButton);
+   }
+  });
+  btnNewButton.setBounds(855, 529, 89, 23);
+  frame.getContentPane().add(btnNewButton);
 
-		JLabel lblABC = new JLabel(
-				"A         B         C           D          E          F         G          H           I           J");
-		lblABC.setBounds(45, 10, 367, 14);
-		frame.getContentPane().add(lblABC);
+  JLabel lblABC = new JLabel(
+    "A         B         C           D          E          F         G          H           I           J");
+  lblABC.setBounds(45, 10, 367, 14);
+  frame.getContentPane().add(lblABC);
 
-		JLabel label = new JLabel(
-				"A          B          C           D          E          F         G          H           I           J");
-		label.setBounds(565, 10, 367, 14);
-		frame.getContentPane().add(label);
+  JLabel label = new JLabel(
+    "A          B          C           D          E          F         G          H           I           J");
+  label.setBounds(565, 10, 367, 14);
+  frame.getContentPane().add(label);
 
-		JLabel label_1 = new JLabel(
-				"<html>1<br><br>2<br><br>3<br><br>4<br><br>5<br><br>6<br><br>7<br><br>8<br><br>9<br><br>10</html>");
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label_1.setVerticalAlignment(SwingConstants.TOP);
-		label_1.setBounds(10, 28, 46, 370);
-		frame.getContentPane().add(label_1);
+  JLabel label_1 = new JLabel(
+    "<html>1<br><br>2<br><br>3<br><br>4<br><br>5<br><br>6<br><br>7<br><br>8<br><br>9<br><br>10</html>");
+  label_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+  label_1.setVerticalAlignment(SwingConstants.TOP);
+  label_1.setBounds(10, 28, 46, 370);
+  frame.getContentPane().add(label_1);
 
-		JLabel label_2 = new JLabel(
-				"<html>1<br><br>2<br><br>3<br><br>4<br><br>5<br><br>6<br><br>7<br><br>8<br><br>9<br><br>10</html>");
-		label_2.setVerticalAlignment(SwingConstants.TOP);
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label_2.setBounds(935, 27, 46, 370);
-		frame.getContentPane().add(label_2);
+  JLabel label_2 = new JLabel(
+    "<html>1<br><br>2<br><br>3<br><br>4<br><br>5<br><br>6<br><br>7<br><br>8<br><br>9<br><br>10</html>");
+  label_2.setVerticalAlignment(SwingConstants.TOP);
+  label_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+  label_2.setBounds(935, 27, 46, 370);
+  frame.getContentPane().add(label_2);
 
-		for (int i = 0; i < 10; i++) {
-			for (int x = 0; x < 10; x++) {
-				// Initialize water
-				enemyButtons[i][x] = new GridButton();
-				enemyButtons[i][x].setIcon(GridButton.water);
-				enemyButtons[i][x].setDisabledIcon(GridButton.water);
-				enemyButtons[i][x].setEnabled(false);
-				final int tempX = i;
-				final int tempY = x;
-				// Button on click will send a coord packet
-				enemyButtons[i][x].addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						Packets.Packet03Coords coordPacket = new Packets.Packet03Coords();
-						coordPacket.x = tempX;
-						coordPacket.y = tempY;
-						disableButtons();
-						lblEnemysTurn.setText("Enemy's Turn");
-						lblEnemysTurn.setForeground(Color.decode("#df7b40"));
-						client.sendTCP(coordPacket);
+  for (int i = 0; i < 10; i++) {
+   for (int x = 0; x < 10; x++) {
+    // Initialize water
+    enemyButtons[i][x] = new GridButton();
+    enemyButtons[i][x].setIcon(GridButton.water);
+    enemyButtons[i][x].setDisabledIcon(GridButton.water);
+    enemyButtons[i][x].setEnabled(false);
+    final int tempX = i;
+    final int tempY = x;
+    // Button on click will send a coord packet
+    enemyButtons[i][x].addActionListener(new ActionListener() {
+     public void actionPerformed(ActionEvent e) {
+      Packets.Packet03Coords coordPacket = new Packets.Packet03Coords();
+      coordPacket.x = tempX;
+      coordPacket.y = tempY;
+      disableButtons();
+      lblEnemysTurn.setText("Enemy's Turn");
+      lblEnemysTurn.setForeground(Color.decode("#df7b40"));
+      client.sendTCP(coordPacket);
 
-					}
-				});
-				enemyPanel.add(enemyButtons[i][x]);
-			}
-		}
-		joinServer();
+     }
+    });
+    enemyPanel.add(enemyButtons[i][x]);
+   }
+  }
+  joinServer();
 
-		Border border = BorderFactory.createLineBorder(Color.BLACK);
-		Border borderwhite = BorderFactory.createLineBorder(Color.lightGray);
-		scroll.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 0, 0, 0)));
-		textArea.setBorder(
-				BorderFactory.createCompoundBorder(borderwhite, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+  Border border = BorderFactory.createLineBorder(Color.BLACK);
+  Border borderwhite = BorderFactory.createLineBorder(Color.lightGray);
+  scroll.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 0, 0, 0)));
+  textArea.setBorder(
+    BorderFactory.createCompoundBorder(borderwhite, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-		textArea.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+  textArea.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-		lblEnemysTurn = new JLabel("Enemy's Turn");
-		lblEnemysTurn.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblEnemysTurn.setForeground(Color.decode("#df7b40"));
-		lblEnemysTurn.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEnemysTurn.setBounds(410, 383, 135, 14);
-		frame.getContentPane().add(lblEnemysTurn);
+  lblEnemysTurn = new JLabel("Enemy's Turn");
+  lblEnemysTurn.setFont(new Font("Tahoma", Font.BOLD, 13));
+  lblEnemysTurn.setForeground(Color.decode("#df7b40"));
+  lblEnemysTurn.setHorizontalAlignment(SwingConstants.CENTER);
+  lblEnemysTurn.setBounds(410, 383, 135, 14);
+  frame.getContentPane().add(lblEnemysTurn);
 
-	}
-	// #method
-	public void joinServer() {
-		// Joins the server
-		client = new Client();
-		cl = new ClientListener();
+ }
+ // #method
+ public void joinServer() {
+  // Joins the server
+  client = new Client();
+  cl = new ClientListener();
 
-		cl.init(client);
-		registerPackets();
-		client.addListener(cl);
+  cl.init(client);
+  registerPackets();
+  client.addListener(cl);
 
-		Log.set(Log.LEVEL_TRACE);
+  Log.set(Log.LEVEL_TRACE);
 
-		new Thread(client).start();
+  new Thread(client).start();
 
-		try {
+  try {
 
-			client.connect(5000, ipAddress, 1337, 1337);
+   client.connect(5000, ipAddress, 1337, 1337);
 
-		} catch (IOException e) {
+  } catch (IOException e) {
 
-			frame.dispose();
-			JOptionPane.showMessageDialog(null, "Jaden hasn't completed setting up his grid. Please try again later.");
-			MultiMenu newWindow = new MultiMenu();
-			newWindow.setVisible(true);
+   frame.dispose();
+   JOptionPane.showMessageDialog(null, "Jaden hasn't completed setting up his grid. Please try again later.");
+   MultiMenu newWindow = new MultiMenu();
+   newWindow.setVisible(true);
 
-		}
-	}
+  }
+ }
 
-	private void registerPackets() {
-		// Resgisters all the packets used by Kryo
-		Kryo kryo = client.getKryo();
-		kryo.register(Packets.Packet00Request.class);
-		kryo.register(Packets.Packet01Response.class);
-		kryo.register(Packets.Packet02Message.class);
-		kryo.register(Packets.Packet03Coords.class);
-		kryo.register(Packets.Packet04Hit.class);
-		kryo.register(Packets.Packet05Victory.class);
-		kryo.register(Packets.Packet06Missed.class);
-	}
+ private void registerPackets() {
+  // Resgisters all the packets used by Kryo
+  Kryo kryo = client.getKryo();
+  kryo.register(Packets.Packet00Request.class);
+  kryo.register(Packets.Packet01Response.class);
+  kryo.register(Packets.Packet02Message.class);
+  kryo.register(Packets.Packet03Coords.class);
+  kryo.register(Packets.Packet04Hit.class);
+  kryo.register(Packets.Packet05Victory.class);
+  kryo.register(Packets.Packet06Missed.class);
+ }
 
-	public static void reEnableButtons() {
-		// Enables the buttons
-		// #conditional #loop
-		for (int i = 0; i < 10; i++) {
-			for (int x = 0; x < 10; x++) {
-				if (MultiGameClient.enemyButtons[i][x].getDisabledIcon() != GridButton.hit
-						&& MultiGameClient.enemyButtons[i][x].getDisabledIcon() != GridButton.miss)
-					MultiGameClient.enemyButtons[i][x].setEnabled(true);
-			}
-		}
-	}
+ public static void reEnableButtons() {
+  // Enables the buttons
+  // #conditional #loop
+  for (int i = 0; i < 10; i++) {
+   for (int x = 0; x < 10; x++) {
+    if (MultiGameClient.enemyButtons[i][x].getDisabledIcon() != GridButton.hit
+      && MultiGameClient.enemyButtons[i][x].getDisabledIcon() != GridButton.miss)
+     MultiGameClient.enemyButtons[i][x].setEnabled(true);
+   }
+  }
+ }
 
-	public static void disableButtons() {
-		// Disable Buttons
-		for (int i = 0; i < 10; i++) {
-			for (int x = 0; x < 10; x++) {
-				MultiGameClient.enemyButtons[i][x].setEnabled(false);
-			}
-		}
-	}
+ public static void disableButtons() {
+  // Disable Buttons
+  for (int i = 0; i < 10; i++) {
+   for (int x = 0; x < 10; x++) {
+    MultiGameClient.enemyButtons[i][x].setEnabled(false);
+   }
+  }
+ }
 
-	public static void scrollList() {
-		// Scrolls the list
-		int lastIndex = list.getModel().getSize() - 1;
-		if (lastIndex >= 0) {
-			list.ensureIndexIsVisible(lastIndex);
-		}
-	}
+ public static void scrollList() {
+  // Scrolls the list
+  int lastIndex = list.getModel().getSize() - 1;
+  if (lastIndex >= 0) {
+   list.ensureIndexIsVisible(lastIndex);
+  }
+ }
 }
