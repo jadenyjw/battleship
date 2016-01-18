@@ -31,7 +31,7 @@ public class SingleGame {
 	private static int pointHit[] = {-1,-1};
 	private static int checkRound[] = new int[4];
 	private static int shotDirect = GridSetup.rng(4);
-	private static String aiMode = "search";
+	private static String aiMode = "search";//#string
 	private static int shotX, shotY;
 	private static boolean letLive = true;
 	// Variables, public and private
@@ -100,7 +100,7 @@ public class SingleGame {
 		System.out.println("Check 3");
 
 		int shipLen;
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 5; i++) {//#loop
 			switch (i) {
 			case 0:
 				shipLen = 5;
@@ -352,7 +352,10 @@ public class SingleGame {
 					
 					}
 					System.out.println("CHECKKKK");
+					System.out.println(shotX);
+					System.out.println(shotY);
 				}while(!check(shotX,shotY));
+				System.out.println("MAKE SURE");
 				checkRound = new int[4];
 			}
 			else if(firstHit[0] != -1 && aiMode.equals("back")){//Check if there is anything behind what we just hit

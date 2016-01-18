@@ -22,7 +22,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
 
 public class GridSetup extends JDialog {
-	// #variable
 	JFrame frame; // Swing frame
 	static JLabel image; // Invalid image
 
@@ -49,7 +48,7 @@ public class GridSetup extends JDialog {
 	private static boolean error = false; // error for checking
 	public static boolean cheatTog = false; // toggles cheatmode
 
-	public static int clientShip[][] = new int[5][3]; // array for client
+	public static int clientShip[][] = new int[5][3]; // #array for client
 	public static int hostShip[][] = new int[5][3]; // array for host
 
 	/**
@@ -223,7 +222,7 @@ public class GridSetup extends JDialog {
 						newClient.frame.setVisible(true);
 						frame.dispose();
 					}
-				} else
+				} else//#error
 					JOptionPane.showMessageDialog(null, "Please place all your ships before deploying.");
 
 			}
