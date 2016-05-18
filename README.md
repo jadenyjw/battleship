@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/jaden71/battleship.svg?branch=master)](https://travis-ci.org/jaden71/battleship)
+[![Build Status](https://travis-ci.org/jaden71/battleship.svg?branch=master)](https://travis-ci.org/jadenyjw/battleship)
 # Battleship in Java
 
 ##Gameplay
